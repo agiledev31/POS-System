@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-use App\Models\Shop;
+use App\Models\Workspace;
 use Carbon\Carbon;
 use DB;
 
-class ShopController extends Controller
+class WorkspaceController extends Controller
 {
-    //----------- GET ALL  Shops --------------\\
+       //----------- GET ALL  Shops --------------\\
 
     // public function index(Request $request)
     // {
@@ -64,14 +64,14 @@ class ShopController extends Controller
 
     public function store(Request $request)
     {
-        // need to create shop policy and set permission for user
-        // $this->authorizeForUser($request->user('api'), 'create', Shop::class);
+        // need to create workspace policy and set permission for user
+        // $this->authorizeForUser($request->user('api'), 'create', Wor::class);
 
         request()->validate([
             'name'   => 'required|string',
         ]);
 
-        Shop::create([
+        Workspace::create([
             'name'   => $request['name'],
             'email'    => $request['email'],
             'phone' => $request['phone'],
@@ -84,13 +84,13 @@ class ShopController extends Controller
 
     //----------- GET ALL Shop --------------\\
 
-    public function Get_all_Shop()
+    public function Get_all_Workspace()
     {
-        $shops = Shop::where('deleted_at', '=', null)
+        $workspaces = Workspace::where('deleted_at', '=', null)
         ->orderBy('id', 'desc')
         ->get(['id','name']);
 
-        return response()->json($companies);
+        return response()->json($workspaces);
     }
 
     //------------ function edit -----------\\

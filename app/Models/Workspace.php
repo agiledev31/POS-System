@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Shop extends Model
+class Workspace extends Model
 {
     use HasFactory;
     protected $dates = ['deleted_at'];
@@ -16,15 +16,15 @@ class Shop extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'phone', 'country', 'created_by',
+        'name', 'created_by',
     ];
 
     protected $casts = [
         'created_by' => 'integer',
     ];
 
-    public function user()
+    public function owner()
     {
-        return $this->hasOne('App\Models\User', 'id', 'created_by');
+        return $this->hasOne('App\Models\Workspace', 'id', 'created_by');
     }
 }
