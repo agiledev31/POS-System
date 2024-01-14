@@ -1253,7 +1253,12 @@ class PermissionRoleSeeder extends Seeder
 				'permission_id' => 124,
 				'role_id'       => 2,
 			],
-			
+			// super admin role
+			[
+				'id'            => 248,
+				'permission_id' => 125,
+				'role_id'       => 1,
+			],
 		)
 	);
     }
