@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Models\Setting;
 use App\Models\User;
+use App\Models\Workspace;
 use App\Models\role_user;
 use App\Models\product_warehouse;
 use App\Models\Warehouse;
@@ -135,7 +136,7 @@ class UserController extends BaseController
             'email' => 'required|unique:users',
         ], [
             'email.unique' => 'This Email already taken.',
-        ]);
+        ]);        
         \DB::transaction(function () use ($request) {
             if ($request->hasFile('avatar')) {
 
@@ -156,6 +157,12 @@ class UserController extends BaseController
                 $is_all_warehouses = 0;
             }
 
+            // create workspace
+            // if($request['workspace_name'])
+            $Workspace = new Workspace;
+            $Workspace->name  = 'workspace'; //$request['workspace_name'];
+            $Workspace->save();
+
             $User = new User;
             $User->firstname = $request['firstname'];
             $User->lastname  = $request['lastname'];
@@ -166,7 +173,13 @@ class UserController extends BaseController
             $User->avatar    = $filename;
             $User->role_id   = $request['role'];
             $User->is_all_warehouses   = $is_all_warehouses;
+            // user workspace
+            $User->workspace_id = $Workspace->id;
             $User->save();
+
+            //set workspace owner
+            $Workspace->owner = $User->id;
+            $Workspace->save();
 
             $role_user = new role_user;
             $role_user->user_id = $User->id;

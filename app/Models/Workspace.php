@@ -16,15 +16,11 @@ class Workspace extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'created_by',
+        'name', 'owner',
     ];
 
-    protected $casts = [
-        'created_by' => 'integer',
-    ];
-
-    public function owner()
+    public function users()
     {
-        return $this->hasOne('App\Models\Workspace', 'id', 'created_by');
+        return $this->hasMany('App\Models\User');
     }
 }

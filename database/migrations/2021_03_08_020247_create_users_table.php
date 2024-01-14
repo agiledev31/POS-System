@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration {
 			$table->string('avatar')->nullable();
 			$table->string('phone', 192);
 			$table->integer('role_id');
+			$table->integer('workspace_id')->nullable()->index('workspace_id');
 			$table->boolean('statut')->default(1);
 			$table->timestamps(6);
 			$table->softDeletes();

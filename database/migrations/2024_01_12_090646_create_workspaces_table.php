@@ -17,7 +17,7 @@ class CreateWorkspacesTable extends Migration
             $table->engine = 'InnoDB';
 			$table->integer('id', true);
 			$table->string('name', 191);
-            $table->integer('created_by')->index('workspace_user_id');
+            $table->integer('owner')->nullable();
 			$table->timestamps(6);
 			$table->softDeletes();
         });

@@ -62,6 +62,12 @@ class WorkspaceController extends Controller
 
     //----------- Store new shop --------------\\
 
+    public function users($id) {
+        $current_workspace = Workspace::findOrFail($id);
+        $users = $current_workspace->users;
+        return response()->json($users);
+    }
+
     public function store(Request $request)
     {
         // need to create workspace policy and set permission for user
@@ -76,7 +82,7 @@ class WorkspaceController extends Controller
             'email'    => $request['email'],
             'phone' => $request['phone'],
             'country' => $request['country'],
-            'created_by' => $request['created_by'],
+            'owner' => $request['owner'],
         ]);
 
         return response()->json(['success' => true]);

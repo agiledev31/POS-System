@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'firstname', 'lastname', 'username', 'email', 'password', 'phone', 'statut', 'avatar', 'role_id','is_all_warehouses'
+        'firstname', 'lastname', 'username', 'email', 'password', 'phone', 'statut', 'avatar', 'role_id','is_all_warehouses', 'workspace_id'
     ];
 
     /**
@@ -39,6 +39,7 @@ class User extends Authenticatable
         'role_id' => 'integer',
         'statut' => 'integer',
         'is_all_warehouses' => 'integer',
+        'workspace_id' => 'integer',
     ];
 
     public function oauthAccessToken()
@@ -67,6 +68,10 @@ class User extends Authenticatable
     public function assignedWarehouses()
     {
         return $this->belongsToMany('App\Models\Warehouse');
+    }
+
+    public function workspace() {
+        return $this->belongsTo('App\Models\Workspace');
     }
 
 }
