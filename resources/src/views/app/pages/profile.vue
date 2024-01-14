@@ -230,7 +230,7 @@ export default {
     //------------------ Get Profile Info ----------------------\\
     Get_Profile_Info() {
       axios
-        .get("Get_user_profile")
+        .get("get_user_profile")
         .then(response => {
           this.user = response.data.user;
           this.avatar = this.currentUser.avatar;

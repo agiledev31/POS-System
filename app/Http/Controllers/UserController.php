@@ -160,7 +160,7 @@ class UserController extends BaseController
             // create workspace
             // if($request['workspace_name'])
             $Workspace = new Workspace;
-            $Workspace->name  = 'workspace'; //$request['workspace_name'];
+            $Workspace->name  = 'my workspace'; //$request['workspace_name'];
             $Workspace->save();
 
             $User = new User;

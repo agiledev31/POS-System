@@ -851,7 +851,18 @@ export default {
             });
         }
       });
-    }
+    },
+    Get_Profile_Info() {
+      axios
+        .get("get_user_profile")
+        .then(response => {
+          console.log("current user", response.data);
+          // this.isLoading = false;
+        })
+        .catch(response => {
+          // this.isLoading = false;
+        });
+    },
   }, // END METHODS
 
   //----------------------------- Created function-------------------
@@ -870,6 +881,8 @@ export default {
         this.Get_Users(this.serverParams.page);
       }, 500);
     });
+
+    this.Get_Profile_Info();
   }
 };
 </script>

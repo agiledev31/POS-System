@@ -372,7 +372,7 @@ Route::middleware(['auth:api', 'Is_Active'])->group(function () {
     Route::get('get_user_auth', 'UserController@GetUserAuth');
     Route::resource('users', 'UserController');
     Route::put('users_switch_activated/{id}', 'UserController@IsActivated');
-    Route::get('Get_user_profile', 'UserController@GetInfoProfile');
+    Route::get('get_user_profile', 'UserController@GetInfoProfile');
     Route::put('update_user_profile/{id}', 'UserController@updateProfile');
 
     //------------------------------- Permission Groups user -----------\\

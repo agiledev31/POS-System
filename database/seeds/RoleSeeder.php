@@ -18,17 +18,17 @@ class RoleSeeder extends Seeder
 	    DB::table('roles')->insert(
             array([
                 'id'    => 1,
-                'name'  => 'Owner',
-                'label' => 'Owner',
-                'status' => 1,
-                'description' => 'Owner',
-            ],
-            [
-                'id'    => 2,
                 'name'  => 'Admin',
                 'label' => 'Admin',
                 'status' => 1,
                 'description' => 'Admin',
+            ],
+            [
+                'id'    => 2,
+                'name'  => 'Owner',
+                'label' => 'Owner',
+                'status' => 1,
+                'description' => 'Owner',
             ])
         );
     }
