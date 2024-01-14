@@ -20,6 +20,7 @@ class CreateShopsTable extends Migration
 			$table->string('email', 191)->nullable();
 			$table->string('phone', 191)->nullable();
 			$table->string('country', 191)->nullable();
+            $table->integer('created_by')->index('shop_user_id');
 			$table->timestamps(6);
 			$table->softDeletes();
         });
