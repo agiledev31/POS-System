@@ -402,7 +402,7 @@ export default {
         statut: "",
         role_id: "",
         avatar: "",
-        is_all_warehouses:1,
+        is_all_warehouses: 1,
       },
       assigned_warehouses:[],
     };
@@ -811,7 +811,7 @@ export default {
         statut: "",
         role_id: "",
         avatar: "",
-        is_all_warehouses:1,
+        is_all_warehouses: 1,
       };
       this.data= new FormData();
       this.assigned_warehouses = [];
@@ -852,21 +852,38 @@ export default {
         }
       });
     },
+    Get_Workspace_Info(id) {
+      axios
+        .get(`get_workspace_info/${id}`)
+        .then(response => {
+          console.log("current workspace", response.data);
+          
+          this.isLoading = false;
+        })
+        .catch(response => {
+          this.isLoading = false;
+        });
+    },
     Get_Profile_Info() {
       axios
         .get("get_user_profile")
         .then(response => {
-          console.log("current user", response.data);
-          // this.isLoading = false;
+          if(response.data.user.workspace_id) {
+            console.log("workspace id", response.data.user.workspace_id);
+            this.Get_Workspace_Info(response.data.user.workspace_id);
+          }
+          this.isLoading = false;
         })
         .catch(response => {
-          // this.isLoading = false;
+          this.isLoading = false;
         });
     },
+    
   }, // END METHODS
 
   //----------------------------- Created function-------------------
   created: function() {
+    this.Get_Profile_Info();
     this.Get_Users(1);
 
     Fire.$on("Event_User", () => {
@@ -881,8 +898,6 @@ export default {
         this.Get_Users(this.serverParams.page);
       }, 500);
     });
-
-    this.Get_Profile_Info();
   }
 };
 </script>

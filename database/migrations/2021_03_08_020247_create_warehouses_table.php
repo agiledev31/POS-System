@@ -18,6 +18,7 @@ class CreateWarehousesTable extends Migration {
 			$table->engine = 'InnoDB';
 			$table->integer('id', true);
 			$table->string('name', 192);
+			$table->integer('workspace_id')->nullable()->index('workspace_id');
 			$table->string('city', 192)->nullable();
 			$table->string('mobile', 192)->nullable();
 			$table->string('zip', 192)->nullable();

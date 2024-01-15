@@ -70,8 +70,8 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Warehouse');
     }
 
-    public function workspace() {
+    public function workspace()
+    {
         return $this->belongsTo('App\Models\Workspace');
     }
-
 }

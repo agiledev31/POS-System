@@ -45,9 +45,14 @@ class UserController extends BaseController
         $Role = Auth::user()->roles()->first();
         $ShowRecord = Role::findOrFail($Role->id)->inRole('record_view');
 
-        $users = User::where(function ($query) use ($ShowRecord) {
+        $users = User::with('workspace')
+            ->where(function ($query) use ($ShowRecord) {
             if (!$ShowRecord) {
                 return $query->where('id', '=', Auth::user()->id);
+            }
+            // return only workspace users
+            if(Auth::user()->workspace_id){
+                return $query->where('workspace_id', '=', Auth::user()->workspace_id);
             }
         });
 
@@ -72,7 +77,11 @@ class UserController extends BaseController
             ->orderBy($order, $dir)
             ->get();
 
-        $roles = Role::where('deleted_at', null)->get(['id', 'name']);
+        if(Auth::user()->role_id == 1) {
+            $roles = Role::where('deleted_at', null)->get(['id', 'name']);
+        } else {
+            $roles = Role::where('deleted_at', null)->where('id', '<>', 1)->get(['id', 'name']);
+        }
         $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name']);
 
         return response()->json([
@@ -156,13 +165,7 @@ class UserController extends BaseController
             }else{
                 $is_all_warehouses = 0;
             }
-
-            // create workspace
-            // if($request['workspace_name'])
-            $Workspace = new Workspace;
-            $Workspace->name  = 'my workspace'; //$request['workspace_name'];
-            $Workspace->save();
-
+            
             $User = new User;
             $User->firstname = $request['firstname'];
             $User->lastname  = $request['lastname'];
@@ -174,13 +177,27 @@ class UserController extends BaseController
             $User->role_id   = $request['role'];
             $User->is_all_warehouses   = $is_all_warehouses;
             // user workspace
-            $User->workspace_id = $Workspace->id;
+            if($request['role'] == 2){
+                if(Auth::user()->role_id == 1) {
+                    $Workspace = new Workspace;
+                    $Workspace->name  = $request['username'] . "'s Workspace";
+                    $Workspace->save();
+                    $User->workspace_id = $Workspace->id;
+                } else {
+                    $User->workspace_id = Auth::user()->workspace_id;
+                }
+            } else {
+                $User->workspace_id = null;
+            }
+
             $User->save();
 
             //set workspace owner
-            $Workspace->owner = $User->id;
-            $Workspace->save();
-
+            if(Auth::user()->role_id == 1 && $request['role'] == 2){
+                $Workspace->owner = $User->id;
+                $Workspace->save();
+            }
+            
             $role_user = new role_user;
             $role_user->user_id = $User->id;
             $role_user->role_id = $request['role'];

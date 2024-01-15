@@ -60,14 +60,6 @@ class WorkspaceController extends Controller
     //     ]);
     // }
 
-    //----------- Store new shop --------------\\
-
-    public function users($id) {
-        $current_workspace = Workspace::findOrFail($id);
-        $users = $current_workspace->users;
-        return response()->json($users);
-    }
-
     public function store(Request $request)
     {
         // need to create workspace policy and set permission for user
@@ -88,15 +80,24 @@ class WorkspaceController extends Controller
         return response()->json(['success' => true]);
     }
 
-    //----------- GET ALL Shop --------------\\
+    //----------- GET ALL Workspace --------------\\
 
-    public function Get_all_Workspace()
+    public function get_all_workspace()
     {
         $workspaces = Workspace::where('deleted_at', '=', null)
-        ->orderBy('id', 'desc')
-        ->get(['id','name']);
+        ->orderBy('id', 'desc');
 
         return response()->json($workspaces);
+    }
+
+    //----------- GET Workspace By Id--------------\\
+
+    public function get_workspace_info(Request $request)
+    {
+        $id = $request['id'];
+        $workspace = Workspace::findOrFail($id);
+
+        return response()->json($workspace);
     }
 
     //------------ function edit -----------\\

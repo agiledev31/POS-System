@@ -18,9 +18,4 @@ class Workspace extends Model
     protected $fillable = [
         'name', 'owner',
     ];
-
-    public function users()
-    {
-        return $this->hasMany('App\Models\User');
-    }
 }
