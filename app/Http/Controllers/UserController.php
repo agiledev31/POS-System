@@ -45,7 +45,7 @@ class UserController extends BaseController
         $Role = Auth::user()->roles()->first();
         $ShowRecord = Role::findOrFail($Role->id)->inRole('record_view');
 
-        $users = User::with('workspace')
+        $users = User::with('workspace', 'assignedWarehouses')
             ->where(function ($query) use ($ShowRecord) {
             if (!$ShowRecord) {
                 return $query->where('id', '=', Auth::user()->id);
@@ -82,7 +82,15 @@ class UserController extends BaseController
         } else {
             $roles = Role::where('deleted_at', null)->where('id', '<>', 1)->get(['id', 'name']);
         }
-        $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name']);
+        if(Auth::user()->role_id == 1) {
+            $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name', 'workspace_id']);
+        } else {
+            $warehouses = Warehouse::with('workspace')
+                ->where('deleted_at', '=', null)
+                ->where('workspace_id', '=', Auth::user()->workspace_id)
+                ->get(['id', 'name', 'workspace_id']);
+        }
+        
 
         return response()->json([
             'users' => $users,
@@ -99,6 +107,7 @@ class UserController extends BaseController
         $helpers = new helpers();
         $user['avatar'] = Auth::user()->avatar;
         $user['username'] = Auth::user()->username;
+        $user['workspace_id'] = Auth::user()->workspace_id;
         $user['currency'] = $helpers->Get_Currency();
         $user['logo'] = Setting::first()->logo;
         $user['default_language'] = Setting::first()->default_language;
@@ -179,11 +188,18 @@ class UserController extends BaseController
             // user workspace
             if($request['role'] == 2){
                 if(Auth::user()->role_id == 1) {
+                    // create default worksapce for a new user
                     $Workspace = new Workspace;
-                    $Workspace->name  = $request['username'] . "'s Workspace";
+                    $Workspace->name  = $request['username'] . "'s workspace";
                     $Workspace->save();
                     $User->workspace_id = $Workspace->id;
+                    // create default warehouse for a new user
+                    $Warehouse = new Warehouse;
+                    $Warehouse->name = $request['username'] . "'s warehouse";
+                    $Warehouse->workspace_id = $Workspace->id;
+                    $Warehouse->save();
                 } else {
+                    // assign an existing workspace to a new user
                     $User->workspace_id = Auth::user()->workspace_id;
                 }
             } else {
@@ -194,6 +210,7 @@ class UserController extends BaseController
 
             //set workspace owner
             if(Auth::user()->role_id == 1 && $request['role'] == 2){
+                // set workspace owner
                 $Workspace->owner = $User->id;
                 $Workspace->save();
             }

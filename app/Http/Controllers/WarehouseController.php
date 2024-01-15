@@ -9,6 +9,7 @@ use App\Models\Warehouse;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WarehouseController extends Controller
 {
@@ -27,19 +28,34 @@ class WarehouseController extends Controller
         $order = $request->SortField;
         $dir = $request->SortType;
 
-        $warehouses = Warehouse::where('deleted_at', '=', null)
-
-        // Search With Multiple Param
-            ->where(function ($query) use ($request) {
-                return $query->when($request->filled('search'), function ($query) use ($request) {
-                    return $query->where('name', 'LIKE', "%{$request->search}%")
-                        ->orWhere('mobile', 'LIKE', "%{$request->search}%")
-                        ->orWhere('country', 'LIKE', "%{$request->search}%")
-                        ->orWhere('city', 'LIKE', "%{$request->search}%")
-                        ->orWhere('zip', 'LIKE', "%{$request->search}%")
-                        ->orWhere('email', 'LIKE', "%{$request->search}%");
+        if(Auth::user()->role_id == 1) {
+            $warehouses = Warehouse::where('deleted_at', '=', null)
+                ->where(function ($query) use ($request) {
+                    return $query->when($request->filled('search'), function ($query) use ($request) {
+                        return $query->where('name', 'LIKE', "%{$request->search}%")
+                            ->orWhere('mobile', 'LIKE', "%{$request->search}%")
+                            ->orWhere('country', 'LIKE', "%{$request->search}%")
+                            ->orWhere('city', 'LIKE', "%{$request->search}%")
+                            ->orWhere('zip', 'LIKE', "%{$request->search}%")
+                            ->orWhere('email', 'LIKE', "%{$request->search}%");
+                    });
                 });
-            });
+        } else {
+            $warehouses = Warehouse::with('workspace')
+                ->where('deleted_at', '=', null)
+                ->where('workspace_id', '=', Auth::user()->workspace_id)
+                ->where(function ($query) use ($request) {
+                    return $query->when($request->filled('search'), function ($query) use ($request) {
+                        return $query->where('name', 'LIKE', "%{$request->search}%")
+                            ->orWhere('mobile', 'LIKE', "%{$request->search}%")
+                            ->orWhere('country', 'LIKE', "%{$request->search}%")
+                            ->orWhere('city', 'LIKE', "%{$request->search}%")
+                            ->orWhere('zip', 'LIKE', "%{$request->search}%")
+                            ->orWhere('email', 'LIKE', "%{$request->search}%");
+                    });
+                });
+        }
+            
         $totalRows = $warehouses->count();
         if($perPage == "-1"){
             $perPage = $totalRows;
@@ -67,13 +83,14 @@ class WarehouseController extends Controller
 
         \DB::transaction(function () use ($request) {
 
-            $Warehouse          = new Warehouse;
-            $Warehouse->name    = $request['name'];
-            $Warehouse->mobile  = $request['mobile'];
-            $Warehouse->country = $request['country'];
-            $Warehouse->city    = $request['city'];
-            $Warehouse->zip     = $request['zip'];
-            $Warehouse->email   = $request['email'];
+            $Warehouse                  = new Warehouse;
+            $Warehouse->name            = $request['name'];
+            $Warehouse->workspace_id    = Auth::user()->workspace_id;
+            $Warehouse->mobile          = $request['mobile'];
+            $Warehouse->country         = $request['country'];
+            $Warehouse->city            = $request['city'];
+            $Warehouse->zip             = $request['zip'];
+            $Warehouse->email           = $request['email'];
             $Warehouse->save();
 
             $products = Product::where('deleted_at', '=', null)->get(['id','type']);

@@ -17,6 +17,7 @@ class Warehouse extends Seeder
             array(
                 'id'      => 1,
                 'name'    => 'Default Warehouse',
+                'workspace_id' => NULL,
                 'city'    => NULL,
                 'mobile'  => NULL,
                 'zip'     => NULL,

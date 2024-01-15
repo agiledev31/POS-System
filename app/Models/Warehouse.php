@@ -9,7 +9,11 @@ class Warehouse extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'name', 'mobile', 'country', 'city', 'email', 'zip',
+        'name', 'workspace_id', 'mobile', 'country', 'city', 'email', 'zip',
+    ];
+
+    protected $casts = [
+        'workspace_id' => 'integer',
     ];
 
     public function assignedUsers()
@@ -17,4 +21,8 @@ class Warehouse extends Model
         return $this->belongsToMany('App\Models\User');
     }
 
+    public function workspace()
+    {
+        return $this->belongsTo('App\Models\Workspace');
+    }
 }

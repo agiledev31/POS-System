@@ -321,11 +321,11 @@
             </b-col>
 
             <!-- assigned_warehouses -->
-            <b-col md="4" sm="4">
+            <b-col v-if="current_user.role_id == 2" md="4" sm="4">
               <h5>{{$t('Assigned_warehouses')}}</h5>
             </b-col>
 
-            <b-col md="8" sm="8">
+            <b-col v-if="current_user.role_id == 2" md="8" sm="8">
               <label class="checkbox checkbox-primary mb-3"><input type="checkbox" v-model="user.is_all_warehouses"><h5>{{$t('All_Warehouses')}} <i v-b-tooltip.hover.bottom title="If 'All Warehouses' Selected , User Can access all data for the selected Warehouses" class="text-info font-weight-bold i-Speach-BubbleAsking"></i></h5><span class="checkmark"></span></label>
                
                <b-form-group class="mt-2" :label="$t('Some_warehouses')">
@@ -402,9 +402,10 @@ export default {
         statut: "",
         role_id: "",
         avatar: "",
-        is_all_warehouses: 1,
+        is_all_warehouses: 0,
       },
       assigned_warehouses:[],
+      current_user: {},
     };
   },
 
@@ -811,7 +812,7 @@ export default {
         statut: "",
         role_id: "",
         avatar: "",
-        is_all_warehouses: 1,
+        is_all_warehouses: 0,
       };
       this.data= new FormData();
       this.assigned_warehouses = [];
@@ -856,8 +857,6 @@ export default {
       axios
         .get(`get_workspace_info/${id}`)
         .then(response => {
-          console.log("current workspace", response.data);
-          
           this.isLoading = false;
         })
         .catch(response => {
@@ -869,7 +868,7 @@ export default {
         .get("get_user_profile")
         .then(response => {
           if(response.data.user.workspace_id) {
-            console.log("workspace id", response.data.user.workspace_id);
+            this.current_user = response.data.user;
             this.Get_Workspace_Info(response.data.user.workspace_id);
           }
           this.isLoading = false;
