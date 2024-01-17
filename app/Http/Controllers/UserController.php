@@ -220,10 +220,16 @@ class UserController extends BaseController
             $role_user->role_id = $request['role'];
             $role_user->save();
 
-            if(!$User->is_all_warehouses){
-                $User->assignedWarehouses()->sync($request['assigned_to']);
+            if(Auth::user()->role_id == 1 && $request['role'] == 2){
+                // set warehouse to a user
+                $assigned_to = array();
+                array_push($assigned_to, $Warehouse->id);
+                $User->assignedWarehouses()->sync($assigned_to);
+            } else {
+                if(!$User->is_all_warehouses){
+                    $User->assignedWarehouses()->sync($request['assigned_to']);
+                }
             }
-    
         }, 10);
 
         return response()->json(['success' => true]);

@@ -34,6 +34,7 @@ class CreateProductsTable extends Migration {
 			$table->float('stock_alert', 10, 0)->nullable()->default(0);
 			$table->boolean('is_variant')->default(0);
 			$table->boolean('is_active')->nullable()->default(1);
+			$table->integer('workspace_id')->nullable()->index('workspace_id');
 			$table->timestamps(6);
 			$table->softDeletes();
 		});
