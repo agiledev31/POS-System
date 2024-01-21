@@ -67,8 +67,8 @@
           </span>
 
           <div v-else-if="props.column.field == 'statut'">
-            <label class="switch switch-primary mr-3">
-              <input @change="isChecked(props.row)" type="checkbox" v-model="props.row.statut">
+            <label v-if="workspace_owner !== props.row.id" class="switch switch-primary mr-3">
+              <input @change="isChecked(props.row)" type="checkbox" v-model="props.row.statut" >
               <span class="slider"></span>
             </label>
           </div>
@@ -326,7 +326,7 @@
             </b-col>
 
             <b-col v-if="current_user.role_id == 2" md="8" sm="8">
-              <label class="checkbox checkbox-primary mb-3"><input type="checkbox" v-model="user.is_all_warehouses"><h5>{{$t('All_Warehouses')}} <i v-b-tooltip.hover.bottom title="If 'All Warehouses' Selected , User Can access all data for the selected Warehouses" class="text-info font-weight-bold i-Speach-BubbleAsking"></i></h5><span class="checkmark"></span></label>
+              <!-- <label class="checkbox checkbox-primary mb-3"><input type="checkbox" v-model="user.is_all_warehouses"><h5>{{$t('All_Warehouses')}} <i v-b-tooltip.hover.bottom title="If 'All Warehouses' Selected , User Can access all data for the selected Warehouses" class="text-info font-weight-bold i-Speach-BubbleAsking"></i></h5><span class="checkmark"></span></label> -->
                
                <b-form-group class="mt-2" :label="$t('Some_warehouses')">
                   <v-select
@@ -406,6 +406,7 @@ export default {
       },
       assigned_warehouses:[],
       current_user: {},
+      workspace_owner: null,
     };
   },
 
@@ -857,6 +858,8 @@ export default {
       axios
         .get(`get_workspace_info/${id}`)
         .then(response => {
+          console.log("workspace", response.data);
+          this.workspace_owner = response.data.owner;
           this.isLoading = false;
         })
         .catch(response => {

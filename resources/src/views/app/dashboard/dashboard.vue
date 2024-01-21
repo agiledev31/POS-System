@@ -417,8 +417,7 @@ export default {
 
           this.report_today = response.data.report_dashboard.original.report;
           this.warehouses = response.data.warehouses;
-          this.stock_alerts =
-            response.data.report_dashboard.original.stock_alert;
+          this.stock_alerts = response.data.report_dashboard.original.stock_alert;
           this.products = response.data.report_dashboard.original.products;
           this.sales = response.data.report_dashboard.original.last_sales;
           var dark_heading = "#c2c6dc";

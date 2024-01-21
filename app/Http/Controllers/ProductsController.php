@@ -42,8 +42,15 @@ class ProductsController extends BaseController
         $param = array(0 => 'like', 1 => '=', 2 => '=', 3 => 'like');
         $data = array();
 
-        $products = Product::with('unit', 'category', 'brand')
+        if(auth()->user()->workspace_id) {
+            $products = Product::with('unit', 'category', 'brand', 'workspace')
+            ->where('deleted_at', '=', null)
+            ->where('workspace_id', '=', auth()->user()->workspace_id);
+        } else {
+            $products = Product::with('unit', 'category', 'brand', 'workspace')
             ->where('deleted_at', '=', null);
+        }
+        
 
         //Multiple Filter
         $Filtred = $helpers->filter($products, $columns, $param, $request)
@@ -79,8 +86,8 @@ class ProductsController extends BaseController
             $item['name'] = $product->name;
             $item['category'] = $product['category']->name;
             $item['brand'] = $product['brand'] ? $product['brand']->name : 'N/D';
-           
-
+            $item['workspace'] = $product['workspace'] ? $product['workspace']->name : '';
+            $item['workspace_id'] = $product['workspace'] ? $product['workspace']->id : '';
             $firstimage = explode(',', $product->image);
             $item['image'] = $firstimage[0];
 
@@ -333,7 +340,7 @@ class ProductsController extends BaseController
                 $Product->note         = $request['note'];
                 $Product->TaxNet       = $request['TaxNet'] ? $request['TaxNet'] : 0;
                 $Product->tax_method   = $request['tax_method'];
-
+                $Product->workspace_id = auth()->user()->workspace_id;
 
                  //-- check if type is_single
                  if($request['type'] == 'is_single'){
@@ -417,7 +424,15 @@ class ProductsController extends BaseController
                 }
 
                 //--Store Product Warehouse
-                $warehouses = Warehouse::where('deleted_at', null)->pluck('id')->toArray();
+                // $warehouses = Warehouse::where('deleted_at', null)->pluck('id')->toArray();
+
+                $user_auth = auth()->user();
+                if($user_auth->is_all_warehouses){
+                    $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name']);
+                }else{
+                    $warehouses_id = UserWarehouse::where('user_id', $user_auth->id)->pluck('warehouse_id')->toArray();
+                    $warehouses = Warehouse::where('deleted_at', '=', null)->whereIn('id', $warehouses_id)->get(['id', 'name']);
+                }
                 if ($warehouses) {
                     $Product_variants = ProductVariant::where('product_id', $Product->id)
                         ->where('deleted_at', null)
@@ -436,7 +451,7 @@ class ProductsController extends BaseController
                         } else {
                             $product_warehouse[] = [
                                 'product_id'   => $Product->id,
-                                'warehouse_id' => $warehouse,
+                                'warehouse_id' => $warehouse->id,
                                 'manage_stock' => $manage_stock,
                             ];
                         }
@@ -644,7 +659,8 @@ class ProductsController extends BaseController
                 $Product->code = $request['code'];
                 $Product->Type_barcode = $request['Type_barcode'];
                 $Product->category_id = $request['category_id'];
-                $Product->brand_id = $request['brand_id'] == 'null' ?Null: $request['brand_id'];
+                $Product->brand_id = $request['brand_id'] == 'null' ? Null: $request['brand_id'];
+                $Product->workspace_id = $request['workspace_id'] == 'null' ? Null: $request['workspace_id'];
                 $Product->TaxNet = $request['TaxNet'];
                 $Product->tax_method = $request['tax_method'];
                 $Product->note = $request['note'];
@@ -1013,6 +1029,7 @@ class ProductsController extends BaseController
         $item['name'] = $Product->name;
         $item['note'] = $Product->note;
         $item['category'] = $Product['category']->name;
+        $item['workspace_id'] = $Product['workspace_id'];
         $item['brand'] = $Product['brand'] ? $Product['brand']->name : 'N/D';
         $item['price'] = $Product->price;
         $item['cost'] = $Product->cost;
@@ -1505,7 +1522,7 @@ class ProductsController extends BaseController
         } else {
             $item['unit_id'] = '';
         }
-
+        $item['workspace_id'] = $Product->workspace_id;
         $item['tax_method'] = $Product->tax_method;
         $item['price'] = $Product->price;
         $item['cost'] = $Product->cost;
@@ -1660,6 +1677,7 @@ class ProductsController extends BaseController
                         $Product->cost = $value['cost'];
                         $Product->category_id = $category_id;
                         $Product->brand_id = $brand_id;
+                        $Product->workspace_id = auth()->user()->workspace_id;
                         $Product->TaxNet = 0;
                         $Product->tax_method = 1;
                         $Product->note = $value['note'] ? $value['note'] : '';

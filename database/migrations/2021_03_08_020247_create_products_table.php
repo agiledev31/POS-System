@@ -22,6 +22,7 @@ class CreateProductsTable extends Migration {
 			$table->string('name', 192);
 			$table->float('cost', 10, 0);
 			$table->float('price', 10, 0);
+			$table->integer('workspace_id')->nullable()->index('workspace_id');
 			$table->integer('category_id')->index('category_id');
 			$table->integer('brand_id')->nullable()->index('brand_id_products');
 			$table->integer('unit_id')->nullable()->index('unit_id_products');
@@ -34,7 +35,6 @@ class CreateProductsTable extends Migration {
 			$table->float('stock_alert', 10, 0)->nullable()->default(0);
 			$table->boolean('is_variant')->default(0);
 			$table->boolean('is_active')->nullable()->default(1);
-			$table->integer('workspace_id')->nullable()->index('workspace_id');
 			$table->timestamps(6);
 			$table->softDeletes();
 		});

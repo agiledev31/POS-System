@@ -12,7 +12,7 @@ class Product extends Model
     protected $fillable = [
         'code', 'Type_barcode', 'name', 'cost', 'price', 'unit_id', 'unit_sale_id', 'unit_purchase_id',
         'stock_alert', 'category_id', 'sub_category_id', 'is_variant','is_imei',
-        'tax_method', 'image', 'brand_id', 'is_active', 'note','type'
+        'tax_method', 'image', 'brand_id', 'is_active', 'note','type', 'workspace_id'
     ];
 
     protected $casts = [
@@ -21,6 +21,7 @@ class Product extends Model
         'unit_id' => 'integer',
         'unit_sale_id' => 'integer',
         'unit_purchase_id' => 'integer',
+        'workspace_id' => 'integer',
         'is_variant' => 'integer',
         'is_imei' => 'integer',
         'brand_id' => 'integer',
@@ -74,6 +75,11 @@ class Product extends Model
     public function brand()
     {
         return $this->belongsTo('App\Models\Brand');
+    }
+
+    public function workspace()
+    {
+        return $this->belongsTo('App\Models\Workspace');
     }
 
 }

@@ -23,12 +23,12 @@ class SettingSeeder extends Seeder
                 'is_invoice_footer' => 0,
                 'invoice_footer' => Null,
                 'warehouse_id' => Null,
-                'CompanyName' => 'Stocky',
-                'CompanyPhone' => '6315996770',
-                'CompanyAdress' => '3618 Abia Martin Drive',
-                'footer' => 'Stocky - Ultimate Inventory With POS',
-                'developed_by' => 'Stocky',
-                'logo' => 'logo-default.png',
+                'CompanyName' => 'Ahmed POS',
+                'CompanyPhone' => '9647803151508',
+                'CompanyAdress' => 'Baghdad, Iraq',
+                'footer' => 'Ahmed - Ultimate Inventory With POS',
+                'developed_by' => 'Ahmed',
+                'logo' => 'logo-2.png',
             )
             
         );
