@@ -92,6 +92,11 @@ class SalesController extends BaseController
                     return $query->where('user_id', '=', Auth::user()->id);
                 }
             });
+        if(Auth::user()->role_id !== 1){
+            $Sales->whereHas('warehouse', function ($q) {
+                $q->where('workspace_id', '=', Auth::user()->workspace_id);
+            });
+        }
         //Multiple Filter
         $Filtred = $helpers->filter($Sales, $columns, $param, $request)
         // Search With Multiple Param

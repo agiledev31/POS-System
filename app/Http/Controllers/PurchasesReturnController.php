@@ -75,6 +75,11 @@ class PurchasesReturnController extends BaseController
                     return $query->where('user_id', '=', Auth::user()->id);
                 }
             });
+        if(Auth::user()->role_id !== 1){
+            $PurchaseReturn->whereHas('warehouse', function ($q) {
+                $q->where('workspace_id', '=', Auth::user()->workspace_id);
+            });
+        }
 
         //Multiple Filter
         $Filtred = $helpers->filter($PurchaseReturn, $columns, $param, $request)

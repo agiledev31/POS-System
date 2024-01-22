@@ -42,15 +42,11 @@ class ProductsController extends BaseController
         $param = array(0 => 'like', 1 => '=', 2 => '=', 3 => 'like');
         $data = array();
 
-        if(auth()->user()->workspace_id) {
-            $products = Product::with('unit', 'category', 'brand', 'workspace')
-            ->where('deleted_at', '=', null)
-            ->where('workspace_id', '=', auth()->user()->workspace_id);
-        } else {
-            $products = Product::with('unit', 'category', 'brand', 'workspace')
+        $products = Product::with('unit', 'category', 'brand', 'workspace')
             ->where('deleted_at', '=', null);
+        if(auth()->user()->workspace_id) {
+            $products->where('workspace_id', '=', auth()->user()->workspace_id);
         }
-        
 
         //Multiple Filter
         $Filtred = $helpers->filter($products, $columns, $param, $request)

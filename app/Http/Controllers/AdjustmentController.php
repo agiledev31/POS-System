@@ -49,6 +49,12 @@ class AdjustmentController extends BaseController
                 }
             });
 
+        if(Auth::user()->role_id !== 1){
+            $Adjustments->whereHas('warehouse', function ($q) {
+                $q->where('workspace_id', '=', Auth::user()->workspace_id);
+            });
+        }
+
         //Multiple Filter
         $Filtred = $helpers->filter($Adjustments, $columns, $param, $request)
         // Search With Multiple Param
