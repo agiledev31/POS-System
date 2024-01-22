@@ -56,8 +56,15 @@
         <template slot="table-row" slot-scope="props">
           <span v-if="props.column.field == 'actions'">
             <a
+              v-if="current_user.id === 1 || current_user.id === props.row.id || 
+                (
+                  currentUserPermissions && currentUserPermissions.includes('users_edit') && 
+                  (current_user.role_id === 1 || current_user.id === workspace_owner) &&
+                  (current_user.role_id === 1 || current_user.role_id === 2) &&
+                  props.row.role_id !== 1 && 
+                  workspace_owner !== props.row.id
+                )"
               @click="Edit_User(props.row)"
-              v-if="currentUserPermissions && currentUserPermissions.includes('users_edit')"
               title="Edit"
               class="cursor-pointer"
               v-b-tooltip.hover
@@ -67,7 +74,17 @@
           </span>
 
           <div v-else-if="props.column.field == 'statut'">
-            <label v-if="workspace_owner !== props.row.id" class="switch switch-primary mr-3">
+            <label 
+              v-if="current_user.id === 1 ||
+                (
+                  currentUserPermissions && currentUserPermissions.includes('users_edit') && 
+                  (current_user.role_id === 1 || current_user.id === workspace_owner) &&
+                  (current_user.role_id === 1 || current_user.role_id === 2) &&
+                  props.row.role_id !== 1 && 
+                  workspace_owner !== props.row.id
+                )" 
+              class="switch switch-primary mr-3"
+            >
               <input @change="isChecked(props.row)" type="checkbox" v-model="props.row.statut" >
               <span class="slider"></span>
             </label>
@@ -858,7 +875,6 @@ export default {
       axios
         .get(`get_workspace_info/${id}`)
         .then(response => {
-          console.log("workspace", response.data);
           this.workspace_owner = response.data.owner;
           this.isLoading = false;
         })
@@ -870,8 +886,8 @@ export default {
       axios
         .get("get_user_profile")
         .then(response => {
+          this.current_user = response.data.user;
           if(response.data.user.workspace_id) {
-            this.current_user = response.data.user;
             this.Get_Workspace_Info(response.data.user.workspace_id);
           }
           this.isLoading = false;
