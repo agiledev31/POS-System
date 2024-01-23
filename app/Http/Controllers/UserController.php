@@ -186,7 +186,7 @@ class UserController extends BaseController
             $User->role_id   = $request['role'];
             $User->is_all_warehouses   = $is_all_warehouses;
             // user workspace
-            if($request['role'] == 2){
+            if($request['role'] !== 1){
                 if(Auth::user()->role_id == 1) {
                     // create default worksapce for a new user
                     $Workspace = new Workspace;
@@ -209,7 +209,7 @@ class UserController extends BaseController
             $User->save();
 
             //set workspace owner
-            if(Auth::user()->role_id == 1 && $request['role'] == 2){
+            if(Auth::user()->role_id == 1 && $request['role'] !== 1){
                 // set workspace owner
                 $Workspace->owner = $User->id;
                 $Workspace->save();
@@ -220,7 +220,7 @@ class UserController extends BaseController
             $role_user->role_id = $request['role'];
             $role_user->save();
 
-            if(Auth::user()->role_id == 1 && $request['role'] == 2){
+            if(Auth::user()->role_id == 1 && $request['role'] !== 1){
                 // set warehouse to a user
                 $assigned_to = array();
                 array_push($assigned_to, $Warehouse->id);
