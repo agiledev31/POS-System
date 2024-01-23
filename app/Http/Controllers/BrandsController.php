@@ -26,15 +26,19 @@ class BrandsController extends Controller
         $dir = $request->SortType;
         $helpers = new helpers();
 
-        $brands = Brand::where('deleted_at', '=', null)
+        $brands = Brand::where('deleted_at', '=', null);
+
+        if(auth()->user()->workspace_id) {
+            $brands->where('workspace_id', '=', auth()->user()->workspace_id);
+        };
 
         // Search With Multiple Param
-            ->where(function ($query) use ($request) {
-                return $query->when($request->filled('search'), function ($query) use ($request) {
-                    return $query->where('name', 'LIKE', "%{$request->search}%")
-                        ->orWhere('description', 'LIKE', "%{$request->search}%");
-                });
+        $brands->where(function ($query) use ($request) {
+            return $query->when($request->filled('search'), function ($query) use ($request) {
+                return $query->where('name', 'LIKE', "%{$request->search}%")
+                    ->orWhere('description', 'LIKE', "%{$request->search}%");
             });
+        });
         $totalRows = $brands->count();
         if($perPage == "-1"){
             $perPage = $totalRows;
@@ -78,6 +82,7 @@ class BrandsController extends Controller
 
             $Brand = new Brand;
 
+            $Brand->workspace_id = auth()->user()->workspace_id;
             $Brand->name = $request['name'];
             $Brand->description = $request['description'];
             $Brand->image = $filename;

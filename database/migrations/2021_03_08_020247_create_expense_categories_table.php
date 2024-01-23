@@ -17,6 +17,7 @@ class CreateExpenseCategoriesTable extends Migration {
 		{
 			$table->engine = 'InnoDB';
 			$table->integer('id', true);
+			$table->integer('workspace_id')->nullable()->index('workspace_id');
 			$table->integer('user_id')->index('expense_category_user_id');
 			$table->string('name', 192);
 			$table->text('description')->nullable();

@@ -17,6 +17,7 @@ class CreateCategoriesTable extends Migration {
 		{
 			$table->engine = 'InnoDB';
 			$table->integer('id', true);
+			$table->integer('workspace_id')->nullable()->index('workspace_id');
 			$table->string('code', 192);
 			$table->string('name', 192);
 			$table->timestamps(6);

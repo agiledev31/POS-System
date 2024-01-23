@@ -17,6 +17,7 @@ class CreateTransfersTable extends Migration {
 		{
 			$table->engine = 'InnoDB';
 			$table->integer('id', true);
+			$table->integer('workspace_id')->nullable()->index('workspace_id');
 			$table->integer('user_id')->index('user_id_transfers');
 			$table->string('Ref', 192);
 			$table->date('date');

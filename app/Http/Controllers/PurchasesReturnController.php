@@ -133,7 +133,7 @@ class PurchasesReturnController extends BaseController
             $item['provider_email'] = $Purchase_Return['provider']->email;
             $item['provider_tele'] = $Purchase_Return['provider']->phone;
             $item['provider_code'] = $Purchase_Return['provider']->code;
-            $item['provider_adr'] = $Purchase_Return['provider']->adresse;
+            $item['provider_adr'] = $Purchase_Return['provider']->address;
             $item['GrandTotal'] = number_format($Purchase_Return['GrandTotal'], 2, '.', '');
             $item['paid_amount'] = number_format($Purchase_Return['paid_amount'], 2, '.', '');
             $item['due'] = number_format($item['GrandTotal'] - $item['paid_amount'], 2, '.', '');
@@ -975,7 +975,7 @@ class PurchasesReturnController extends BaseController
         $return_details['supplier_name'] = $Purchase_Return['provider']->name;
         $return_details['supplier_email'] = $Purchase_Return['provider']->email;
         $return_details['supplier_phone'] = $Purchase_Return['provider']->phone;
-        $return_details['supplier_adr'] = $Purchase_Return['provider']->adresse;
+        $return_details['supplier_adr'] = $Purchase_Return['provider']->address;
         $return_details['supplier_tax'] = $Purchase_Return['provider']->tax_number;
         $return_details['warehouse'] = $Purchase_Return['warehouse']->name;
         $return_details['GrandTotal'] = number_format($Purchase_Return->GrandTotal, 2, '.', '');
@@ -1059,7 +1059,7 @@ class PurchasesReturnController extends BaseController
         $return_details['purchase_ref'] = $PurchaseReturn['purchase']?$PurchaseReturn['purchase']->Ref:'---';
         $return_details['supplier_name'] = $PurchaseReturn['provider']->name;
         $return_details['supplier_phone'] = $PurchaseReturn['provider']->phone;
-        $return_details['supplier_adr'] = $PurchaseReturn['provider']->adresse;
+        $return_details['supplier_adr'] = $PurchaseReturn['provider']->address;
         $return_details['supplier_email'] = $PurchaseReturn['provider']->email;
         $return_details['supplier_tax'] = $PurchaseReturn['provider']->tax_number;
         $return_details['TaxNet'] = number_format($PurchaseReturn->TaxNet, 2, '.', '');

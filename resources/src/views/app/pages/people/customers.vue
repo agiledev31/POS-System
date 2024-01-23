@@ -541,7 +541,7 @@
                     label="Adress"
                     class="form-control"
                     rows="4"
-                    v-model="client.adresse"
+                    v-model="client.address"
                     :placeholder="$t('Adress')"
                  ></textarea>
                 </b-form-group>
@@ -644,7 +644,7 @@
               <tr>
                 <!-- Customer Adress -->
                 <td>{{$t('Adress')}}</td>
-                <th>{{client.adresse}}</th>
+                <th>{{client.address}}</th>
               </tr>
               <tr>
                 <!-- Tax Number -->
@@ -817,7 +817,7 @@ export default {
         phone: "",
         country: "",
         city: "",
-        adresse: "",
+        address: "",
         tax_number: "",
 
       }
@@ -1222,7 +1222,7 @@ export default {
           tax_number: this.client.tax_number,
           country: this.client.country,
           city: this.client.city,
-          adresse: this.client.adresse
+          address: this.client.address
         })
         .then(response => {
           Fire.$emit("Event_Customer");
@@ -1252,7 +1252,7 @@ export default {
           tax_number: this.client.tax_number,
           country: this.client.country,
           city: this.client.city,
-          adresse: this.client.adresse
+          address: this.client.address
         })
         .then(response => {
           Fire.$emit("Event_Customer");
@@ -1280,7 +1280,7 @@ export default {
         country: "",
         tax_number: "",
         city: "",
-        adresse: ""
+        address: ""
       };
     },
 

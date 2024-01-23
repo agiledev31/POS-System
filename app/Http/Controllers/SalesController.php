@@ -146,7 +146,7 @@ class SalesController extends BaseController
             $item['client_email'] = $Sale['client']['email'];
             $item['client_tele'] = $Sale['client']['phone'];
             $item['client_code'] = $Sale['client']['code'];
-            $item['client_adr'] = $Sale['client']['adresse'];
+            $item['client_adr'] = $Sale['client']['address'];
             $item['GrandTotal'] = number_format($Sale['GrandTotal'], 2, '.', '');
             $item['paid_amount'] = number_format($Sale['paid_amount'], 2, '.', '');
             $item['due'] = number_format($item['GrandTotal'] - $item['paid_amount'], 2, '.', '');
@@ -849,7 +849,7 @@ class SalesController extends BaseController
         $sale_details['TaxNet'] = $sale_data->TaxNet;
         $sale_details['client_name'] = $sale_data['client']->name;
         $sale_details['client_phone'] = $sale_data['client']->phone;
-        $sale_details['client_adr'] = $sale_data['client']->adresse;
+        $sale_details['client_adr'] = $sale_data['client']->address;
         $sale_details['client_email'] = $sale_data['client']->email;
         $sale_details['client_tax'] = $sale_data['client']->tax_number;
         $sale_details['GrandTotal'] = number_format($sale_data->GrandTotal, 2, '.', '');
@@ -1079,7 +1079,7 @@ class SalesController extends BaseController
 
         $sale['client_name'] = $sale_data['client']->name;
         $sale['client_phone'] = $sale_data['client']->phone;
-        $sale['client_adr'] = $sale_data['client']->adresse;
+        $sale['client_adr'] = $sale_data['client']->address;
         $sale['client_email'] = $sale_data['client']->email;
         $sale['client_tax'] = $sale_data['client']->tax_number;
         $sale['TaxNet'] = number_format($sale_data->TaxNet, 2, '.', '');

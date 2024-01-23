@@ -24,15 +24,19 @@ class UnitsController extends BaseController
         $dir = $request->SortType;
         $data = array();
 
-        $Units = Unit::where('deleted_at', '=', null)
+        $Units = Unit::where('deleted_at', '=', null);
+
+        if(auth()->user()->workspace_id) {
+            $Units->where('workspace_id', '=', auth()->user()->workspace_id);
+        };
 
         // Search With Multiple Param
-            ->where(function ($query) use ($request) {
-                return $query->when($request->filled('search'), function ($query) use ($request) {
-                    return $query->where('name', 'LIKE', "%{$request->search}%")
-                        ->orWhere('ShortName', 'LIKE', "%{$request->search}%");
-                });
+        $Units->where(function ($query) use ($request) {
+            return $query->when($request->filled('search'), function ($query) use ($request) {
+                return $query->where('name', 'LIKE', "%{$request->search}%")
+                    ->orWhere('ShortName', 'LIKE', "%{$request->search}%");
             });
+        });
         $totalRows = $Units->count();
         if($perPage == "-1"){
             $perPage = $totalRows;
@@ -65,6 +69,14 @@ class UnitsController extends BaseController
             ->where('deleted_at', null)
             ->orderBy('id', 'DESC')
             ->get(['id', 'name']);
+            
+        if(auth()->user()->workspace_id) {
+            $Units_base = Unit::where('base_unit', null)
+            ->where('deleted_at', null)
+            ->where('workspace_id', auth()->user()->workspace_id)
+            ->orderBy('id', 'DESC')
+            ->get(['id', 'name']);
+        }
 
         return response()->json([
             'Units' => $data,
@@ -94,6 +106,7 @@ class UnitsController extends BaseController
         }
 
         Unit::create([
+            'workspace_id' => auth()->user()->workspace_id,
             'name' => $request['name'],
             'ShortName' => $request['ShortName'],
             'base_unit' => $request['base_unit'],

@@ -9,11 +9,17 @@ class Provider extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'name', 'code', 'adresse', 'phone', 'country', 'email', 'city','tax_number'
+        'name', 'code', 'address', 'phone', 'country', 'email', 'city','tax_number', 'workspace_id',
     ];
 
     protected $casts = [
         'code' => 'integer',
+        'workspace_id' => 'integer'
     ];
+
+    public function workspace()
+    {
+        return $this->belongsTo('App\Models\Workspace');
+    }
 
 }

@@ -8,10 +8,11 @@ class ExpenseCategory extends Model
 {
 
     protected $fillable = [
-        'user_id', 'description', 'name', 'created_at', 'updated_at', 'deleted_at',
+        'workspace_id', 'user_id', 'description', 'name', 'created_at', 'updated_at', 'deleted_at',
     ];
 
     protected $casts = [
+        'workspace_id' => 'integer',
         'user_id' => 'integer',
     ];
 
@@ -25,4 +26,8 @@ class ExpenseCategory extends Model
         return $this->belongsTo('App\Models\User');
     }
 
+    public function workspace()
+    {
+        return $this->belongsTo('App\Models\Workspace');
+    }
 }

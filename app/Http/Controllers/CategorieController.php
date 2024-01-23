@@ -24,15 +24,19 @@ class CategorieController extends BaseController
         $dir = $request->SortType;
         $helpers = new helpers();
 
-        $categories = Category::where('deleted_at', '=', null)
+        $categories = Category::where('deleted_at', '=', null);
+
+        if(auth()->user()->workspace_id) {
+            $categories->where('workspace_id', '=', auth()->user()->workspace_id);
+        };
 
         // Search With Multiple Param
-            ->where(function ($query) use ($request) {
-                return $query->when($request->filled('search'), function ($query) use ($request) {
-                    return $query->where('name', 'LIKE', "%{$request->search}%")
-                        ->orWhere('code', 'LIKE', "%{$request->search}%");
-                });
+        $categories->where(function ($query) use ($request) {
+            return $query->when($request->filled('search'), function ($query) use ($request) {
+                return $query->where('name', 'LIKE', "%{$request->search}%")
+                    ->orWhere('code', 'LIKE', "%{$request->search}%");
             });
+        });
         $totalRows = $categories->count();
         if($perPage == "-1"){
             $perPage = $totalRows;
@@ -60,6 +64,7 @@ class CategorieController extends BaseController
         ]);
 
         Category::create([
+            'workspace_id' => auth()->user()->workspace_id,
             'code' => $request['code'],
             'name' => $request['name'],
         ]);

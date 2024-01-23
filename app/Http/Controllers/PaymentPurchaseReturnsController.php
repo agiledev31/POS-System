@@ -309,7 +309,7 @@ class PaymentPurchaseReturnsController extends BaseController
         $payment_data['return_Ref'] = $payment['PurchaseReturn']->Ref;
         $payment_data['supplier_name'] = $payment['PurchaseReturn']['provider']->name;
         $payment_data['supplier_phone'] = $payment['PurchaseReturn']['provider']->phone;
-        $payment_data['supplier_adr'] = $payment['PurchaseReturn']['provider']->adresse;
+        $payment_data['supplier_adr'] = $payment['PurchaseReturn']['provider']->address;
         $payment_data['supplier_email'] = $payment['PurchaseReturn']['provider']->email;
         $payment_data['montant'] = $payment->montant;
         $payment_data['Ref'] = $payment->Ref;

@@ -1222,7 +1222,7 @@
                         label="Adress"
                         class="form-control"
                         rows="4"
-                        v-model="client.adresse"
+                        v-model="client.address"
                         :placeholder="$t('Adress')"
                     ></textarea>
                     </b-form-group>
@@ -1368,7 +1368,7 @@ export default {
         country: "",
         tax_number: "",
         city: "",
-        adresse: ""
+        address: ""
       },
       category_id: "",
       brand_id: "",
@@ -1709,7 +1709,7 @@ export default {
           tax_number: this.client.tax_number,
           country: this.client.country,
           city: this.client.city,
-          adresse: this.client.adresse
+          address: this.client.address
         })
         .then(response => {
           NProgress.done();
@@ -1741,7 +1741,7 @@ export default {
         tax_number: "",
         country: "",
         city: "",
-        adresse: ""
+        address: ""
       };
     },
     //------------------------------------ Get Clients Without Paginate -------------------------\\

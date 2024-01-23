@@ -299,7 +299,7 @@ class PaymentPurchasesController extends BaseController
         $payment_data['purchase_Ref'] = $payment['purchase']->Ref;
         $payment_data['supplier_name'] = $payment['purchase']['provider']->name;
         $payment_data['supplier_phone'] = $payment['purchase']['provider']->phone;
-        $payment_data['supplier_adr'] = $payment['purchase']['provider']->adresse;
+        $payment_data['supplier_adr'] = $payment['purchase']['provider']->address;
         $payment_data['supplier_email'] = $payment['purchase']['provider']->email;
         $payment_data['montant'] = $payment->montant;
         $payment_data['Ref'] = $payment->Ref;

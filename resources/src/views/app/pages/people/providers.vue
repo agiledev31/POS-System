@@ -275,7 +275,7 @@
                     label="Adress"
                     class="form-control"
                     rows="4"
-                    v-model="provider.adresse"
+                    v-model="provider.address"
                     :placeholder="$t('Adress')"
                  ></textarea>
                 </b-form-group>
@@ -596,7 +596,7 @@
               <tr>
                 <!-- Provider Adress -->
                 <td>{{$t('Adress')}}</td>
-                <th>{{provider.adresse}}</th>
+                <th>{{provider.address}}</th>
               </tr>
               <tr>
                 <!-- Provider Tax_Number -->
@@ -752,7 +752,7 @@ export default {
         tax_number: "",
         country: "",
         city: "",
-        adresse: ""
+        address: ""
       },
       payment: {
         provider_id: "",
@@ -1106,7 +1106,7 @@ export default {
           tax_number: this.provider.tax_number,
           country: this.provider.country,
           city: this.provider.city,
-          adresse: this.provider.adresse
+          address: this.provider.address
         })
         .then(response => {
           Fire.$emit("Event_Provider");
@@ -1135,7 +1135,7 @@ export default {
           phone: this.provider.phone,
           country: this.provider.country,
           city: this.provider.city,
-          adresse: this.provider.adresse
+          address: this.provider.address
         })
         .then(response => {
           Fire.$emit("Event_Provider");
@@ -1172,7 +1172,7 @@ export default {
         country: "",
         tax_number: "",
         city: "",
-        adresse: ""
+        address: ""
       };
     },
 

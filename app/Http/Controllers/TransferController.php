@@ -51,6 +51,10 @@ class TransferController extends BaseController
                 }
             });
 
+        if(auth()->user()->workspace_id) {
+            $transfers->where('workspace_id', '=', auth()->user()->workspace_id);
+        }
+
         //Multiple Filter
         $Filtred = $helpers->filter($transfers, $columns, $param, $request)
         // Search With Multiple Param
@@ -122,6 +126,7 @@ class TransferController extends BaseController
         \DB::transaction(function () use ($request) {
             $order = new Transfer;
 
+            $order->workspace_id = auth()->user()->workspace_id;
             $order->date = $request->transfer['date'];
             $order->Ref = $this->getNumberOrder();
             $order->from_warehouse_id = $request->transfer['from_warehouse'];

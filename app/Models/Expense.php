@@ -9,11 +9,12 @@ class Expense extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'date', 'user_id', 'expense_category_id', 'warehouse_id', 'details',
+        'date', 'workspace_id', 'user_id', 'expense_category_id', 'warehouse_id', 'details',
         'amount', 'Ref', 'created_at', 'updated_at', 'deleted_at',
     ];
 
     protected $casts = [
+        'workspace_id' => 'integer',
         'user_id' => 'integer',
         'expense_category_id' => 'integer',
         'warehouse_id' => 'integer',
@@ -33,6 +34,11 @@ class Expense extends Model
     public function user()
     {
         return $this->belongsTo('App\Models\User');
+    }
+
+    public function workspace()
+    {
+        return $this->belongsTo('App\Models\Workspace');
     }
 
 }

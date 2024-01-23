@@ -46,6 +46,10 @@ class ExpensesController extends BaseController
                 }
             });
 
+        if(auth()->user()->workspace_id) {
+            $Expenses->where('workspace_id', '=', auth()->user()->workspace_id);
+        }
+
         //Multiple Filter
         $Filtred = $helpers->filter($Expenses, $columns, $param, $request)
         //Search With Multiple Param
@@ -122,6 +126,7 @@ class ExpensesController extends BaseController
         ]);
 
         Expense::create([
+            'workspace_id' => Auth::user()->workspace_id,
             'user_id' => Auth::user()->id,
             'date' => $request['expense']['date'],
             'Ref' => $this->getNumberOrder(),

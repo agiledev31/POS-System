@@ -132,6 +132,11 @@ class QuotationsController extends BaseController
         }
 
         $customers = client::where('deleted_at', '=', null)->get();
+        if(auth()->user()->workspace_id) {
+            $customers = client::where('deleted_at', '=', null)
+                ->where('workspace_id', auth()->user()->workspace_id)
+                ->get();
+        }
         
         //get warehouses assigned to user
         $user_auth = auth()->user();
@@ -378,7 +383,7 @@ class QuotationsController extends BaseController
         $quote['TaxNet'] = $quotation_data->TaxNet;
         $quote['client_name'] = $quotation_data['client']->name;
         $quote['client_phone'] = $quotation_data['client']->phone;
-        $quote['client_adr'] = $quotation_data['client']->adresse;
+        $quote['client_adr'] = $quotation_data['client']->address;
         $quote['client_email'] = $quotation_data['client']->email;
         $quote['client_tax'] = $quotation_data['client']->tax_number;
         $quote['warehouse'] = $quotation_data['warehouse']->name;
@@ -484,7 +489,7 @@ class QuotationsController extends BaseController
 
         $quote['client_name'] = $Quotation['client']->name;
         $quote['client_phone'] = $Quotation['client']->phone;
-        $quote['client_adr'] = $Quotation['client']->adresse;
+        $quote['client_adr'] = $Quotation['client']->address;
         $quote['client_email'] = $Quotation['client']->email;
         $quote['client_tax'] = $Quotation['client']->tax_number;
         $quote['TaxNet'] = number_format($Quotation->TaxNet, 2, '.', '');
@@ -598,6 +603,11 @@ class QuotationsController extends BaseController
         $clients = Client::where('deleted_at', '=', null)->get(['id', 'name']);
         $quotation_with_stock = Setting::where('deleted_at', '=', null)->first()->quotation_with_stock;
 
+        if(auth()->user()->workspace_id) {
+            $clients = client::where('deleted_at', '=', null)
+                ->where('workspace_id', auth()->user()->workspace_id)
+                ->get(['id', 'name']);
+        }
         return response()->json([
             'clients'              => $clients,
             'warehouses'           => $warehouses,
@@ -771,6 +781,11 @@ class QuotationsController extends BaseController
         }
 
         $clients = Client::where('deleted_at', '=', null)->get(['id', 'name']);
+        if(auth()->user()->workspace_id) {
+            $clients = client::where('deleted_at', '=', null)
+                ->where('workspace_id', auth()->user()->workspace_id)
+                ->get(['id', 'name']);
+        }
 
         return response()->json([
             'details' => $details,

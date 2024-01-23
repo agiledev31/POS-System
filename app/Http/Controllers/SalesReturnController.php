@@ -134,7 +134,7 @@ class SalesReturnController extends BaseController
             $item['client_email'] = $Sale_Return['client']->email;
             $item['client_tele'] = $Sale_Return['client']->phone;
             $item['client_code'] = $Sale_Return['client']->code;
-            $item['client_adr'] = $Sale_Return['client']->adresse;
+            $item['client_adr'] = $Sale_Return['client']->address;
             $item['GrandTotal'] = number_format($Sale_Return['GrandTotal'], 2, '.', '');
             $item['paid_amount'] = number_format($Sale_Return['paid_amount'], 2, '.', '');
             $item['due'] = number_format($item['GrandTotal'] - $item['paid_amount'], 2, '.', '');
@@ -688,7 +688,7 @@ class SalesReturnController extends BaseController
         $return_details['TaxNet'] = $Sale_Return->TaxNet;
         $return_details['client_name'] = $Sale_Return['client']->name;
         $return_details['client_phone'] = $Sale_Return['client']->phone;
-        $return_details['client_adr'] = $Sale_Return['client']->adresse;
+        $return_details['client_adr'] = $Sale_Return['client']->address;
         $return_details['client_email'] = $Sale_Return['client']->email;
         $return_details['client_tax'] = $Sale_Return['client']->tax_number;
         $return_details['warehouse'] = $Sale_Return['warehouse']->name;
@@ -923,7 +923,7 @@ class SalesReturnController extends BaseController
 
         $return_details['client_name'] = $Sale_Return['client']->name;
         $return_details['client_phone'] = $Sale_Return['client']->phone;
-        $return_details['client_adr'] = $Sale_Return['client']->adresse;
+        $return_details['client_adr'] = $Sale_Return['client']->address;
         $return_details['client_email'] = $Sale_Return['client']->email;
         $return_details['client_tax'] = $Sale_Return['client']->tax_number;
         $return_details['TaxNet'] = number_format($Sale_Return->TaxNet, 2, '.', '');

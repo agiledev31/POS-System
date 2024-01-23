@@ -32,13 +32,18 @@ class CategoryExpenseController extends BaseController
                 if (!$view_records) {
                     return $query->where('user_id', '=', Auth::user()->id);
                 }
-            })
-            ->where(function ($query) use ($request) {
-                return $query->when($request->filled('search'), function ($query) use ($request) {
-                    return $query->where('name', 'LIKE', "%{$request->search}%")
-                        ->orWhere('description', 'LIKE', "%{$request->search}%");
-                });
             });
+        
+        if(auth()->user()->workspace_id) {
+            $ExpenseCategory->where('workspace_id', '=', auth()->user()->workspace_id);
+        };
+
+        $ExpenseCategory->where(function ($query) use ($request) {
+            return $query->when($request->filled('search'), function ($query) use ($request) {
+                return $query->where('name', 'LIKE', "%{$request->search}%")
+                    ->orWhere('description', 'LIKE', "%{$request->search}%");
+            });
+        });
 
         $totalRows = $ExpenseCategory->count();
         if($perPage == "-1"){
@@ -67,6 +72,7 @@ class CategoryExpenseController extends BaseController
         ]);
 
         ExpenseCategory::create([
+            'workspace_id' => Auth::user()->workspace_id,
             'user_id' => Auth::user()->id,
             'description' => $request['description'],
             'name' => $request['name'],

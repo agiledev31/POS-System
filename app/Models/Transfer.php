@@ -10,12 +10,13 @@ class Transfer extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'id', 'date','user_id', 'from_warehouse_id', 'to_warehouse_id',
+        'id', 'date','workspace_id', 'user_id', 'from_warehouse_id', 'to_warehouse_id',
         'items', 'statut', 'notes', 'GrandTotal', 'discount', 'shipping', 'TaxNet', 'tax_rate',
         'created_at', 'updated_at', 'deleted_at',
     ];
 
     protected $casts = [
+        'workspace_id' => 'integer',
         'user_id' => 'integer',
         'from_warehouse_id' => 'integer',
         'to_warehouse_id' => 'integer',
@@ -46,6 +47,11 @@ class Transfer extends Model
     public function to_warehouse()
     {
         return $this->belongsTo('App\Models\Warehouse', 'to_warehouse_id');
+    }
+
+    public function workspace()
+    {
+        return $this->belongsTo('App\Models\Workspace');
     }
 
 }

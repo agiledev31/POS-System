@@ -17,6 +17,7 @@ class CreateExpensesTable extends Migration {
 		{
 			$table->engine = 'InnoDB';
 			$table->integer('id', true);
+			$table->integer('workspace_id')->nullable()->index('workspace_id');
 			$table->date('date');
 			$table->string('Ref', 192);
 			$table->integer('user_id')->index('expense_user_id');

@@ -568,7 +568,7 @@ class ReportController extends BaseController
                 $item['provider_email'] = $Purchase['provider']->email;
                 $item['provider_tele'] = $Purchase['provider']->phone;
                 $item['provider_code'] = $Purchase['provider']->code;
-                $item['provider_adr'] = $Purchase['provider']->adresse;
+                $item['provider_adr'] = $Purchase['provider']->address;
                 $item['GrandTotal'] = $Purchase['GrandTotal'];
                 $item['paid_amount'] = $Purchase['paid_amount'];
                 $item['due'] = $Purchase['GrandTotal'] - $Purchase['paid_amount'];
@@ -681,7 +681,7 @@ class ReportController extends BaseController
                 $item['client_email'] = $Sale['client']['email'];
                 $item['client_tele'] = $Sale['client']['phone'];
                 $item['client_code'] = $Sale['client']['code'];
-                $item['client_adr'] = $Sale['client']['adresse'];
+                $item['client_adr'] = $Sale['client']['address'];
                 $item['GrandTotal'] = $Sale['GrandTotal'];
                 $item['paid_amount'] = $Sale['paid_amount'];
                 $item['due'] = $Sale['GrandTotal'] - $Sale['paid_amount'];

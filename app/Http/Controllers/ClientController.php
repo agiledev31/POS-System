@@ -38,6 +38,10 @@ class ClientController extends BaseController
         $data = array();
         $clients = Client::where('deleted_at', '=', null);
 
+        if(auth()->user()->workspace_id) {
+            $clients->where('workspace_id', '=', auth()->user()->workspace_id);
+        }
+
         //Multiple Filter
         $Filtred = $helpers->filter($clients, $columns, $param, $request)
         // Search With Multiple Param
@@ -92,7 +96,7 @@ class ClientController extends BaseController
             $item['email'] = $client->email;
             $item['country'] = $client->country;
             $item['city'] = $client->city;
-            $item['adresse'] = $client->adresse;
+            $item['address'] = $client->address;
             $data[] = $item;
         }
 
@@ -117,9 +121,10 @@ class ClientController extends BaseController
         );
 
         Client::create([
+            'workspace_id' => auth()->user()->workspace_id,
             'name' => $request['name'],
             'code' => $this->getNumberOrder(),
-            'adresse' => $request['adresse'],
+            'address' => $request['address'],
             'phone' => $request['phone'],
             'email' => $request['email'],
             'country' => $request['country'],
@@ -149,7 +154,7 @@ class ClientController extends BaseController
 
         Client::whereId($id)->update([
             'name' => $request['name'],
-            'adresse' => $request['adresse'],
+            'address' => $request['address'],
             'phone' => $request['phone'],
             'email' => $request['email'],
             'country' => $request['country'],
@@ -252,9 +257,10 @@ class ClientController extends BaseController
                 if (!$validator->fails()) {
                     
                     Client::create([
+                        'workspace_id' => auth()->user()->workspace_id,
                         'name' => $value['name'],
                         'code' => $this->getNumberOrder(),
-                        'adresse' => $value['adresse'] == '' ? null : $value['adresse'],
+                        'address' => $value['address'] == '' ? null : $value['address'],
                         'phone' => $value['phone'] == '' ? null : $value['phone'],
                         'email' => $value['email'] == '' ? null : $value['email'],
                         'country' => $value['country'] == '' ? null : $value['country'],

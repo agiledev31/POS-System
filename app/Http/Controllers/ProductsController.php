@@ -44,6 +44,7 @@ class ProductsController extends BaseController
 
         $products = Product::with('unit', 'category', 'brand', 'workspace')
             ->where('deleted_at', '=', null);
+        
         if(auth()->user()->workspace_id) {
             $products->where('workspace_id', '=', auth()->user()->workspace_id);
         }
@@ -149,6 +150,11 @@ class ProductsController extends BaseController
 
         $categories = Category::where('deleted_at', null)->get(['id', 'name']);
         $brands = Brand::where('deleted_at', null)->get(['id', 'name']);
+
+        if(auth()->user()->workspace_id) {
+            $categories = Category::where('deleted_at', null)->where('workspace_id', auth()->user()->workspace_id)->get(['id', 'name']);
+            $brands = Brand::where('deleted_at', null)->where('workspace_id', auth()->user()->workspace_id)->get(['id', 'name']);
+        }
 
         return response()->json([
             'warehouses' => $warehouses,
@@ -656,7 +662,6 @@ class ProductsController extends BaseController
                 $Product->Type_barcode = $request['Type_barcode'];
                 $Product->category_id = $request['category_id'];
                 $Product->brand_id = $request['brand_id'] == 'null' ? Null: $request['brand_id'];
-                $Product->workspace_id = $request['workspace_id'] == 'null' ? Null: $request['workspace_id'];
                 $Product->TaxNet = $request['TaxNet'];
                 $Product->tax_method = $request['tax_method'];
                 $Product->note = $request['note'];
@@ -1425,6 +1430,11 @@ class ProductsController extends BaseController
         $categories = Category::where('deleted_at', null)->get(['id', 'name']);
         $brands = Brand::where('deleted_at', null)->get(['id', 'name']);
         $units = Unit::where('deleted_at', null)->where('base_unit', null)->get();
+        if(auth()->user()->workspace_id) {
+            $categories = Category::where('deleted_at', null)->where('workspace_id', auth()->user()->workspace_id)->get(['id', 'name']);
+            $brands = Brand::where('deleted_at', null)->where('workspace_id', auth()->user()->workspace_id)->get(['id', 'name']);
+            $units = Unit::where('deleted_at', null)->where('workspace_id', auth()->user()->workspace_id)->get(['id', 'name']);
+        }
         return response()->json([
             'categories' => $categories,
             'brands' => $brands,
@@ -1568,18 +1578,31 @@ class ProductsController extends BaseController
         $item['not_selling'] = $Product->not_selling?true:false;
 
         $data = $item;
-        $categories = Category::where('deleted_at', null)->get(['id', 'name']);
-        $brands = Brand::where('deleted_at', null)->get(['id', 'name']);
 
         $product_units = Unit::where('id', $Product->unit_id)
-                              ->orWhere('base_unit', $Product->unit_id)
-                              ->where('deleted_at', null)
-                              ->get();
+            ->orWhere('base_unit', $Product->unit_id)
+            ->where('deleted_at', null)
+            ->get();
 
-      
+        $categories = Category::where('deleted_at', null)->get(['id', 'name']);
+        $brands = Brand::where('deleted_at', null)->get(['id', 'name']);
         $units = Unit::where('deleted_at', null)
             ->where('base_unit', null)
-            ->get();
+            ->get(['id', 'name']);
+
+        if(auth()->user()->workspace_id) {
+            $categories = Category::where('deleted_at', null)->where('workspace_id', auth()->user()->workspace_id)->get(['id', 'name']);
+            $brands = Brand::where('deleted_at', null)->where('workspace_id', auth()->user()->workspace_id)->get(['id', 'name']);
+            $units = Unit::where('deleted_at', null)
+                ->where('base_unit', null)
+                ->where('workspace_id', auth()->user()->workspace_id)
+                ->get();
+            $product_units = Unit::where('id', $Product->unit_id)
+                ->orWhere('base_unit', $Product->unit_id)
+                ->where('deleted_at', null)
+                ->where('workspace_id', auth()->user()->workspace_id)
+                ->get();
+        }
 
         return response()->json([
             'product' => $data,

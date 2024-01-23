@@ -17,13 +17,14 @@ class CreateProvidersTable extends Migration {
 		{
 			$table->engine = 'InnoDB';
 			$table->integer('id', true);
+			$table->integer('workspace_id')->nullable()->index('workspace_id');
 			$table->string('name');
 			$table->integer('code');
 			$table->string('email', 192);
 			$table->string('phone', 192);
 			$table->string('country');
 			$table->string('city');
-			$table->string('adresse');
+			$table->string('address');
 			$table->timestamps(6);
 			$table->softDeletes();
 		});

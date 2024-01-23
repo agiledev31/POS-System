@@ -18,7 +18,7 @@ class ChangeTypeOfColumnsClientsTable extends Migration
                 $table->string('country')->nullable()->change();
                 $table->string('city')->nullable()->change();
                 $table->string('phone')->nullable()->change();
-                $table->string('adresse')->nullable()->change();
+                $table->string('address')->nullable()->change();
     
             });
     }
