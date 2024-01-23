@@ -156,6 +156,11 @@ class PurchasesController extends BaseController
         }
 
         $suppliers = provider::where('deleted_at', '=', null)->get(['id', 'name']);
+        if(auth()->user()->workspace_id) {
+            $suppliers = Provider::where('deleted_at', '=', null)
+                ->where('workspace_id', auth()->user()->workspace_id)
+                ->get(['id', 'name']);
+        }
 
          //get warehouses assigned to user
          $user_auth = auth()->user();
@@ -917,7 +922,11 @@ class PurchasesController extends BaseController
          } 
 
         $suppliers = Provider::where('deleted_at', '=', null)->get(['id', 'name']);
-
+        if(auth()->user()->workspace_id) {
+            $suppliers = Provider::where('deleted_at', '=', null)
+                ->where('workspace_id', auth()->user()->workspace_id)
+                ->get(['id', 'name']);
+        }
         return response()->json([
             'warehouses' => $warehouses,
             'suppliers' => $suppliers,
@@ -1080,7 +1089,11 @@ class PurchasesController extends BaseController
             }
             
             $suppliers = Provider::where('deleted_at', '=', null)->get(['id', 'name']);
-
+            if(auth()->user()->workspace_id) {
+                $suppliers = Provider::where('deleted_at', '=', null)
+                    ->where('workspace_id', auth()->user()->workspace_id)
+                    ->get(['id', 'name']);
+            }
             return response()->json([
                 'details' => $details,
                 'purchase' => $purchase,

@@ -165,6 +165,11 @@ class SalesController extends BaseController
         
         $stripe_key = config('app.STRIPE_KEY');
         $customers = client::where('deleted_at', '=', null)->get(['id', 'name']);
+        if(auth()->user()->workspace_id) {
+            $customers = client::where('deleted_at', '=', null)
+                ->where('workspace_id', auth()->user()->workspace_id)
+                ->get(['id', 'name']);
+        }
 
        //get warehouses assigned to user
        $user_auth = auth()->user();
@@ -1193,6 +1198,11 @@ class SalesController extends BaseController
        }
 
         $clients = Client::where('deleted_at', '=', null)->get(['id', 'name']);
+        if(auth()->user()->workspace_id) {
+            $clients = Client::where('deleted_at', '=', null)
+                ->where('workspace_id', auth()->user()->workspace_id)
+                ->get(['id', 'name']);
+        }
         $stripe_key = config('app.STRIPE_KEY');
 
         return response()->json([
@@ -1371,7 +1381,11 @@ class SalesController extends BaseController
         }
 
           $clients = Client::where('deleted_at', '=', null)->get(['id', 'name']);
-  
+          if(auth()->user()->workspace_id) {
+            $clients = Client::where('deleted_at', '=', null)
+                ->where('workspace_id', auth()->user()->workspace_id)
+                ->get(['id', 'name']);
+            }
           return response()->json([
               'details' => $details,
               'sale' => $sale,
@@ -1535,6 +1549,11 @@ class SalesController extends BaseController
        }
          
         $clients = Client::where('deleted_at', '=', null)->get(['id', 'name']);
+        if(auth()->user()->workspace_id) {
+            $clients = Client::where('deleted_at', '=', null)
+                ->where('workspace_id', auth()->user()->workspace_id)
+                ->get(['id', 'name']);
+        }
 
         return response()->json([
             'details' => $details,

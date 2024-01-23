@@ -393,7 +393,6 @@ class PosController extends BaseController
     public function GetELementPos(Request $request)
     {
         $this->authorizeForUser($request->user('api'), 'Sales_pos', Sale::class);
-        $clients = Client::where('deleted_at', '=', null)->get(['id', 'name']);
         $settings = Setting::where('deleted_at', '=', null)->with('Client')->first();
 
           //get warehouses assigned to user
@@ -444,13 +443,20 @@ class PosController extends BaseController
         }
         $categories = Category::where('deleted_at', '=', null)->get(['id', 'name']);
         $brands = Brand::where('deleted_at', '=', null)->get();
+        $clients = Client::where('deleted_at', '=', null)->get(['id', 'name']);
         $stripe_key = config('app.STRIPE_KEY');
+
+        if(auth()->user()->workspace_id) {
+            $categories = Category::where('deleted_at', '=', null)->where('workspace_id', auth()->user()->workspace_id)->get(['id', 'name']);
+            $brands = Brand::where('deleted_at', '=', null)->where('workspace_id', auth()->user()->workspace_id)->get();
+            $clients = Client::where('deleted_at', '=', null)->where('workspace_id', auth()->user()->workspace_id)->get(['id', 'name']);
+        }
 
         return response()->json([
             'stripe_key' => $stripe_key,
             'brands' => $brands,
             'defaultWarehouse' => $defaultWarehouse,
-            'defaultClient' => $defaultClient,
+            'defaultClient' => '', // $defaultClient,
             'default_client_name' => $default_client_name,
             'clients' => $clients,
             'warehouses' => $warehouses,

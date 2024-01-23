@@ -145,6 +145,11 @@ class PurchasesReturnController extends BaseController
         $suppliers = Provider::where('deleted_at', '=', null)->get(['id', 'name']);
         $purchases = Purchase::where('deleted_at', '=', null)->get(['id', 'Ref']);
 
+        if(auth()->user()->workspace_id) {
+            $suppliers = Provider::where('deleted_at', '=', null)
+                ->where('workspace_id', auth()->user()->workspace_id)
+                ->get(['id', 'name']);
+        }
          //get warehouses assigned to user
          $user_auth = auth()->user();
          if($user_auth->is_all_warehouses){
