@@ -11,10 +11,11 @@ class PaymentSaleReturns extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'sale_return_id', 'date', 'montant','change', 'Ref', 'Reglement', 'user_id', 'notes',
+        'workspace_id', 'sale_return_id', 'date', 'montant','change', 'Ref', 'Reglement', 'user_id', 'notes',
     ];
 
     protected $casts = [
+        'workspace_id' => 'integer',
         'montant' => 'double',
         'change'  => 'double',
         'sale_return_id' => 'integer',
@@ -29,6 +30,11 @@ class PaymentSaleReturns extends Model
     public function SaleReturn()
     {
         return $this->belongsTo('App\Models\SaleReturn');
+    }
+
+    public function workspace()
+    {
+        return $this->belongsTo('App\Models\Workspace');
     }
 
 }

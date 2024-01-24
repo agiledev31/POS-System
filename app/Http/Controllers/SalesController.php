@@ -376,6 +376,7 @@ class SalesController extends BaseController
                             $PaymentSale->change    = $request['change'];
                             $PaymentSale->notes     = NULL;
                             $PaymentSale->user_id   = Auth::user()->id;
+                            $PaymentSale->workspace_id = Auth::user()->workspace_id;
                             $PaymentSale->save();
     
                             $sale->update([
@@ -386,6 +387,7 @@ class SalesController extends BaseController
                             $PaymentCard['customer_id'] = $request->client_id;
                             $PaymentCard['payment_id']  = $PaymentSale->id;
                             $PaymentCard['charge_id']   = $charge->id;
+                            $PaymentCard['workspace_id']   = Auth::user()->workspace_id;
                             PaymentWithCreditCard::create($PaymentCard);
     
                             // Paying Method Cash
@@ -400,6 +402,7 @@ class SalesController extends BaseController
                                 'change' => $request['change'],
                                 'notes' => NULL,
                                 'user_id' => Auth::user()->id,
+                                'workspace_id' => Auth::user()->workspace_id,
                             ]);
     
                             $sale->update([

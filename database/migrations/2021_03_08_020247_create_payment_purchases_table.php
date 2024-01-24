@@ -17,6 +17,7 @@ class CreatePaymentPurchasesTable extends Migration {
 		{
 			$table->engine = 'InnoDB';
 			$table->integer('id', true);
+			$table->integer('workspace_id')->nullable()->index('workspace_id');
 			$table->integer('user_id')->index('user_id_payment_purchases');
 			$table->date('date');
 			$table->string('Ref', 192);

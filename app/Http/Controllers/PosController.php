@@ -211,6 +211,7 @@ class PosController extends BaseController
                         $PaymentSale->change    = $request['change'];
                         $PaymentSale->notes     = $request->payment['notes'];
                         $PaymentSale->user_id   = Auth::user()->id;
+                        $PaymentSale->workspace_id = Auth::user()->workspace_id;
                         $PaymentSale->save();
 
                         $sale->update([
@@ -235,6 +236,7 @@ class PosController extends BaseController
                             'change' => $request['change'],
                             'notes' => $request->payment['notes'],
                             'user_id' => Auth::user()->id,
+                            'workspace_id' => Auth::user()->workspace_id,
                         ]);
 
                         $sale->update([

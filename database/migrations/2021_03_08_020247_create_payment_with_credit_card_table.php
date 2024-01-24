@@ -17,6 +17,7 @@ class CreatePaymentWithCreditCardTable extends Migration {
 		{
 			$table->engine = 'InnoDB';
 			$table->integer('id', true);
+			$table->integer('workspace_id')->nullable()->index('workspace_id');
 			$table->integer('payment_id');
 			$table->integer('customer_id');
 			$table->string('customer_stripe_id', 192);

@@ -17,6 +17,7 @@ class CreatePaymentSaleReturnsTable extends Migration {
 		{
 			$table->engine = 'InnoDB';
 			$table->integer('id', true);
+			$table->integer('workspace_id')->nullable()->index('workspace_id');
 			$table->integer('user_id')->index('factures_sale_return_user_id');
 			$table->date('date');
 			$table->string('Ref', 192);

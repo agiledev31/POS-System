@@ -64,15 +64,19 @@ class PaymentSalesController extends BaseController
                 if (!$view_records) {
                     return $query->where('user_id', '=', Auth::user()->id);
                 }
-            })
+            });
+        
+        if(auth()->user()->workspace_id) {
+            $Payments->where('workspace_id', '=', auth()->user()->workspace_id);
+        };
         // Multiple Filter
-            ->where(function ($query) use ($request) {
-                return $query->when($request->filled('client_id'), function ($query) use ($request) {
-                    return $query->whereHas('sale.client', function ($q) use ($request) {
-                        $q->where('id', '=', $request->client_id);
-                    });
+        $Payments->where(function ($query) use ($request) {
+            return $query->when($request->filled('client_id'), function ($query) use ($request) {
+                return $query->whereHas('sale.client', function ($q) use ($request) {
+                    $q->where('id', '=', $request->client_id);
                 });
             });
+        });
         $Filtred = $helpers->filter($Payments, $columns, $param, $request)
         // Search With Multiple Param
             ->where(function ($query) use ($request) {
@@ -230,6 +234,7 @@ class PaymentSalesController extends BaseController
                         $PaymentSale->change    = $request['change'];
                         $PaymentSale->notes     = $request['notes'];
                         $PaymentSale->user_id   = Auth::user()->id;
+                        $PaymentSale->workspace_id = Auth::user()->workspace_id;
                         $PaymentSale->save();
 
                         $sale->update([
@@ -240,12 +245,14 @@ class PaymentSalesController extends BaseController
                         $PaymentCard['customer_id'] = $sale->client_id;
                         $PaymentCard['payment_id']  = $PaymentSale->id;
                         $PaymentCard['charge_id']   = $charge->id;
+                        $PaymentCard['workspace_id'] = Auth::user()->workspace_id;
                         PaymentWithCreditCard::create($PaymentCard);
 
                         // Paying Method Cash
                     } else {
 
                         PaymentSale::create([
+                            'workspace_id' => Auth::user()->workspace_id,
                             'sale_id'   => $sale->id,
                             'Ref'       => app('App\Http\Controllers\PaymentSalesController')->getNumberOrder(),
                             'date'      => Carbon::now(),

@@ -11,10 +11,11 @@ class PaymentPurchaseReturns extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'purchase_return_id', 'date', 'montant','change', 'Ref', 'Reglement', 'user_id', 'notes',
+        'workspace_id', 'purchase_return_id', 'date', 'montant','change', 'Ref', 'Reglement', 'user_id', 'notes',
     ];
 
     protected $casts = [
+        'workspace_id' => 'integer',
         'montant' => 'double',
         'change'  => 'double',
         'purchase_return_id' => 'integer',
@@ -29,6 +30,11 @@ class PaymentPurchaseReturns extends Model
     public function PurchaseReturn()
     {
         return $this->belongsTo('App\Models\PurchaseReturn');
+    }
+
+    public function workspace()
+    {
+        return $this->belongsTo('App\Models\Workspace');
     }
 
 }

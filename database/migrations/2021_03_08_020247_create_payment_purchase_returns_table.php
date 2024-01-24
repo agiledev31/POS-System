@@ -17,6 +17,7 @@ class CreatePaymentPurchaseReturnsTable extends Migration {
 		{
 			$table->engine = 'InnoDB';
 			$table->integer('id', true);
+			$table->integer('workspace_id')->nullable()->index('workspace_id');
 			$table->integer('user_id')->index('user_id_payment_return_purchase');
 			$table->date('date');
 			$table->string('Ref', 192);

@@ -11,10 +11,11 @@ class PaymentSale extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'sale_id', 'date', 'montant', 'Ref','change', 'Reglement', 'user_id', 'notes',
+        'workspace_id', 'sale_id', 'date', 'montant', 'Ref','change', 'Reglement', 'user_id', 'notes',
     ];
 
     protected $casts = [
+        'workspace_id' => 'integer',
         'montant' => 'double',
         'change'  => 'double',
         'sale_id' => 'integer',
@@ -31,4 +32,8 @@ class PaymentSale extends Model
         return $this->belongsTo('App\Models\Sale');
     }
 
+    public function workspace()
+    {
+        return $this->belongsTo('App\Models\Workspace');
+    }
 }

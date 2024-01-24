@@ -51,16 +51,20 @@ class PaymentPurchaseReturnsController extends BaseController
                 if (!$view_records) {
                     return $query->where('user_id', '=', Auth::user()->id);
                 }
-            })
+            });
+
+        if(auth()->user()->workspace_id) {
+            $Payments->where('workspace_id', '=', auth()->user()->workspace_id);
+        };
 
         // Multiple Filter
-            ->where(function ($query) use ($request) {
-                return $query->when($request->filled('provider_id'), function ($query) use ($request) {
-                    return $query->whereHas('PurchaseReturn.provider', function ($q) use ($request) {
-                        $q->where('id', '=', $request->provider_id);
-                    });
+        $Payments->where(function ($query) use ($request) {
+            return $query->when($request->filled('provider_id'), function ($query) use ($request) {
+                return $query->whereHas('PurchaseReturn.provider', function ($q) use ($request) {
+                    $q->where('id', '=', $request->provider_id);
                 });
             });
+        });
         $Filtred = $helpers->filter($Payments, $columns, $param, $request)
 
         // Search With Multiple Param
@@ -144,6 +148,7 @@ class PaymentPurchaseReturnsController extends BaseController
                 }
 
                 PaymentPurchaseReturns::create([
+                    'workspace_id' => auth()->user()->workspace_id,
                     'purchase_return_id' => $request['purchase_return_id'],
                     'Ref' => $this->getNumberOrder(),
                     'date' => $request['date'],
