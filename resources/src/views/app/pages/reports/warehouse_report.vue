@@ -1099,7 +1099,7 @@ export default {
     //---------------------------------- Report Warhouse Count Stock
     report_with_echart() {
       axios
-        .get(`report/warhouse_count_stock`)
+        .get(`report/warehouse_count_stock`)
         .then(response => {
           const responseData = response.data;
           var dark_heading = "#c2c6dc";

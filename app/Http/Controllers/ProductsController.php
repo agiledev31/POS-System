@@ -1129,6 +1129,13 @@ class ProductsController extends BaseController
                         });
                     })
                     ->where(function ($query) use ($request) {
+                        return $query->whereHas('product', function ($q) use ($request) {
+                            if (auth()->user()->workspace_id) {
+                                $q->where('workspace_id', '=', auth()->user()->workspace_id);
+                            }
+                        });
+                    })
+                    ->where(function ($query) use ($request) {
                         if ($request->stock == '1' && $request->product_service == '1') {
                             return $query->where('qte', '>', 0)->orWhere('manage_stock', false);
         
@@ -1142,7 +1149,7 @@ class ProductsController extends BaseController
         })->get();
 
         foreach ($product_warehouse_data as $product_warehouse) {
-
+            
             if ($product_warehouse->product_variant_id) {
                 $item['product_variant_id'] = $product_warehouse->product_variant_id;
 
@@ -1372,7 +1379,16 @@ class ProductsController extends BaseController
                 return $query->when($request->filled('warehouse'), function ($query) use ($request) {
                     return $query->where('warehouse_id', $request->warehouse);
                 });
-            })->where('product_warehouse.deleted_at', null)->get();
+            })
+            ->where(function ($query) use ($request) {
+                return $query->whereHas('product', function ($q) use ($request) {
+                    if (auth()->user()->workspace_id) {
+                        $q->where('workspace_id', '=', auth()->user()->workspace_id);
+                    }
+                });
+            })
+            ->where('product_warehouse.deleted_at', null)
+            ->get();
 
         $data = [];
 

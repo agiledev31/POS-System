@@ -58,6 +58,7 @@ class ReportController extends BaseController
                     return $query->where('user_id', '=', Auth::user()->id);
                 }
             })
+            ->where('workspace_id', '=', auth()->user()->workspace_id)
             ->orderBy('id', 'desc')
             ->take(5)
             ->get();
@@ -96,6 +97,7 @@ class ReportController extends BaseController
         $data = array();
 
         $clients = Client::where('deleted_at', '=', null)
+            ->where('workspace_id', '=', auth()->user()->workspace_id)
         // Search With Multiple Param
             ->where(function ($query) use ($request) {
                 return $query->when($request->filled('search'), function ($query) use ($request) {
@@ -1031,30 +1033,58 @@ class ReportController extends BaseController
         $this->authorizeForUser($request->user('api'), 'WarehouseStock', Product::class);
 
         $data['sales'] = Sale::where('deleted_at', '=', null)
+            ->with('warehouse')
             ->where(function ($query) use ($request) {
                 return $query->when($request->filled('warehouse_id'), function ($query) use ($request) {
                     return $query->where('warehouse_id', $request->warehouse_id);
+                });
+            })->where(function ($query) use ($request) {
+                return $query->whereHas('warehouse', function ($q) use ($request) {
+                    if (auth()->user()->workspace_id) {
+                        $q->where('workspace_id', '=', auth()->user()->workspace_id);
+                    }
                 });
             })->count();
 
         $data['purchases'] = Purchase::where('deleted_at', '=', null)
+            ->with('warehouse')
             ->where(function ($query) use ($request) {
                 return $query->when($request->filled('warehouse_id'), function ($query) use ($request) {
                     return $query->where('warehouse_id', $request->warehouse_id);
+                });
+            })->where(function ($query) use ($request) {
+                return $query->whereHas('warehouse', function ($q) use ($request) {
+                    if (auth()->user()->workspace_id) {
+                        $q->where('workspace_id', '=', auth()->user()->workspace_id);
+                    }
                 });
             })->count();
 
         $data['ReturnPurchase'] = PurchaseReturn::where('deleted_at', '=', null)
+            ->with('warehouse')
             ->where(function ($query) use ($request) {
                 return $query->when($request->filled('warehouse_id'), function ($query) use ($request) {
                     return $query->where('warehouse_id', $request->warehouse_id);
                 });
+            })->where(function ($query) use ($request) {
+                return $query->whereHas('warehouse', function ($q) use ($request) {
+                    if (auth()->user()->workspace_id) {
+                        $q->where('workspace_id', '=', auth()->user()->workspace_id);
+                    }
+                });
             })->count();
 
         $data['ReturnSale'] = SaleReturn::where('deleted_at', '=', null)
+            ->with('warehouse')
             ->where(function ($query) use ($request) {
                 return $query->when($request->filled('warehouse_id'), function ($query) use ($request) {
                     return $query->where('warehouse_id', $request->warehouse_id);
+                });
+            })->where(function ($query) use ($request) {
+                return $query->whereHas('warehouse', function ($q) use ($request) {
+                    if (auth()->user()->workspace_id) {
+                        $q->where('workspace_id', '=', auth()->user()->workspace_id);
+                    }
                 });
             })->count();
 
@@ -1099,6 +1129,13 @@ class ReportController extends BaseController
             ->where(function ($query) use ($request) {
                 return $query->when($request->filled('warehouse_id'), function ($query) use ($request) {
                     return $query->where('warehouse_id', $request->warehouse_id);
+                });
+            })
+            ->where(function ($query) use ($request) {
+                return $query->whereHas('warehouse', function ($q) use ($request) {
+                    if (auth()->user()->workspace_id) {
+                        $q->where('workspace_id', '=', auth()->user()->workspace_id);
+                    }
                 });
             })
         // Search With Multiple Param
@@ -1175,6 +1212,13 @@ class ReportController extends BaseController
                     return $query->where('warehouse_id', $request->warehouse_id);
                 });
             })
+            ->where(function ($query) use ($request) {
+                return $query->whereHas('warehouse', function ($q) use ($request) {
+                    if (auth()->user()->workspace_id) {
+                        $q->where('workspace_id', '=', auth()->user()->workspace_id);
+                    }
+                });
+            })
         //Search With Multiple Param
             ->where(function ($query) use ($request) {
                 return $query->when($request->filled('search'), function ($query) use ($request) {
@@ -1242,6 +1286,13 @@ class ReportController extends BaseController
             ->where(function ($query) use ($request) {
                 return $query->when($request->filled('warehouse_id'), function ($query) use ($request) {
                     return $query->where('warehouse_id', $request->warehouse_id);
+                });
+            })
+            ->where(function ($query) use ($request) {
+                return $query->whereHas('warehouse', function ($q) use ($request) {
+                    if (auth()->user()->workspace_id) {
+                        $q->where('workspace_id', '=', auth()->user()->workspace_id);
+                    }
                 });
             })
         //Search With Multiple Param
@@ -1314,11 +1365,18 @@ class ReportController extends BaseController
         $ShowRecord = Role::findOrFail($Role->id)->inRole('record_view');
 
         $PurchaseReturn = PurchaseReturn::where('deleted_at', '=', null)
-            ->with('purchase','provider','warehouse')
+            ->with('warehouse', 'purchase', 'provider')
             ->where(function ($query) use ($ShowRecord) {
                 if (!$ShowRecord) {
                     return $query->where('user_id', '=', Auth::user()->id);
                 }
+            })
+            ->where(function ($query) use ($request) {
+                return $query->whereHas('warehouse', function ($q) use ($request) {
+                    if (auth()->user()->workspace_id) {
+                        $q->where('workspace_id', '=', auth()->user()->workspace_id);
+                    }
+                });
             })
             ->orWhere(function ($query) use ($request) {
                 return $query->whereHas('purchase', function ($q) use ($request) {
@@ -1355,19 +1413,21 @@ class ReportController extends BaseController
             ->get();
 
         foreach ($PurchaseReturn as $Purchase_Return) {
-            $item['id'] = $Purchase_Return->id;
-            $item['Ref'] = $Purchase_Return->Ref;
-            $item['statut'] = $Purchase_Return->statut;
-            $item['purchase_ref'] = $Purchase_Return['purchase']?$Purchase_Return['purchase']->Ref:'---';
-            $item['purchase_id'] = $Purchase_Return['purchase']?$Purchase_Return['purchase']->id:NULL;
-            $item['warehouse_name'] = $Purchase_Return['warehouse']->name;
-            $item['provider_name'] = $Purchase_Return['provider']->name;
-            $item['GrandTotal'] = $Purchase_Return->GrandTotal;
-            $item['paid_amount'] = $Purchase_Return->paid_amount;
-            $item['due'] = $Purchase_Return->GrandTotal - $Purchase_Return->paid_amount;
-            $item['payment_status'] = $Purchase_Return->payment_statut;
+            if($Purchase_Return['warehouse']->workspace_id === auth()->user()->workspace_id) {
+                $item['id'] = $Purchase_Return->id;
+                $item['Ref'] = $Purchase_Return->Ref;
+                $item['statut'] = $Purchase_Return->statut;
+                $item['purchase_ref'] = $Purchase_Return['purchase']?$Purchase_Return['purchase']->Ref:'---';
+                $item['purchase_id'] = $Purchase_Return['purchase']?$Purchase_Return['purchase']->id:NULL;
+                $item['warehouse_name'] = $Purchase_Return['warehouse']->name;
+                $item['provider_name'] = $Purchase_Return['provider']->name;
+                $item['GrandTotal'] = $Purchase_Return->GrandTotal;
+                $item['paid_amount'] = $Purchase_Return->paid_amount;
+                $item['due'] = $Purchase_Return->GrandTotal - $Purchase_Return->paid_amount;
+                $item['payment_status'] = $Purchase_Return->payment_statut;
 
-            $data[] = $item;
+                $data[] = $item;
+            }
         }
 
         return response()->json([
@@ -1394,7 +1454,7 @@ class ReportController extends BaseController
         $ShowRecord = Role::findOrFail($Role->id)->inRole('record_view');
 
         $Expenses = Expense::where('deleted_at', '=', null)
-            ->with('expense_category','warehouse')
+            ->with('expense_category', 'warehouse')
             ->where(function ($query) use ($ShowRecord) {
                 if (!$ShowRecord) {
                     return $query->where('user_id', '=', Auth::user()->id);
@@ -1403,6 +1463,13 @@ class ReportController extends BaseController
             ->where(function ($query) use ($request) {
                 return $query->when($request->filled('warehouse_id'), function ($query) use ($request) {
                     return $query->where('warehouse_id', $request->warehouse_id);
+                });
+            })
+            ->where(function ($query) use ($request) {
+                return $query->whereHas('warehouse', function ($q) use ($request) {
+                    if (auth()->user()->workspace_id) {
+                        $q->where('workspace_id', '=', auth()->user()->workspace_id);
+                    }
                 });
             })
         //Search With Multiple Param
@@ -1447,13 +1514,20 @@ class ReportController extends BaseController
 
     //----------------- Warhouse Count Stock -----------------------\\
 
-    public function Warhouse_Count_Stock(Request $request)
+    public function Warehouse_Count_Stock(Request $request)
     {
         $this->authorizeForUser($request->user('api'), 'WarehouseStock', Product::class);
 
         $stock_count = product_warehouse::join('products', 'product_warehouse.product_id', '=', 'products.id')
             ->join('warehouses', 'product_warehouse.warehouse_id', '=', 'warehouses.id')
             ->where('product_warehouse.deleted_at', '=', null)
+            ->where(function ($query) use ($request) {
+                return $query->whereHas('warehouse', function ($q) use ($request) {
+                    if (auth()->user()->workspace_id) {
+                        $q->where('workspace_id', '=', auth()->user()->workspace_id);
+                    }
+                });
+            })
             ->select(
                 DB::raw("count(DISTINCT products.id) as value"),
                 DB::raw("warehouses.name as name"),
@@ -1466,6 +1540,13 @@ class ReportController extends BaseController
         $stock_value = product_warehouse::join('products', 'product_warehouse.product_id', '=', 'products.id')
             ->join('warehouses', 'product_warehouse.warehouse_id', '=', 'warehouses.id')
             ->where('product_warehouse.deleted_at', '=', null)
+            ->where(function ($query) use ($request) {
+                return $query->whereHas('warehouse', function ($q) use ($request) {
+                    if (auth()->user()->workspace_id) {
+                        $q->where('workspace_id', '=', auth()->user()->workspace_id);
+                    }
+                });
+            })
             ->select(
                 DB::raw("SUM(products.price * qte ) as price"),
                 DB::raw("SUM(products.cost * qte) as cost"),

@@ -64,7 +64,7 @@ Route::middleware(['auth:api', 'Is_Active'])->group(function () {
     Route::get("report/returns_sale_warehouse", "ReportController@Returns_Sale_Warehouse");
     Route::get("report/returns_purchase_warehouse", "ReportController@Returns_Purchase_Warehouse");
     Route::get("report/expenses_warehouse", "ReportController@Expenses_Warehouse");
-    Route::get("report/warhouse_count_stock", "ReportController@Warhouse_Count_Stock");
+    Route::get("report/warehouse_count_stock", "ReportController@Warehouse_Count_Stock");
     Route::get("report/report_today", "ReportController@report_today");
     Route::get("report/count_quantity_alert", "ReportController@count_quantity_alert");
     Route::get("report/profit_and_loss", "ReportController@ProfitAndLoss");
