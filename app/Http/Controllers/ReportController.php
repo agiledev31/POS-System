@@ -1413,7 +1413,9 @@ class ReportController extends BaseController
             ->get();
 
         foreach ($PurchaseReturn as $Purchase_Return) {
-            if($Purchase_Return['warehouse']->workspace_id === auth()->user()->workspace_id) {
+            if($Purchase_Return['warehouse']->workspace_id === auth()->user()->workspace_id
+                || auth()->user()->role_id === 1
+            ) {
                 $item['id'] = $Purchase_Return->id;
                 $item['Ref'] = $Purchase_Return->Ref;
                 $item['statut'] = $Purchase_Return->statut;
@@ -1587,6 +1589,17 @@ class ReportController extends BaseController
     {
 
         $products_alerts = product_warehouse::join('products', 'product_warehouse.product_id', '=', 'products.id')
+            ->where(function ($query) use ($request) {
+                if (auth()->user()->workspace_id) {
+                    $query->where('products.workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
+            ->join('warehouses', 'product_warehouse.warehouse_id', '=', 'warehouses.id')
+            ->where(function ($query) use ($request) {
+                if (auth()->user()->workspace_id) {
+                    $query->where('warehouses.workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
             ->whereRaw('qte <= stock_alert')
             ->count();
 

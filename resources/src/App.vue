@@ -30,7 +30,7 @@ export default {
   metaInfo() {
     return {
       // if no subcomponents specify a metaInfo.title, this title will be used
-      title: "Stocky",
+      title: "",
       // all titles will be injected into this template
       titleTemplate: "%s | Ultimate Inventory With POS",
       bodyAttrs: {

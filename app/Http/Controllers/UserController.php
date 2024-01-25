@@ -115,8 +115,19 @@ class UserController extends BaseController
         $user['developed_by'] = Setting::first()->developed_by;
         $permissions = Auth::user()->roles()->first()->permissions->pluck('name');
         $products_alerts = product_warehouse::join('products', 'product_warehouse.product_id', '=', 'products.id')
+            ->where(function ($query) use ($request) {
+                if (auth()->user()->workspace_id) {
+                    $query->where('products.workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
             ->whereRaw('qte <= stock_alert')
             ->where('product_warehouse.deleted_at', null)
+            ->join('warehouses', 'product_warehouse.warehouse_id', '=', 'warehouses.id')
+            ->where(function ($query) use ($request) {
+                if (auth()->user()->workspace_id) {
+                    $query->where('warehouses.workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
             ->count();
 
         return response()->json([

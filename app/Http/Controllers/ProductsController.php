@@ -195,7 +195,6 @@ class ProductsController extends BaseController
                 'price'        => Rule::requiredIf($request->type != 'is_variant'),
             ];
 
-
            // if type is not is_variant, add validation for variants array
             if ($request->type == 'is_variant') {
                 $productRules['variants'] = [
@@ -318,8 +317,6 @@ class ProductsController extends BaseController
                 ];
             }
 
-
-
             // validate the request data
             $validatedData = $request->validate($productRules, [
                 'code.unique'   => 'Product code already used.',
@@ -439,13 +436,13 @@ class ProductsController extends BaseController
                     $Product_variants = ProductVariant::where('product_id', $Product->id)
                         ->where('deleted_at', null)
                         ->get();
+
                     foreach ($warehouses as $warehouse) {
                         if ($request['is_variant'] == 'true') {
                             foreach ($Product_variants as $product_variant) {
-
                                 $product_warehouse[] = [
                                     'product_id'         => $Product->id,
-                                    'warehouse_id'       => $warehouse,
+                                    'warehouse_id'       => $warehouse->id,
                                     'product_variant_id' => $product_variant->id,
                                     'manage_stock'       => $manage_stock,
                                 ];
@@ -458,6 +455,7 @@ class ProductsController extends BaseController
                             ];
                         }
                     }
+                    
                     product_warehouse::insert($product_warehouse);
                 }
 
