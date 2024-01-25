@@ -302,6 +302,11 @@ class DashboardController extends Controller
         // Stock Alerts
         $product_warehouse_data = product_warehouse::with('warehouse', 'product' ,'productVariant')
         ->join('products', 'product_warehouse.product_id', '=', 'products.id')
+        ->where(function($query) {
+            if(auth()->user()->workspace_id) {
+                return $query->where('products.workspace_id', '=', auth()->user()->workspace_id);
+            }
+        })
         ->where('manage_stock', true)
         ->whereRaw('qte <= stock_alert')
         ->where('product_warehouse.deleted_at', null)
@@ -312,11 +317,6 @@ class DashboardController extends Controller
                 return $query->whereIn('product_warehouse.warehouse_id', $array_warehouses_id);
             }
         })
-        // ->where(function($query) use($request) {
-        //     if(auth()->user()->workspace_id) {
-        //         return $query->where('product.workspace_id', '=', auth()->user()->workspace_id);
-        //     }
-        // })
 
         ->take('5')->get();
 
