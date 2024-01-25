@@ -97,7 +97,11 @@ class ReportController extends BaseController
         $data = array();
 
         $clients = Client::where('deleted_at', '=', null)
-            ->where('workspace_id', '=', auth()->user()->workspace_id)
+            ->where(function ($query) use ($request) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
         // Search With Multiple Param
             ->where(function ($query) use ($request) {
                 return $query->when($request->filled('search'), function ($query) use ($request) {
@@ -522,6 +526,11 @@ class ReportController extends BaseController
                 ->with('facture', 'provider', 'warehouse')
                 ->join('providers', 'purchases.provider_id', '=', 'providers.id')
                 ->where('purchases.deleted_at', '=', null)
+                ->where(function($query) use($request) {
+                    if(auth()->user()->workspace_id) {
+                        $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                    }
+                })
                 ->whereBetween('purchases.date', array($request->from, $request->to));
                 
             //  Check If User Has Permission Show All Records
@@ -634,6 +643,11 @@ class ReportController extends BaseController
                 ->with('facture', 'client', 'warehouse')
                 ->join('clients', 'sales.client_id', '=', 'clients.id')
                 ->where('sales.deleted_at', '=', null)
+                ->where(function($query) use($request) {
+                    if(auth()->user()->workspace_id) {
+                        $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                    }
+                })
                 ->whereBetween('sales.date', array($request->from, $request->to));
     
             //  Check If User Has Permission Show All Records
@@ -729,6 +743,11 @@ class ReportController extends BaseController
         $data = array();
 
         $providers = Provider::where('deleted_at', '=', null)
+            ->where(function ($query) use ($request) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
         // Search With Multiple Param
             ->where(function ($query) use ($request) {
                 return $query->when($request->filled('search'), function ($query) use ($request) {
@@ -2187,6 +2206,11 @@ class ReportController extends BaseController
 
         $products_data = SaleDetail::join('sales', 'sale_details.sale_id', '=', 'sales.id')
         ->join('products', 'sale_details.product_id', '=', 'products.id')
+        ->where(function ($query) use ($request) {
+            if (auth()->user()->workspace_id) {
+                return $query->where('products.workspace_id', '=', auth()->user()->workspace_id);
+            }
+        })
         ->where(function ($query) use ($view_records) {
             if (!$view_records) {
                 return $query->where('sales.user_id', '=', Auth::user()->id);
@@ -2243,15 +2267,19 @@ class ReportController extends BaseController
         $offSet = ($pageStart * $perPage) - $perPage;
 
         $customers_count = Sale::where('sales.deleted_at', '=', null)
-        ->where(function ($query) use ($view_records) {
-            if (!$view_records) {
-                return $query->where('sales.user_id', '=', Auth::user()->id);
-            }
-        })
-
-        ->join('clients', 'sales.client_id', '=', 'clients.id')
-        ->select(DB::raw('clients.name'), DB::raw("count(*) as total_sales"))
-        ->groupBy('clients.name')->get();
+            ->where(function ($query) use ($view_records) {
+                if (!$view_records) {
+                    return $query->where('sales.user_id', '=', Auth::user()->id);
+                }
+            })
+            ->join('clients', 'sales.client_id', '=', 'clients.id')
+            ->where(function ($query) use ($request) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('clients.workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
+            ->select(DB::raw('clients.name'), DB::raw("count(*) as total_sales"))
+            ->groupBy('clients.name')->get();
 
         $totalRows = $customers_count->count();
         if($perPage == "-1"){
@@ -2259,21 +2287,25 @@ class ReportController extends BaseController
         }
 
         $customers_data = Sale::where('sales.deleted_at', '=', null)
-        ->where(function ($query) use ($view_records) {
-            if (!$view_records) {
-                return $query->where('sales.user_id', '=', Auth::user()->id);
-            }
-        })
-
-        ->join('clients', 'sales.client_id', '=', 'clients.id')
-        ->select(
-            DB::raw('clients.name as name'), 
-            DB::raw('clients.phone as phone'), 
-            DB::raw('clients.email as email'), 
-            DB::raw("count(*) as total_sales"),
-            DB::raw('sum(GrandTotal) as total'),
-        )
-        ->groupBy('clients.name');
+            ->where(function ($query) use ($view_records) {
+                if (!$view_records) {
+                    return $query->where('sales.user_id', '=', Auth::user()->id);
+                }
+            })
+            ->join('clients', 'sales.client_id', '=', 'clients.id')
+            ->where(function ($query) use ($request) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('clients.workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
+            ->select(
+                DB::raw('clients.name as name'), 
+                DB::raw('clients.phone as phone'), 
+                DB::raw('clients.email as email'), 
+                DB::raw("count(*) as total_sales"),
+                DB::raw('sum(GrandTotal) as total'),
+            )
+            ->groupBy('clients.name');
 
         $customers = $customers_data->offset($offSet)
             ->limit($perPage)
@@ -2305,8 +2337,13 @@ class ReportController extends BaseController
          $data = array();
  
          $users = User::where(function ($query) use ($request) {
-            return $query->when($request->filled('search'), function ($query) use ($request) {
-                return $query->where('username', 'LIKE', "%{$request->search}%");
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
+            ->where(function ($query) use ($request) {
+                return $query->when($request->filled('search'), function ($query) use ($request) {
+                    return $query->where('username', 'LIKE', "%{$request->search}%");
                 });
             });
  
@@ -2900,6 +2937,11 @@ class ReportController extends BaseController
 
         $products_data = Product::with('unit', 'category', 'brand')
         ->where('deleted_at', '=', null)
+        ->where(function($query) use($request) {
+            if(auth()->user()->workspace_id) {
+                $query->where('workspace_id', '=', auth()->user()->workspace_id);
+            }
+        })
         // ->where('type', '!=', 'is_service')
         // Search With Multiple Param
         ->where(function ($query) use ($request) {
@@ -3830,14 +3872,19 @@ class ReportController extends BaseController
         }
 
     
-        $products_data = Product::where('deleted_at', '=', null)->select('id', 'name','code', 'is_variant','unit_id','type')
-    
-        ->where(function ($query) use ($request) {
-            return $query->when($request->filled('search'), function ($query) use ($request) {
-                return $query->where('name','LIKE', "%{$request->search}%")
-                    ->orWhere('code', 'LIKE', "%{$request->search}%");
-                });
-        });
+        $products_data = Product::where('deleted_at', '=', null)
+            ->where(function($query) use($request) {
+                if(auth()->user()->workspace_id) {
+                    $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
+            ->select('id', 'name','code', 'is_variant','unit_id','type')
+            ->where(function ($query) use ($request) {
+                return $query->when($request->filled('search'), function ($query) use ($request) {
+                    return $query->where('name','LIKE', "%{$request->search}%")
+                        ->orWhere('code', 'LIKE', "%{$request->search}%");
+                    });
+            });
         
         $totalRows = $products_data->count();
         if($perPage == "-1"){
@@ -4205,7 +4252,14 @@ class ReportController extends BaseController
                     });
                 }
             })
-         ->whereBetween('date', array($request->from, $request->to));
+            ->where(function ($query) use ($request) {
+                if (Auth::user()->workspace_id) {
+                    return $query->whereHas('sale.warehouse', function ($q) use ($request) {
+                        $q->where('workspace_id', '=', Auth::user()->workspace_id);
+                    });
+                }
+            })
+            ->whereBetween('date', array($request->from, $request->to));
 
          // Filter
          $sale_details_Filtred = $sale_details_data->where(function ($query) use ($request) {
@@ -4361,13 +4415,18 @@ class ReportController extends BaseController
                     });
                 }
             })
-
+            ->where(function ($query) use ($request) {
+                if (Auth::user()->workspace_id) {
+                    return $query->whereHas('purchase.warehouse', function ($q) use ($request) {
+                        $q->where('workspace_id', '=', Auth::user()->workspace_id);
+                    });
+                }
+            })
             ->where(function ($query) use ($request) {
                 return $query->whereHas('purchase', function ($q) use ($request) {
                     $q->whereBetween('date', array($request->from, $request->to));
                 });
             });
-
         // Filter
         $purchase_details_Filtred = $purchase_details_data->where(function ($query) use ($request) {
             return $query->when($request->filled('provider_id'), function ($query) use ($request) {
@@ -4459,15 +4518,21 @@ class ReportController extends BaseController
           }
 
         //get warehouses assigned to user
-       $user_auth = auth()->user();
-       if($user_auth->is_all_warehouses){
-           $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name']);
-       }else{
-           $warehouses_id = UserWarehouse::where('user_id', $user_auth->id)->pluck('warehouse_id')->toArray();
-           $warehouses = Warehouse::where('deleted_at', '=', null)->whereIn('id', $warehouses_id)->get(['id', 'name']);
-       }
+        $user_auth = auth()->user();
+        if($user_auth->is_all_warehouses){
+            $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name']);
+        }else{
+            $warehouses_id = UserWarehouse::where('user_id', $user_auth->id)->pluck('warehouse_id')->toArray();
+            $warehouses = Warehouse::where('deleted_at', '=', null)->whereIn('id', $warehouses_id)->get(['id', 'name']);
+        }
 
-       $suppliers = Provider::where('deleted_at', '=', null)->get(['id', 'name']);
+        $suppliers = Provider::where('deleted_at', '=', null)
+            ->where(function($query) use($request) {
+                if(auth()->user()->workspace_id) {
+                    $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
+            ->get(['id', 'name']);
 
         return response()->json([
             'totalRows' => $totalRows,
