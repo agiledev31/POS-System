@@ -17,6 +17,7 @@ class CreateDesignationsTable extends Migration {
 		{
 			$table->engine = 'InnoDB';
 			$table->integer('id', true);
+			$table->integer('workspace_id')->nullable()->index('workspace_id');
 			$table->integer('company_id')->index('designation_company_id');
 			$table->integer('department_id')->index('designation_departement_id');
 			$table->string('designation', 192);

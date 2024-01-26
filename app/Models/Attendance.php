@@ -12,7 +12,7 @@ class Attendance extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'user_id','employee_id','company_id','date','clock_in',
+        'workspace_id', 'user_id','employee_id','company_id','date','clock_in',
         'clock_in_ip','clock_out_ip',
         'clock_in_out','depart_early','late_time','clock_out',
         'overtime','total_work','total_rest','status'
@@ -20,6 +20,7 @@ class Attendance extends Model
     ];
 
     protected $casts = [
+        'workspace_id' => 'integer',
         'user_id'    => 'integer',
         'employee_id'  => 'integer',
         'company_id'  => 'integer',
@@ -43,5 +44,9 @@ class Attendance extends Model
         return $this->hasOne('App\Models\Company', 'id', 'company_id');
     }
 
+    public function workspace()
+    {
+        return $this->belongsTo('App\Models\Workspace');
+    }
 
 }

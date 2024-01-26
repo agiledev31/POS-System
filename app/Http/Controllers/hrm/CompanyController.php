@@ -27,6 +27,11 @@ class CompanyController extends Controller
         $dir = $request->SortType;
 
         $companies = Company::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
 
         // Search With Multiple Param
             ->where(function ($query) use ($request) {
@@ -67,6 +72,7 @@ class CompanyController extends Controller
             'email'   => $request['email'],
             'phone'   => $request['phone'],
             'country' => $request['country'],
+            'workspace_id' => auth()->user()->workspace_id,
         ]);
 
         return response()->json(['success' => true]);
@@ -135,8 +141,13 @@ class CompanyController extends Controller
     public function Get_all_Company()
     {
         $companies = Company::where('deleted_at', '=', null)
-        ->orderBy('id', 'desc')
-        ->get(['id','name']);
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
+            ->orderBy('id', 'desc')
+            ->get(['id','name']);
 
         return response()->json($companies);
     }

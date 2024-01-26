@@ -12,9 +12,16 @@ class Company extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        "name",'email','phone','country'
+        'name','email','phone','country', 'workspace_id',
     ];
 
+    protected $casts = [
+        'workspace_id' => 'integer',
+    ];
 
+    public function workspace()
+    {
+        return $this->belongsTo('App\Models\Workspace');
+    }
 
 }

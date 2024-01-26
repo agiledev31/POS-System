@@ -26,8 +26,13 @@ class HolidayController extends Controller
         $order = $request->SortField;
         $dir = $request->SortType;
 
-        $holidays = Holiday::with('company')->where('deleted_at', '=', null)
-
+        $holidays = Holiday::with('company')
+            ->where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
         // Search With Multiple Param
             ->where(function ($query) use ($request) {
                 return $query->when($request->filled('search'), function ($query) use ($request) {
@@ -43,8 +48,8 @@ class HolidayController extends Controller
             ->orderBy($order, $dir)
             ->get();
 
+        $data = array();
         foreach ($holidays as $holiday) {
-
             $item['id'] = $holiday->id;
             $item['title'] = $holiday->title;
             $item['company_id'] = $holiday['company']->id;
@@ -68,8 +73,14 @@ class HolidayController extends Controller
     {
         $this->authorizeForUser($request->user('api'), 'create', Holiday::class);
 
-        $companies = Company::where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id','name']);
-        return response()->json([
+        $companies = Company::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
+            ->orderBy('id', 'desc')->get(['id','name']);
+            return response()->json([
             'companies' =>$companies,
         ]);
     }
@@ -88,6 +99,7 @@ class HolidayController extends Controller
         ]);
 
         Holiday::create([
+            'workspace_id'    => auth()->user()->workspace_id,
             'company_id'      => $request['company_id'],
             'title'           => $request['title'],
             'start_date'      => $request['start_date'],
@@ -110,7 +122,13 @@ class HolidayController extends Controller
     {
         $this->authorizeForUser($request->user('api'), 'update', Holiday::class);
 
-        $companies = Company::where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id','name']);
+        $companies = Company::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
+            ->orderBy('id', 'desc')->get(['id','name']);
         return response()->json([
             'companies' =>$companies,
         ]);

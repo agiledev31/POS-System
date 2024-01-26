@@ -17,6 +17,7 @@ class CreateAttendancesTable extends Migration {
 		{
 			$table->engine = 'InnoDB';
 			$table->integer('id', true);
+			$table->integer('workspace_id')->nullable()->index('workspace_id');
 			$table->integer('user_id')->index('attendances_user_id');
 			$table->integer('company_id')->index('attendances_company_id');
 			$table->integer('employee_id')->index('attendances_employee_id');

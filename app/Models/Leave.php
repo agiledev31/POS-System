@@ -12,11 +12,12 @@ class Leave extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'company_id','department_id','employee_id','leave_type_id','start_date','end_date',
+        'workspace_id', 'company_id','department_id','employee_id','leave_type_id','start_date','end_date',
         'reason','attachment','half_day','days','status'
     ];
 
     protected $casts = [
+        'workspace_id' => 'integer',
         'company_id'  => 'integer',
         'department_id'  => 'integer',
         'employee_id'  => 'integer',
@@ -43,5 +44,10 @@ class Leave extends Model
     public function leave_type()
     {
         return $this->belongsTo('App\Models\LeaveType');
+    }
+
+    public function workspace()
+    {
+        return $this->belongsTo('App\Models\Workspace');
     }
 }

@@ -207,7 +207,13 @@ class WarehouseController extends Controller
 
     public function Get_Warehouses()
     {
-        $Warehouses = Warehouse::where('deleted_at', '=', null)->get();
+        $Warehouses = Warehouse::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
+            ->get();
         return response()->json($Warehouses);
     }
 

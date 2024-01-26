@@ -16,6 +16,7 @@ class CreateLeaveTypesTable extends Migration {
 		Schema::create('leave_types', function(Blueprint $table)
 		{
 			$table->engine = 'InnoDB';
+			$table->integer('workspace_id')->nullable()->index('workspace_id');
 			$table->integer('id', true);
 			$table->string('title', 192);
 			$table->timestamps(6);

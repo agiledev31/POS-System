@@ -17,6 +17,7 @@ class CreateLeavesTable extends Migration {
 		{
 			$table->engine = 'InnoDB';
 			$table->integer('id', true);
+			$table->integer('workspace_id')->nullable()->index('workspace_id');
 			$table->integer('employee_id')->index('leave_employee_id');
 			$table->integer('company_id')->index('leave_company_id');
 			$table->integer('department_id')->index('leave_department_id');

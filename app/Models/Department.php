@@ -12,10 +12,11 @@ class Department extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        "department","department_head",'company_id'
+        'workspace_id', "department","department_head",'company_id'
     ];
 
     protected $casts = [
+        'workspace_id' => 'integer', 
         'department_head' => 'integer',
         'company_id' => 'integer',
     ];
@@ -29,6 +30,11 @@ class Department extends Model
     public function company()
     {
         return $this->hasOne('App\Models\Company', 'id', 'company_id');
+    }
+
+    public function workspace()
+    {
+        return $this->belongsTo('App\Models\Workspace');
     }
 
 }

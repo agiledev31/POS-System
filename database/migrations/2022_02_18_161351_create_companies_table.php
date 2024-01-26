@@ -17,6 +17,7 @@ class CreateCompaniesTable extends Migration {
 		{
 			$table->engine = 'InnoDB';
 			$table->integer('id', true);
+			$table->integer('workspace_id')->nullable()->index('workspace_id');
 			$table->string('name', 191);
 			$table->string('email', 191)->nullable();
 			$table->string('phone', 191)->nullable();

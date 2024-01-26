@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration {
 		{
 			$table->engine = 'InnoDB';
 			$table->integer('id', true);
+			$table->integer('workspace_id')->nullable()->index('workspace_id');
 			$table->string('firstname');
 			$table->string('lastname');
 			$table->string('username', 192);
@@ -25,7 +26,6 @@ class CreateUsersTable extends Migration {
 			$table->string('avatar')->nullable();
 			$table->string('phone', 192);
 			$table->integer('role_id');
-			$table->integer('workspace_id')->nullable()->index('workspace_id');
 			$table->boolean('statut')->default(1);
 			$table->timestamps(6);
 			$table->softDeletes();

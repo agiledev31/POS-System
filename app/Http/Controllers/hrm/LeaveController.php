@@ -71,8 +71,20 @@ class LeaveController extends Controller
     {
         $this->authorizeForUser($request->user('api'), 'create', Leave::class);
 
-        $leave_types = LeaveType::where('deleted_at', '=', null)->orderBy('id', 'desc')->get();
-        $companies = Company::where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id','name']);
+        $leave_types = LeaveType::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
+            ->orderBy('id', 'desc')->get();
+        $companies = Company::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
+            ->orderBy('id', 'desc')->get(['id','name']);
 
         return response()->json([
             'companies'   => $companies,
@@ -89,14 +101,14 @@ class LeaveController extends Controller
         $this->authorizeForUser($request->user('api'), 'create', Leave::class);
 
         request()->validate([
-            'employee_id'      => 'required',
-            'company_id'      => 'required',
-            'department_id'      => 'required',
-            'leave_type_id'    => 'required',
-            'start_date'       => 'required',
-            'end_date'         => 'required|after_or_equal:start_date',
-            'status'           => 'required',
-            'attachment'      => 'nullable|image|mimes:jpeg,png,jpg,bmp,gif,svg|max:2048',
+            'employee_id'       => 'required',
+            'company_id'        => 'required',
+            'department_id'     => 'required',
+            'leave_type_id'     => 'required',
+            'start_date'        => 'required',
+            'end_date'          => 'required|after_or_equal:start_date',
+            'status'            => 'required',
+            'attachment'        => 'nullable|image|mimes:jpeg,png,jpg,bmp,gif,svg|max:2048',
         ]);
 
         if ($request->hasFile('attachment')) {
@@ -113,10 +125,11 @@ class LeaveController extends Controller
         $start_date = new DateTime($request->start_date);
         $end_date = new DateTime($request->end_date);
         $day     = $start_date->diff($end_date);
-        $days_diff    = $day->d +1;
+        $days_diff    = $day->d + 1;
         $leave_type = LeaveType::findOrFail($request['leave_type_id']);
 
         $leave_data= [];
+        $leave_data['workspace_id'] = auth()->user()->workspace_id;
         $leave_data['employee_id'] = $request['employee_id'];
         $leave_data['company_id'] = $request['company_id'];
         $leave_data['department_id'] = $request['department_id'];
@@ -157,8 +170,20 @@ class LeaveController extends Controller
         $this->authorizeForUser($request->user('api'), 'update', Leave::class);
 
         $leave = Leave::where('deleted_at', '=', null)->findOrFail($id);
-        $leave_types = LeaveType::where('deleted_at', '=', null)->orderBy('id', 'desc')->get();
-        $companies = Company::where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id','name']);
+        $leave_types = LeaveType::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
+            ->orderBy('id', 'desc')->get();
+        $companies = Company::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
+            ->orderBy('id', 'desc')->get(['id','name']);
 
         return response()->json([
             'leave'       => $leave,

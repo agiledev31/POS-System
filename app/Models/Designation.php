@@ -12,10 +12,11 @@ class Designation extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'designation','department_id','company_id'
+        'workspace_id', 'designation','department_id','company_id'
     ];
 
     protected $casts = [
+        'workspace_id' => 'integer',
         'department_id' => 'integer',
         'company_id'    => 'integer',
     ];
@@ -29,5 +30,10 @@ class Designation extends Model
     public function department()
     {
         return $this->hasOne('App\Models\Department', 'id', 'department_id');
+    }
+
+    public function workspace()
+    {
+        return $this->belongsTo('App\Models\Workspace');
     }
 }

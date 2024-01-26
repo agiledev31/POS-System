@@ -17,6 +17,7 @@ class CreateHolidaysTable extends Migration {
 		{
 			$table->engine = 'InnoDB';
 			$table->integer('id', true);
+			$table->integer('workspace_id')->nullable()->index('workspace_id');
 			$table->string('title', 192);
 			$table->integer('company_id')->index('holidays_company_id');
 			$table->date('start_date');

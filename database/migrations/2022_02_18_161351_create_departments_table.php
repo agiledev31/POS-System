@@ -17,6 +17,7 @@ class CreateDepartmentsTable extends Migration {
 		{
 			$table->engine = 'InnoDB';
 			$table->integer('id', true);
+			$table->integer('workspace_id')->nullable()->index('workspace_id');
 			$table->string('department', 191);
 			$table->integer('company_id')->index('department_company_id');
 			$table->integer('department_head')->nullable()->index('department_department_head');

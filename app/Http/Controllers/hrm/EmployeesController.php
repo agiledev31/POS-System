@@ -59,6 +59,11 @@ class EmployeesController extends Controller
         $data = array();
 
         $employees = Employee::with('company:id,name','office_shift:id,name','department:id,department','designation:id,designation')
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })    
             ->where('deleted_at', '=', null)
             ->where('leaving_date' , NULL);
 
@@ -95,7 +100,12 @@ class EmployeesController extends Controller
             $data[] = $item;
         }
 
-        $companies = Company::where('deleted_at', '=', null)->get(['id', 'name']);
+        $companies = Company::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })->get(['id', 'name']);
 
         return response()->json([
             'employees' => $data,
@@ -112,7 +122,13 @@ class EmployeesController extends Controller
   
           $this->authorizeForUser($request->user('api'), 'create', Employee::class);
   
-          $companies = Company::where('deleted_at', '=', null)->get(['id','name']);
+          $companies = Company::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
+            ->get(['id','name']);
   
           return response()->json([
               'companies' => $companies,
@@ -145,6 +161,7 @@ class EmployeesController extends Controller
             $data['gender'] = $request['gender'];
             $data['phone'] = $request['phone'];
             $data['birth_date'] = $request['birth_date'];
+            $data['workspace_id'] = auth()->user()->workspace_id;
             $data['company_id'] = $request['company_id'];
             $data['department_id'] = $request['department_id'];
             $data['designation_id'] = $request['designation_id'];
@@ -165,7 +182,13 @@ class EmployeesController extends Controller
         $this->authorizeForUser($request->user('api'), 'view', Employee::class);
 
         $employee = Employee::where('deleted_at', '=', null)->findOrFail($id);
-        $companies = Company::where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id','name']);
+        $companies = Company::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
+            ->orderBy('id', 'desc')->get(['id','name']);
         $office_shifts = OfficeShift::where('company_id' , $employee->company_id)->where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id','name']);
         $departments = Department::where('company_id' , $employee->company_id)->where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id','department']);
         $designations = Designation::where('department_id' , $employee->department_id)->where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id','designation']);
@@ -185,7 +208,13 @@ class EmployeesController extends Controller
         $this->authorizeForUser($request->user('api'), 'update', Employee::class);
 
         $employee = Employee::where('deleted_at', '=', null)->findOrFail($id);
-        $companies = Company::where('deleted_at', '=', null)->get(['id','name']);
+        $companies = Company::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
+            ->orderBy('id', 'desc')->get(['id','name']);
         $office_shifts = OfficeShift::where('company_id' , $employee->company_id)->where('deleted_at', '=', null)->get(['id','name']);
         $departments = Department::where('company_id' , $employee->company_id)->where('deleted_at', '=', null)->get(['id','department']);
         $designations = Designation::where('department_id' , $employee->department_id)->where('deleted_at', '=', null)->get(['id','designation']);

@@ -33,4 +33,9 @@ class Adjustment extends Model
         return $this->belongsTo('App\Models\Warehouse');
     }
 
+    public function workspace()
+    {
+        return $this->belongsTo('App\Models\Workspace');
+    }
+
 }

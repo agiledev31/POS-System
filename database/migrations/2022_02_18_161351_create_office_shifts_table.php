@@ -17,6 +17,7 @@ class CreateOfficeShiftsTable extends Migration {
 		{
 			$table->engine = 'InnoDB';
 			$table->integer('id', true);
+			$table->integer('workspace_id')->nullable()->index('workspace_id');
 			$table->integer('company_id')->index('office_shift_company_id');
 			$table->string('name', 191);
 			$table->string('monday_in', 191)->nullable();

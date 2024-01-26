@@ -12,7 +12,7 @@ class OfficeShift extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'name','company_id','monday_in','monday_out',
+        'name','workspace_id', 'company_id','monday_in','monday_out',
         'tuesday_in','tuesday_out','wednesday_in','wednesday_out',
         'thursday_in','thursday_out','friday_in','friday_out',
         'saturday_in','saturday_out','sunday_in','sunday_out'
@@ -20,6 +20,7 @@ class OfficeShift extends Model
     ];
 
     protected $casts = [
+        'workspace_id' => 'integer',
         'company_id'  => 'integer',
     ];
 
@@ -29,5 +30,9 @@ class OfficeShift extends Model
         return $this->hasOne('App\Models\Company', 'id', 'company_id');
     }
 
+    public function workspace()
+    {
+        return $this->belongsTo('App\Models\Workspace');
+    }
 
 }

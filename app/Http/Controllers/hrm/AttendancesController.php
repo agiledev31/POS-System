@@ -41,6 +41,11 @@ class AttendancesController extends Controller
                 return $query->where('user_id', '=', Auth::user()->id);
             }
         })
+        ->where(function ($query) {
+            if (auth()->user()->workspace_id) {
+                return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+            }
+        })
          // Search With Multiple Param
          ->where(function ($query) use ($request) {
             return $query->when($request->filled('search'), function ($query) use ($request) {
@@ -94,7 +99,12 @@ class AttendancesController extends Controller
     {
         $this->authorizeForUser($request->user('api'), 'create', Attendance::class);
 
-        $companies = Company::where('deleted_at', '=', null)->get(['id','name']);
+        $companies = Company::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })->get(['id','name']);
         return response()->json([
             'companies' =>$companies,
         ]);
@@ -197,6 +207,7 @@ class AttendancesController extends Controller
             $data['total_work'] = $work_duration;
             $data['clock_in_out'] = 0;
             $data['company_id'] = $company_id;
+            $data['workspace_id'] = auth()->user()->workspace_id;
 
             $data['clock_in_ip'] = '';
             $data['clock_out_ip'] = '';

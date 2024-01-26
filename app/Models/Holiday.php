@@ -12,15 +12,21 @@ class Holiday extends Model
     protected $dates = ['deleted_at'];
     
     protected $fillable = [
-        'title','company_id','start_date','end_date','description'
+        'title','workspace_id','company_id','start_date','end_date','description'
     ];
 
     protected $casts = [
+        'workspace_id' => 'integer',
         'company_id'  => 'integer',
     ];
 
     public function company()
     {
         return $this->hasOne('App\Models\Company', 'id', 'company_id');
+    }
+
+    public function workspace()
+    {
+        return $this->belongsTo('App\Models\Workspace');
     }
 }

@@ -31,6 +31,11 @@ class DepartmentsController extends Controller
             leftjoin('employees','employees.id','=','departments.department_head')
             ->join('companies','companies.id','=','departments.company_id')
             ->where('departments.deleted_at' , '=', null)
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('departments.workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
             ->select('departments.*','employees.username AS employee_head','companies.name AS company_name')
 
         // Search With Multiple Param
@@ -59,7 +64,13 @@ class DepartmentsController extends Controller
     {
         $this->authorizeForUser($request->user('api'), 'create', Department::class);
 
-        $companies = Company::where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id','name']);
+        $companies = Company::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
+            ->orderBy('id', 'desc')->get(['id','name']);
         return response()->json([
             'companies' =>$companies,
         ]);
@@ -78,7 +89,9 @@ class DepartmentsController extends Controller
         ]);
 
         Department::create([
+            'workspace_id'      => auth()->user()->workspace_id,
             'department'        => $request['department'],
+            'workspace_id'      => auth()->user()->workspace_id,
             'company_id'        => $request['company_id'],
             'department_head'   => $request['department_head']?$request['department_head']:Null,
             ]);
@@ -99,7 +112,13 @@ class DepartmentsController extends Controller
     {
         $this->authorizeForUser($request->user('api'), 'update', Department::class);
 
-        $companies = Company::where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id','name']);
+        $companies = Company::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
+            ->orderBy('id', 'desc')->get(['id','name']);
         return response()->json([
             'companies' =>$companies,
         ]);
@@ -162,7 +181,14 @@ class DepartmentsController extends Controller
 
     public function Get_all_Departments()
     {
-        $departments = Department::where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id','department']);
+        $departments = Department::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
+            ->orderBy('id', 'desc')
+            ->get(['id','department']);
 
         return response()->json($departments);
     }

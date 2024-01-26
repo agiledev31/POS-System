@@ -26,6 +26,11 @@ class LeaveTypeController extends Controller
         $dir = $request->SortType;
 
         $leave_types = LeaveType::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
 
         // Search With Multiple Param
             ->where(function ($query) use ($request) {
@@ -59,6 +64,7 @@ class LeaveTypeController extends Controller
         ]);
 
         LeaveType::create([
+            'workspace_id'    => auth()->user()->workspace_id,
             'title'           => $request['title'],
         ]);
 

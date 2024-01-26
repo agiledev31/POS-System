@@ -26,7 +26,13 @@ class OfficeShiftController extends Controller
         $order = $request->SortField;
         $dir = $request->SortType;
         $data = array();
-        $office_shifts = OfficeShift::with('company:id,name')->where('deleted_at', '=', null)
+        $office_shifts = OfficeShift::with('company:id,name')
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
+            ->where('deleted_at', '=', null)
 
         // Search With Multiple Param
             ->where(function ($query) use ($request) {
@@ -77,7 +83,13 @@ class OfficeShiftController extends Controller
     {
         $this->authorizeForUser($request->user('api'), 'create', OfficeShift::class);
 
-        $companies = Company::where('deleted_at', '=', null)->get(['id','name']);
+        $companies = Company::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
+            ->get(['id','name']);
         return response()->json([
             'companies' =>$companies,
         ]);
@@ -111,6 +123,7 @@ class OfficeShiftController extends Controller
         $sunday_out = new DateTime($request['sunday_out']);
 
         OfficeShift::create([
+            'workspace_id'   => auth()->user()->workspace_id,
             'company_id'     => $request['company_id'],
             'name'           => $request['name'],
             'monday_in'      => $request['monday_in']?$monday_in->format('H:iA'):Null,
@@ -145,7 +158,13 @@ class OfficeShiftController extends Controller
     {
         $this->authorizeForUser($request->user('api'), 'update', OfficeShift::class);
 
-        $companies = Company::where('deleted_at', '=', null)->get(['id','name']);
+        $companies = Company::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })->get(['id','name']);
+
         return response()->json([
             'companies' =>$companies,
         ]);

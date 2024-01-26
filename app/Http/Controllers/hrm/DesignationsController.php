@@ -26,7 +26,13 @@ class DesignationsController extends Controller
         $order = $request->SortField;
         $dir = $request->SortType;
         $data = array();
-        $designations = Designation::with('department')->where('deleted_at', '=', null)
+        $designations = Designation::with('department')
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
+            ->where('deleted_at', '=', null)
 
         // Search With Multiple Param
             ->where(function ($query) use ($request) {
@@ -65,7 +71,12 @@ class DesignationsController extends Controller
     {
         $this->authorizeForUser($request->user('api'), 'create', Designation::class);
 
-        $companies = Company::where('deleted_at', '=', null)->get(['id','name']);
+        $companies = Company::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })->get(['id','name']);
         return response()->json([
             'companies' =>$companies,
         ]);
@@ -86,6 +97,7 @@ class DesignationsController extends Controller
 
         Designation::create([
             'designation'   => $request['designation'],
+            'workspace_id'  => auth()->user()->workspace_id,
             'company_id'    => $request['company_id'],
             'department_id' => $request['department'],
         ]);
@@ -106,7 +118,13 @@ class DesignationsController extends Controller
     {
         $this->authorizeForUser($request->user('api'), 'update', Designation::class);
 
-        $companies = Company::where('deleted_at', '=', null)->get(['id','name']);
+        $companies = Company::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
+            ->get(['id','name']);
         return response()->json([
             'companies' =>$companies,
         ]);

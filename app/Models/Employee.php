@@ -12,7 +12,7 @@ class Employee extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'id','firstname','lastname','username','email','gender','phone','remaining_leave','total_leave',
+        'id', 'workspace_id', 'firstname','lastname','username','email','gender','phone','remaining_leave','total_leave',
         'birth_date','department_id','designation_id','office_shift_id','joining_date',
         'leaving_date','marital_status','employment_type','city','province','zipcode','address','resume','avatar','document',
         'country','company_id','facebook','skype','whatsapp','twitter','linkedin','hourly_rate','basic_salary'
@@ -20,6 +20,7 @@ class Employee extends Model
 
     protected $casts = [
         'id'     => 'integer',
+        'workspace_id' => 'integer',
         'company_id'     => 'integer',
         'department_id'  => 'integer',
         'designation_id' => 'integer',
@@ -62,6 +63,11 @@ class Employee extends Model
         return $this->hasMany(Leave::class)
         ->select('id','employee_id','start_date','end_date','status')
         ->where('status' , 'approved');
+    }
+
+    public function workspace()
+    {
+        return $this->belongsTo('App\Models\Workspace');
     }
 
 }

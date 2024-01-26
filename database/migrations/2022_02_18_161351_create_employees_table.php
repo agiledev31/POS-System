@@ -17,6 +17,7 @@ class CreateEmployeesTable extends Migration {
 		{
 			$table->engine = 'InnoDB';
 			$table->integer('id', true);
+			$table->integer('workspace_id')->nullable()->index('workspace_id');
 			$table->string('firstname', 192);
 			$table->string('lastname', 192);
 			$table->string('username', 191);
