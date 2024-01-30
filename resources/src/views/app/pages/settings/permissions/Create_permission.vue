@@ -62,7 +62,10 @@
                           <b-row>
                             <!--dashboard -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Reports_payments_Sale_Returns')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -103,7 +106,10 @@
                           <b-row>
                             <!--Users View -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('users_view')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -116,7 +122,10 @@
                             </b-col>
                             <!--Users ADD -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('users_add')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -129,7 +138,10 @@
                             </b-col>
                             <!--Users Edit -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('users_edit')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -142,7 +154,10 @@
                             </b-col>
                             <!--Users Delete -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('users_delete')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -155,7 +170,10 @@
                             </b-col>
                             <!--Users record view -->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('record_view')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -196,7 +214,10 @@
                           <b-row>
                             <!--Permissions View -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('permissions_view')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -209,7 +230,10 @@
                             </b-col>
                             <!--Permissions ADD -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('permissions_add')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -222,7 +246,10 @@
                             </b-col>
                             <!--Permissions Edit -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('permissions_edit')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -235,7 +262,10 @@
                             </b-col>
                             <!--Permissions Delete -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('permissions_delete')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -276,7 +306,10 @@
                           <b-row>
                             <!--Products View -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('products_view')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -289,7 +322,10 @@
                             </b-col>
                             <!--Products ADD -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('products_add')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -302,7 +338,10 @@
                             </b-col>
                             <!--Products Edit -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('products_edit')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -315,7 +354,10 @@
                             </b-col>
                             <!--Products Delete -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('products_delete')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -328,7 +370,10 @@
                             </b-col>
                             <!--Products Barcode -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('barcode_view')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -342,7 +387,10 @@
 
                             <!--Products Import -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('product_import')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -355,7 +403,10 @@
                             </b-col>
                              <!--Category -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('category')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -368,7 +419,10 @@
                             </b-col>
                             <!--Brand  -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('brand')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input type="checkbox" checked v-model="permissions" value="brand">
                                 <span>{{$t('Brand')}}</span>
                                 <span class="checkmark"></span>
@@ -376,7 +430,10 @@
                             </b-col>
                              <!--Unit  -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('unit')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input type="checkbox" checked v-model="permissions" value="unit">
                                 <span>{{$t('Units')}}</span>
                                 <span class="checkmark"></span>
@@ -412,7 +469,10 @@
                           <b-row>
                             <!--Adjustment View -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('adjustment_view')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -425,7 +485,10 @@
                             </b-col>
                             <!--Adjustment ADD -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('adjustment_add')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -438,7 +501,10 @@
                             </b-col>
                             <!--Adjustment Edit -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('adjustment_edit')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -451,7 +517,10 @@
                             </b-col>
                             <!--Adjustment Delete -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('adjustment_delete')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -492,7 +561,10 @@
                           <b-row>
                             <!--Transfer View -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('transfer_view')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -505,7 +577,10 @@
                             </b-col>
                             <!--Transfer ADD -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('transfer_add')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -518,7 +593,10 @@
                             </b-col>
                             <!--Transfer Edit -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('transfer_edit')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -531,7 +609,10 @@
                             </b-col>
                             <!--Transfer Delete -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('transfer_delete')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -572,7 +653,10 @@
                           <b-row>
                             <!--Expense View -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('expense_view')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -585,7 +669,10 @@
                             </b-col>
                             <!--Expense ADD -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('expense_add')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -598,7 +685,10 @@
                             </b-col>
                             <!--Expense Edit -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('expense_edit')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -611,7 +701,10 @@
                             </b-col>
                             <!--Expense Delete -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('expense_delete')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -652,7 +745,10 @@
                           <b-row>
                             <!--Sales View -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Sales_view')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -665,7 +761,10 @@
                             </b-col>
                             <!--Sales ADD -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Sales_add')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -678,7 +777,10 @@
                             </b-col>
                             <!--Sales Edit -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Sales_edit')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -691,7 +793,10 @@
                             </b-col>
                             <!--Sales Delete -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Sales_delete')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -704,7 +809,10 @@
                             </b-col>
                             <!--Sales POS -->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Pos_view')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -718,7 +826,10 @@
 
                              <!--shipment -->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('shipment')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -732,7 +843,10 @@
 
                              <!--Change product details -->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('edit_product_sale')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -746,7 +860,10 @@
 
                               <!--edit tax and discount and shipping -->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('edit_tax_discount_shipping_sale')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -788,7 +905,10 @@
                           <b-row>
                             <!--Purchases View -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Purchases_view')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -801,7 +921,10 @@
                             </b-col>
                             <!--Purchases ADD -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Purchases_add')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -814,7 +937,10 @@
                             </b-col>
                             <!--Purchases Edit -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Purchases_edit')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -827,7 +953,10 @@
                             </b-col>
                             <!--Purchases Delete -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Purchases_delete')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -841,7 +970,10 @@
 
                             <!--Change product details -->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('edit_product_purchase')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -855,7 +987,10 @@
 
                              <!--edit tax and discount and shipping -->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('edit_tax_discount_shipping_purchase')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -898,7 +1033,10 @@
                           <b-row>
                             <!--Quotations View -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Quotations_view')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -911,7 +1049,10 @@
                             </b-col>
                             <!--Quotations ADD -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Quotations_add')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -924,7 +1065,10 @@
                             </b-col>
                             <!--Quotations Edit -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Quotations_edit')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -937,7 +1081,10 @@
                             </b-col>
                             <!--Quotations Delete -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Quotations_delete')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -951,7 +1098,10 @@
 
                             <!--Change product details -->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('edit_product_quotation')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -965,7 +1115,10 @@
 
                             <!--edit tax and discount and shipping -->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('edit_tax_discount_shipping_quotation')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1007,7 +1160,10 @@
                           <b-row>
                             <!--Return Sale View -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Sale_Returns_view')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1020,7 +1176,10 @@
                             </b-col>
                             <!--Return Sale ADD -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Sale_Returns_add')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1033,7 +1192,10 @@
                             </b-col>
                             <!--Return Sale Edit -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Sale_Returns_edit')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1046,7 +1208,10 @@
                             </b-col>
                             <!--Return Sale Delete -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Sale_Returns_delete')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1087,7 +1252,10 @@
                           <b-row>
                             <!--Return Purchase View -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Purchase_Returns_view')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1100,7 +1268,10 @@
                             </b-col>
                             <!--Return Purchase ADD -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Purchase_Returns_add')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1113,7 +1284,10 @@
                             </b-col>
                             <!--Return Purchase Edit -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Purchase_Returns_edit')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1126,7 +1300,10 @@
                             </b-col>
                             <!--Return Purchase Delete -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Purchase_Returns_delete')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1167,7 +1344,10 @@
                           <b-row>
                             <!--Payment Sales View -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('payment_sales_view')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1180,7 +1360,10 @@
                             </b-col>
                             <!--Payment Sales ADD -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('payment_sales_add')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1193,7 +1376,10 @@
                             </b-col>
                             <!--Payment Sales Edit -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('payment_sales_edit')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1206,7 +1392,10 @@
                             </b-col>
                             <!--Payment Sales Delete -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('payment_sales_delete')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1247,7 +1436,10 @@
                           <b-row>
                             <!--Payment Purchases View -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('payment_purchases_view')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1260,7 +1452,10 @@
                             </b-col>
                             <!--Payment Purchases ADD -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('payment_purchases_add')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1273,7 +1468,10 @@
                             </b-col>
                             <!--Payment Purchases Edit -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('payment_purchases_edit')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1286,7 +1484,10 @@
                             </b-col>
                             <!--Payment Purchases Delete -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('payment_purchases_delete')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1327,7 +1528,10 @@
                           <b-row>
                             <!--Payment Returns View -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('payment_returns_view')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1340,7 +1544,10 @@
                             </b-col>
                             <!--Payment Returns ADD -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('payment_returns_add')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1353,7 +1560,10 @@
                             </b-col>
                             <!--Payment Returns Edit -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('payment_returns_edit')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1366,7 +1576,10 @@
                             </b-col>
                             <!--Payment Returns Delete -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('payment_returns_delete')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1407,7 +1620,10 @@
                           <b-row>
                             <!--Customers View -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Customers_view')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1420,7 +1636,10 @@
                             </b-col>
                             <!--Customers ADD -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Customers_add')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1433,7 +1652,10 @@
                             </b-col>
                             <!--Customers Edit -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Customers_edit')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1446,7 +1668,10 @@
                             </b-col>
                             <!--Customers Delete -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Customers_delete')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1460,7 +1685,10 @@
 
                             <!--Customers Import -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('customers_import')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1474,7 +1702,10 @@
 
                             <!--pay_all_sell_due_at_a_time -->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('pay_due')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1488,7 +1719,10 @@
 
                              <!--pay_sale_return_due -->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('pay_sale_return_due')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1530,7 +1764,10 @@
                           <b-row>
                             <!--Suppliers View -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Suppliers_view')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1543,7 +1780,10 @@
                             </b-col>
                             <!--Suppliers ADD -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Suppliers_add')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1556,7 +1796,10 @@
                             </b-col>
                             <!--Suppliers Edit -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Suppliers_edit')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1569,7 +1812,10 @@
                             </b-col>
                             <!--Suppliers Delete -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Suppliers_delete')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1583,7 +1829,10 @@
 
                             <!--Suppliers Import -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Suppliers_import')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1597,7 +1846,10 @@
 
                              <!--pay_all_purchase_due_at_a_time -->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('pay_supplier_due')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1611,7 +1863,10 @@
 
                             <!--pay_all_purchase_return_due_at_a_time -->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('pay_purchase_return_due')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1653,7 +1908,10 @@
                           <b-row>
                             <!--Reports_payments_Sales  -->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Reports_payments_Sales')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1666,7 +1924,10 @@
                             </b-col>
                             <!--Reports_payments_Purchases  -->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Reports_payments_Purchases')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1679,7 +1940,10 @@
                             </b-col>
                             <!--Reports_payments_Sale_Returns  -->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Reports_payments_Sale_Returns')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1692,7 +1956,10 @@
                             </b-col>
                             <!--Reports_payments_purchase_Return  -->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Reports_payments_purchase_Return')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1705,7 +1972,10 @@
                             </b-col>
                             <!-- Sales Reports -->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Reports_sales')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1718,7 +1988,10 @@
                             </b-col>
                             <!--Purchases Reports -->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Reports_purchase')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1731,7 +2004,10 @@
                             </b-col>
                             <!-- Customers Reports -->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Reports_customers')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1744,7 +2020,10 @@
                             </b-col>
                             <!--Suppliers Reports -->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Reports_suppliers')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1757,7 +2036,10 @@
                             </b-col>
                             <!--Proft and Loss -->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Reports_profit')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1770,7 +2052,10 @@
                             </b-col>
                             <!--Product Quantity Alerts -->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Reports_quantity_alerts')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1784,7 +2069,10 @@
 
                             <!--Warehouse Stock Chart-->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Warehouse_report')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1798,7 +2086,10 @@
 
                             <!--Top_Selling_Products-->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Top_products')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1812,7 +2103,10 @@
 
                              <!--Top_customers-->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('Top_customers')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1826,7 +2120,10 @@
 
                              <!--users_report-->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('users_report')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1840,7 +2137,10 @@
 
                              <!--stock_report-->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('stock_report')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1854,7 +2154,10 @@
 
                              <!--product_report-->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('product_report')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1868,7 +2171,10 @@
 
                              <!--product_sales_report-->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('product_sales_report')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1882,7 +2188,10 @@
 
                             <!--product_purchases_report-->
                             <b-col md="12">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('product_purchases_report')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1893,8 +2202,6 @@
                                 <span class="checkmark"></span>
                               </label>
                             </b-col>
-
-
 
                           </b-row>
                         </b-card-text>
@@ -1926,7 +2233,10 @@
                           <b-row>
                              <!--view Employee-->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('view_employee')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1939,7 +2249,10 @@
                             </b-col>
                             <!--add Employee-->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('add_employee')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1952,7 +2265,10 @@
                             </b-col>
                             <!--edit employee -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('edit_employee')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1965,7 +2281,10 @@
                             </b-col>
                              <!--delete employee -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('delete_employee')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1979,7 +2298,10 @@
 
                             <!--Company -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('company')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -1993,7 +2315,10 @@
 
                             <!--department -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('department')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -2007,7 +2332,10 @@
 
                              <!--designation -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('designation')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -2021,7 +2349,10 @@
 
                             <!--office_shift -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('office_shift')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -2035,7 +2366,10 @@
 
                             <!--attendance -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('attendance')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -2049,7 +2383,10 @@
 
                             <!--leave -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('leave')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -2063,7 +2400,10 @@
 
                             <!--holiday -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('holiday')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -2105,7 +2445,10 @@
                           <b-row>
                             <!--Settings System -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('setting_system')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -2119,7 +2462,10 @@
 
                             <!--sms_settings  -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('sms_settings')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -2133,7 +2479,10 @@
 
                              <!--notification_template  -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('notification_template')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -2147,7 +2496,10 @@
 
                             <!--pos_settings  -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('pos_settings')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -2161,7 +2513,10 @@
 
                              <!--payment_gateway  -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('payment_gateway')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -2175,7 +2530,10 @@
 
                              <!--mail_settings  -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('mail_settings')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -2189,7 +2547,10 @@
 
                             <!--Currency  -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('currency')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -2202,7 +2563,10 @@
                             </b-col>
                             <!--Warehouse  -->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('warehouse')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input
                                   type="checkbox"
                                   checked
@@ -2215,7 +2579,10 @@
                             </b-col>
                             <!--Backup-->
                             <b-col md="6">
-                              <label class="checkbox checkbox-outline-primary">
+                              <label 
+                                v-if="currentUserPermissions && currentUserPermissions.includes('backup')"
+                                class="checkbox checkbox-outline-primary"
+                              >
                                 <input type="checkbox" checked v-model="permissions" value="backup">
                                 <span>{{$t('Backup')}}</span>
                                 <span class="checkmark"></span>
@@ -2247,6 +2614,7 @@
 
 <script>
 import NProgress from "nprogress";
+import { mapGetters } from "vuex";
 
 export default {
   metaInfo: {
@@ -2263,6 +2631,11 @@ export default {
       }
     };
   },
+  
+  computed: {
+    ...mapGetters(["currentUserPermissions"])
+  },
+
 
   methods: {
     //------------- Submit Validation Create Permissions
@@ -2323,10 +2696,36 @@ export default {
           NProgress.done();
           this.makeToast("danger", this.$t("InvalidData"), this.$t("Failed"));
         });
-    }
+    },
+    Get_Workspace_Info(id) {
+      axios
+        .get(`get_workspace_info/${id}`)
+        .then(response => {
+          this.workspace_owner = response.data.owner;
+          this.isLoading = false;
+        })
+        .catch(response => {
+          this.isLoading = false;
+        });
+    },
+    Get_Profile_Info() {
+      axios
+        .get("get_user_profile")
+        .then(response => {
+          this.current_user = response.data.user;
+          if(response.data.user.workspace_id) {
+            this.Get_Workspace_Info(response.data.user.workspace_id);
+          }
+          this.isLoading = false;
+        })
+        .catch(response => {
+          this.isLoading = false;
+        });
+    },
   }, //end Methods
 
   created: function() {
+    this.Get_Profile_Info();
   }
 };
 </script>

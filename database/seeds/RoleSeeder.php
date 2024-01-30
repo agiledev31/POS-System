@@ -30,13 +30,14 @@ class RoleSeeder extends Seeder
                 'status' => 1,
                 'description' => 'Owner',
             ],
-            [
-                'id'    => 3,
-                'name'  => 'Staff',
-                'label' => 'Staff',
-                'status' => 1,
-                'description' => 'Staff',
-            ])
+            // [
+            //     'id'    => 3,
+            //     'name'  => 'Staff',
+            //     'label' => 'Staff',
+            //     'status' => 1,
+            //     'description' => 'Staff',
+            // ]
+            )
         );
     }
 }

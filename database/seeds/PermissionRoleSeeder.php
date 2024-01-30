@@ -960,11 +960,11 @@ class PermissionRoleSeeder extends Seeder
 				'permission_id' => 65,
 				'role_id'       => 2,
 			],
-			[
-				'id'            => 190,
-				'permission_id' => 66,
-				'role_id'       => 2,
-			],
+			// [
+			// 	'id'            => 190,
+			// 	'permission_id' => 66,
+			// 	'role_id'       => 2,
+			// ],
 			[
 				'id'            => 191,
 				'permission_id' => 67,
@@ -975,11 +975,11 @@ class PermissionRoleSeeder extends Seeder
 				'permission_id' => 68,
 				'role_id'       => 2,
 			],
-			[
-				'id'            => 193,
-				'permission_id' => 69,
-				'role_id'       => 2,
-			],
+			// [
+			// 	'id'            => 193,
+			// 	'permission_id' => 69,
+			// 	'role_id'       => 2,
+			// ],
 			[
 				'id'            => 194,
 				'permission_id' => 70,
@@ -1158,26 +1158,26 @@ class PermissionRoleSeeder extends Seeder
 				'permission_id' => 105,
 				'role_id'       => 2,
 			],
-			[
-				'id'            => 229,
-				'permission_id' => 106,
-				'role_id'       => 2,
-			],
-			[
-				'id'            => 230,
-				'permission_id' => 107,
-				'role_id'       => 2,
-			],
-			[
-				'id'            => 231,
-				'permission_id' => 108,
-				'role_id'       => 2,
-			],
-			[
-				'id'            => 232,
-				'permission_id' => 109,
-				'role_id'       => 2,
-			],
+			// [
+			// 	'id'            => 229,
+			// 	'permission_id' => 106,
+			// 	'role_id'       => 2,
+			// ],
+			// [
+			// 	'id'            => 230,
+			// 	'permission_id' => 107,
+			// 	'role_id'       => 2,
+			// ],
+			// [
+			// 	'id'            => 231,
+			// 	'permission_id' => 108,
+			// 	'role_id'       => 2,
+			// ],
+			// [
+			// 	'id'            => 232,
+			// 	'permission_id' => 109,
+			// 	'role_id'       => 2,
+			// ],
 			[
 				'id'            => 233,
 				'permission_id' => 110,
@@ -1218,11 +1218,11 @@ class PermissionRoleSeeder extends Seeder
 				'permission_id' => 117,
 				'role_id'       => 2,
 			],
-			[
-				'id'            => 241,
-				'permission_id' => 118,
-				'role_id'       => 2,
-			],
+			// [
+			// 	'id'            => 241,
+			// 	'permission_id' => 118,
+			// 	'role_id'       => 2,
+			// ],
 			[
 				'id'            => 242,
 				'permission_id' => 119,
@@ -1261,447 +1261,447 @@ class PermissionRoleSeeder extends Seeder
 			],
 
 			// staff roll
-			[
-				'id'            => 310,
-				'permission_id' => 10,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 311,
-				'permission_id' => 11,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 312,
-				'permission_id' => 12,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 313,
-				'permission_id' => 13,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 314,
-				'permission_id' => 14,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 315,
-				'permission_id' => 15,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 316,
-				'permission_id' => 16,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 317,
-				'permission_id' => 17,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 318,
-				'permission_id' => 18,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 319,
-				'permission_id' => 19,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 320,
-				'permission_id' => 20,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 321,
-				'permission_id' => 21,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 322,
-				'permission_id' => 22,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 323,
-				'permission_id' => 23,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 324,
-				'permission_id' => 24,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 325,
-				'permission_id' => 25,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 326,
-				'permission_id' => 26,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 327,
-				'permission_id' => 27,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 328,
-				'permission_id' => 28,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 329,
-				'permission_id' => 29,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 330,
-				'permission_id' => 30,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 331,
-				'permission_id' => 31,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 332,
-				'permission_id' => 32,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 333,
-				'permission_id' => 33,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 334,
-				'permission_id' => 34,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 335,
-				'permission_id' => 35,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 336,
-				'permission_id' => 36,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 337,
-				'permission_id' => 37,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 338,
-				'permission_id' => 38,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 339,
-				'permission_id' => 39,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 340,
-				'permission_id' => 40,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 341,
-				'permission_id' => 41,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 342,
-				'permission_id' => 42,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 343,
-				'permission_id' => 43,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 344,
-				'permission_id' => 44,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 345,
-				'permission_id' => 45,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 346,
-				'permission_id' => 46,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 347,
-				'permission_id' => 47,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 348,
-				'permission_id' => 48,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 349,
-				'permission_id' => 49,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 350,
-				'permission_id' => 50,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 351,
-				'permission_id' => 51,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 352,
-				'permission_id' => 52,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 353,
-				'permission_id' => 53,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 354,
-				'permission_id' => 54,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 355,
-				'permission_id' => 55,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 356,
-				'permission_id' => 56,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 357,
-				'permission_id' => 57,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 358,
-				'permission_id' => 58,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 359,
-				'permission_id' => 59,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 360,
-				'permission_id' => 60,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 361,
-				'permission_id' => 61,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 362,
-				'permission_id' => 62,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 363,
-				'permission_id' => 63,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 364,
-				'permission_id' => 64,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 365,
-				'permission_id' => 65,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 366,
-				'permission_id' => 66,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 367,
-				'permission_id' => 67,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 368,
-				'permission_id' => 68,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 369,
-				'permission_id' => 69,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 370,
-				'permission_id' => 70,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 372,
-				'permission_id' => 72,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 373,
-				'permission_id' => 73,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 374,
-				'permission_id' => 74,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 375,
-				'permission_id' => 75,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 376,
-				'permission_id' => 76,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 377,
-				'permission_id' => 77,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 378,
-				'permission_id' => 78,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 379,
-				'permission_id' => 79,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 380,
-				'permission_id' => 80,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 381,
-				'permission_id' => 81,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 382,
-				'permission_id' => 82,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 383,
-				'permission_id' => 83,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 384,
-				'permission_id' => 84,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 385,
-				'permission_id' => 85,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 386,
-				'permission_id' => 86,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 387,
-				'permission_id' => 87,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 388,
-				'permission_id' => 88,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 389,
-				'permission_id' => 89,
-				'role_id'       => 3,
-			],
-			//hrm
-			[
-				'id'            => 401,
-				'permission_id' => 101,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 402,
-				'permission_id' => 102,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 403,
-				'permission_id' => 103,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 404,
-				'permission_id' => 104,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 405,
-				'permission_id' => 105,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 410,
-				'permission_id' => 110,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 415,
-				'permission_id' => 115,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 416,
-				'permission_id' => 116,
-				'role_id'       => 3,
-			],
-			[
-				'id'            => 417,
-				'permission_id' => 117,
-				'role_id'       => 3,
-			],
+			// [
+			// 	'id'            => 310,
+			// 	'permission_id' => 10,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 311,
+			// 	'permission_id' => 11,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 312,
+			// 	'permission_id' => 12,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 313,
+			// 	'permission_id' => 13,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 314,
+			// 	'permission_id' => 14,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 315,
+			// 	'permission_id' => 15,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 316,
+			// 	'permission_id' => 16,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 317,
+			// 	'permission_id' => 17,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 318,
+			// 	'permission_id' => 18,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 319,
+			// 	'permission_id' => 19,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 320,
+			// 	'permission_id' => 20,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 321,
+			// 	'permission_id' => 21,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 322,
+			// 	'permission_id' => 22,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 323,
+			// 	'permission_id' => 23,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 324,
+			// 	'permission_id' => 24,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 325,
+			// 	'permission_id' => 25,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 326,
+			// 	'permission_id' => 26,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 327,
+			// 	'permission_id' => 27,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 328,
+			// 	'permission_id' => 28,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 329,
+			// 	'permission_id' => 29,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 330,
+			// 	'permission_id' => 30,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 331,
+			// 	'permission_id' => 31,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 332,
+			// 	'permission_id' => 32,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 333,
+			// 	'permission_id' => 33,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 334,
+			// 	'permission_id' => 34,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 335,
+			// 	'permission_id' => 35,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 336,
+			// 	'permission_id' => 36,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 337,
+			// 	'permission_id' => 37,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 338,
+			// 	'permission_id' => 38,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 339,
+			// 	'permission_id' => 39,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 340,
+			// 	'permission_id' => 40,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 341,
+			// 	'permission_id' => 41,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 342,
+			// 	'permission_id' => 42,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 343,
+			// 	'permission_id' => 43,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 344,
+			// 	'permission_id' => 44,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 345,
+			// 	'permission_id' => 45,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 346,
+			// 	'permission_id' => 46,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 347,
+			// 	'permission_id' => 47,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 348,
+			// 	'permission_id' => 48,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 349,
+			// 	'permission_id' => 49,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 350,
+			// 	'permission_id' => 50,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 351,
+			// 	'permission_id' => 51,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 352,
+			// 	'permission_id' => 52,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 353,
+			// 	'permission_id' => 53,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 354,
+			// 	'permission_id' => 54,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 355,
+			// 	'permission_id' => 55,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 356,
+			// 	'permission_id' => 56,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 357,
+			// 	'permission_id' => 57,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 358,
+			// 	'permission_id' => 58,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 359,
+			// 	'permission_id' => 59,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 360,
+			// 	'permission_id' => 60,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 361,
+			// 	'permission_id' => 61,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 362,
+			// 	'permission_id' => 62,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 363,
+			// 	'permission_id' => 63,
+			// 	'role_id'       => 3,
+			// ],
+			// // [
+			// // 	'id'            => 364,
+			// // 	'permission_id' => 64,
+			// // 	'role_id'       => 3,
+			// // ],
+			// [
+			// 	'id'            => 365,
+			// 	'permission_id' => 65,
+			// 	'role_id'       => 3,
+			// ],
+			// // [
+			// // 	'id'            => 366,
+			// // 	'permission_id' => 66,
+			// // 	'role_id'       => 3,
+			// // ],
+			// [
+			// 	'id'            => 367,
+			// 	'permission_id' => 67,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 368,
+			// 	'permission_id' => 68,
+			// 	'role_id'       => 3,
+			// ],
+			// // [
+			// // 	'id'            => 369,
+			// // 	'permission_id' => 69,
+			// // 	'role_id'       => 3,
+			// // ],
+			// [
+			// 	'id'            => 370,
+			// 	'permission_id' => 70,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 372,
+			// 	'permission_id' => 72,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 373,
+			// 	'permission_id' => 73,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 374,
+			// 	'permission_id' => 74,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 375,
+			// 	'permission_id' => 75,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 376,
+			// 	'permission_id' => 76,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 377,
+			// 	'permission_id' => 77,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 378,
+			// 	'permission_id' => 78,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 379,
+			// 	'permission_id' => 79,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 380,
+			// 	'permission_id' => 80,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 381,
+			// 	'permission_id' => 81,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 382,
+			// 	'permission_id' => 82,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 383,
+			// 	'permission_id' => 83,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 384,
+			// 	'permission_id' => 84,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 385,
+			// 	'permission_id' => 85,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 386,
+			// 	'permission_id' => 86,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 387,
+			// 	'permission_id' => 87,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 388,
+			// 	'permission_id' => 88,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 389,
+			// 	'permission_id' => 89,
+			// 	'role_id'       => 3,
+			// ],
+			// //hrm
+			// [
+			// 	'id'            => 401,
+			// 	'permission_id' => 101,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 402,
+			// 	'permission_id' => 102,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 403,
+			// 	'permission_id' => 103,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 404,
+			// 	'permission_id' => 104,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 405,
+			// 	'permission_id' => 105,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 410,
+			// 	'permission_id' => 110,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 415,
+			// 	'permission_id' => 115,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 416,
+			// 	'permission_id' => 116,
+			// 	'role_id'       => 3,
+			// ],
+			// [
+			// 	'id'            => 417,
+			// 	'permission_id' => 117,
+			// 	'role_id'       => 3,
+			// ],
 		)
 	);
     }

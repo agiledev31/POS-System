@@ -28,7 +28,9 @@
         <div slot="table-actions" class="mt-2 mb-3">
           <router-link
             class="btn-rounded btn btn-primary ripple btn-icon m-1"
-            v-if="currentUserPermissions && currentUserPermissions.includes('permissions_add')"
+            v-if="currentUserPermissions && currentUserPermissions.includes('permissions_add') 
+              && (current_user.id === 1 || current_user.id === workspace_owner)
+              && current_user.role_id <= 2"
             to="/app/Settings/Permissions/store"
           >
             <span class="ul-btn__icon">
@@ -38,7 +40,9 @@
           </router-link>
         </div>
 
-        <template slot="table-row" slot-scope="props" v-if="props.row.id !==1">
+        <template slot="table-row" slot-scope="props" 
+          v-if="!(props.row.id === 1 || (props.row.id === 2 && current_user.workspace_id)) && current_user.role_id <= 2"
+        >
           <span v-if="props.column.field == 'actions'">
             <router-link 
               v-if="currentUserPermissions && currentUserPermissions.includes('permissions_edit')"
@@ -87,7 +91,9 @@ export default {
       totalRows: "",
       search: "",
       limit: "10",
-      roles: []
+      roles: [],
+      workspace_owner: "",
+      current_user: "",
     };
   },
 
@@ -227,10 +233,36 @@ export default {
         }
       });
     },
+    Get_Workspace_Info(id) {
+      axios
+        .get(`get_workspace_info/${id}`)
+        .then(response => {
+          this.workspace_owner = response.data.owner;
+          this.isLoading = false;
+        })
+        .catch(response => {
+          this.isLoading = false;
+        });
+    },
+    Get_Profile_Info() {
+      axios
+        .get("get_user_profile")
+        .then(response => {
+          this.current_user = response.data.user;
+          if(response.data.user.workspace_id) {
+            this.Get_Workspace_Info(response.data.user.workspace_id);
+          }
+          this.isLoading = false;
+        })
+        .catch(response => {
+          this.isLoading = false;
+        });
+    },
    
   }, //end Methods
 
   created: function() {
+    this.Get_Profile_Info();
     this.Get_Roles(1);
 
     Fire.$on("Delete_role", () => {

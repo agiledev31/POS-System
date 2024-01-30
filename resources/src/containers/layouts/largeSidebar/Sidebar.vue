@@ -215,15 +215,15 @@
 
           <li
             v-show="currentUserPermissions && (currentUserPermissions.includes('setting_system') 
-                        || currentUserPermissions.includes('sms_settings')
-                        || currentUserPermissions.includes('notification_template')
-                        || currentUserPermissions.includes('pos_settings')
-                        || currentUserPermissions.includes('payment_gateway')
-                        || currentUserPermissions.includes('mail_settings')
-                        || currentUserPermissions.includes('warehouse') 
-                        || currentUserPermissions.includes('backup') 
-                        || currentUserPermissions.includes('currency') 
-                        || currentUserPermissions.includes('permissions_view'))"
+              || currentUserPermissions.includes('sms_settings')
+              || currentUserPermissions.includes('notification_template')
+              || currentUserPermissions.includes('pos_settings')
+              || currentUserPermissions.includes('payment_gateway')
+              || currentUserPermissions.includes('mail_settings')
+              || currentUserPermissions.includes('warehouse') 
+              || currentUserPermissions.includes('backup') 
+              || currentUserPermissions.includes('currency') 
+              || currentUserPermissions.includes('permissions_view'))"
             @mouseenter="toggleSubMenu"
             :class="{ active: selectedParentMenu == 'settings' }"
             class="nav-item"
@@ -663,7 +663,7 @@
           data-parent="settings"
           :class="{ 'd-block': selectedParentMenu == 'settings' }"
         >
-          <li
+          <!-- <li
             class="nav-item"
             v-if="currentUserPermissions && currentUserPermissions.includes('setting_system')"
           >
@@ -671,7 +671,7 @@
               <i class="nav-icon i-Gear"></i>
               <span class="item-name">{{$t('SystemSettings')}}</span>
             </router-link>
-          </li>
+          </li> -->
 
           <li
             class="nav-item"
@@ -723,7 +723,7 @@
             </router-link>
           </li>
 
-            <li
+            <!-- <li
             class="nav-item"
             v-if="currentUserPermissions && currentUserPermissions.includes('setting_system')"
           >
@@ -731,9 +731,9 @@
               <i class="nav-icon i-Upgrade"></i>
               <span class="item-name">{{$t('update_settings')}}</span>
             </router-link>
-          </li>
+          </li> -->
 
-           <li
+           <!-- <li
             class="nav-item"
             v-if="currentUserPermissions && currentUserPermissions.includes('payment_gateway')"
           >
@@ -741,7 +741,7 @@
               <i class="nav-icon i-Money-2"></i>
               <span class="item-name">{{$t('payment_gateway')}}</span>
             </router-link>
-          </li>
+          </li> -->
 
           
 
