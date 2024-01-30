@@ -670,7 +670,6 @@ export default {
         .then(response => {
           this.users = response.data.users;
           this.roles = response.data.roles;
-          console.log("currnt user", this.current_user);
           if(this.current_user.role_id === 1 ){
             this.roles = response.data.roles.slice(0, 2);
           }
