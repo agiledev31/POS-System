@@ -663,7 +663,7 @@
           data-parent="settings"
           :class="{ 'd-block': selectedParentMenu == 'settings' }"
         >
-          <!-- <li
+          <li
             class="nav-item"
             v-if="currentUserPermissions && currentUserPermissions.includes('setting_system')"
           >
@@ -671,7 +671,7 @@
               <i class="nav-icon i-Gear"></i>
               <span class="item-name">{{$t('SystemSettings')}}</span>
             </router-link>
-          </li> -->
+          </li>
 
           <li
             class="nav-item"
