@@ -45,7 +45,7 @@
         </div>
 
         <template slot="table-row" slot-scope="props">
-          <span v-if="props.column.field == 'actions'">
+          <span v-if="props.column.field == 'actions' && props.row.id !== 1">
             <a @click="Edit_Currency(props.row)" title="Edit" v-b-tooltip.hover>
               <i class="i-Edit text-25 text-success"></i>
             </a>

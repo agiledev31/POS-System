@@ -80,7 +80,15 @@ class UserController extends BaseController
         if(Auth::user()->role_id == 1) {
             $roles = Role::where('deleted_at', null)->get(['id', 'name']);
         } else {
-            $roles = Role::where('deleted_at', null)->where('id', '<>', 1)->get(['id', 'name']);
+            $roles = Role::where('deleted_at', null)
+                ->where('id', '<>', 1)
+                ->where(function($query) {
+                    if(auth()->user()->workspace_id) {
+                        return $query->where('workspace_id', '=', auth()->user()->workspace_id)
+                            ->orWhere('id', '=', 2);                
+                        }
+                })
+                ->get(['id', 'name']);
         }
         if(Auth::user()->role_id == 1) {
             $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name', 'workspace_id']);

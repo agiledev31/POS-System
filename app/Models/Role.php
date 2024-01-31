@@ -41,4 +41,9 @@ class Role extends Model
         }
         return !!$permission->intersect($this->permissions)->count();
     }
+
+    public function workspace()
+    {
+        return $this->belongsTo('App\Models\Workspace');
+    }
 }

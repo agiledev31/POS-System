@@ -17,6 +17,7 @@ class CreateRolesTable extends Migration {
 		{
 			$table->engine = 'InnoDB';
 			$table->integer('id', true);
+			$table->integer('workspace_id')->nullable()->index('workspace_id');
 			$table->string('name', 192);
 			$table->string('label', 192)->nullable();
 			$table->text('description')->nullable();

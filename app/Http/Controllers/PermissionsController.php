@@ -29,6 +29,10 @@ class PermissionsController extends BaseController
 
         $roles = Role::where('deleted_at', '=', null)
         // Search With Multiple Param
+            ->where(function($query) {
+                if(auth()->user()->workspace_id) {
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);                }
+            })
             ->where(function ($query) use ($request) {
                 return $query->when($request->filled('search'), function ($query) use ($request) {
                     return $query->where('name', 'LIKE', "%{$request->search}%")
@@ -69,6 +73,7 @@ class PermissionsController extends BaseController
                 $Role->label = $request['role']['name'];
                 $Role->status = 0;
                 $Role->description = $request['role']['description'];
+                $Role->workspace_id = auth()->user()->workspace_id;
                 $Role->save();
 
                 $role = Role::findOrFail($Role->id);
