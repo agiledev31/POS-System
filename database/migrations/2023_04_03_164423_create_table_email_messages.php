@@ -16,6 +16,7 @@ class CreateTableEmailMessages extends Migration
         Schema::create('email_messages', function (Blueprint $table) {
             $table->engine = 'InnoDB';
 			$table->integer('id', true);
+            $table->integer('workspace_id')->nullable()->index('workspace_id');
             $table->text('name')->nullable();
             $table->text('subject')->nullable();
             $table->text('body')->nullable();

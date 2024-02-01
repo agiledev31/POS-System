@@ -16,6 +16,7 @@ class CreateSmsMessagesTable extends Migration
         Schema::create('sms_messages', function (Blueprint $table) {
             $table->engine = 'InnoDB';
 			$table->integer('id', true);
+            $table->integer('workspace_id')->nullable()->index('workspace_id');
             $table->text('name')->nullable();
             $table->text('text')->nullable();
             $table->timestamps(6);

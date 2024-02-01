@@ -5,7 +5,8 @@
     <div class="app-footer">
       <div class="row">
         <div class="col-md-9">
-          <p><strong>{{currentUser.footer}}</strong></p>
+          <p><strong>Ultimate Inventory With POS</strong></p>
+          <!-- <p><strong>{{currentUser.footer}}</strong></p> -->
         </div>
       </div>
       <div
@@ -15,7 +16,8 @@
           <img class="logo" :src="'/images/'+currentUser.logo" alt width="60" height="60">
           <div>
             <div>
-              <p class="m-0">&copy; {{ new Date().getFullYear() }} {{$t('developed_by')}} {{currentUser.developed_by}}</p>
+              <p class="m-0">&copy; {{ new Date().getFullYear() }} {{$t('developed_by')}} Ahmed </p>
+              <!-- <p class="m-0">&copy; {{ new Date().getFullYear() }} {{$t('developed_by')}} {{currentUser.developed_by}}</p> -->
               <p class="m-0">All rights reserved - v4.0.6</p>
             </div>
           </div>
