@@ -17,7 +17,7 @@ class CreateSettingsTable extends Migration {
 		{
 			$table->engine = 'InnoDB';
 			$table->integer('id', true);
-			$table->integer('workspace_id', true)->nullable()->indix('workspace_id');
+			$table->integer('workspace_id')->nullable()->indix('workspace_id');
 			$table->string('email', 191);
 			$table->integer('currency_id')->nullable()->index('currency_id');
 			$table->string('CompanyName');
