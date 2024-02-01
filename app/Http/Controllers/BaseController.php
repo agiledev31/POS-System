@@ -74,9 +74,9 @@ class BaseController extends Controller
     public function clearCookie()
     {
         $domain = ($_SERVER['SERVER_NAME'] != 'localhost') ? $_SERVER['SERVER_NAME'] : '.'.$_SERVER['SERVER_NAME'];
-        if (isset($_COOKIE['Stocky_token'])) {
-            unset($_COOKIE['Stocky_token']);
-            setcookie('Stocky_token', '', time() - 2147483647, '/', $domain); // empty value and old timestamp
+        if (isset($_COOKIE['POS_token'])) {
+            unset($_COOKIE['POS_token']);
+            setcookie('POS_token', '', time() - 2147483647, '/', $domain); // empty value and old timestamp
         }
     }
 

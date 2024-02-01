@@ -26,7 +26,7 @@ class IsActiveToken
         foreach ($arrayKeys as $value)
         {
 
-            if (strpos($value, 'Stocky_token') !== false) {
+            if (strpos($value, 'POS_token') !== false) {
 
                 $userAccessTokenArray = (array) $userUnserializeArray[$value];
                 $arrayAccessKeys = array_keys($userAccessTokenArray);

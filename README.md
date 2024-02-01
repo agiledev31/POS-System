@@ -74,7 +74,7 @@
 -   Added  : Clearing cache with a click of a button
 -   Updated : Fix bug in Import Product (without create warehouse)
 -   Updated : Change currency symbol from the right to the left
--   Added  : Video in documentation showing you the steps on how to upgrade stocky
+-   Added  : Video in documentation showing you the steps on how to upgrade
 -   Updated : Minor bug fixes
 
 # Version 3.3.0 - 06-07-2021
