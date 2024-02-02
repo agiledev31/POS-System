@@ -17,6 +17,7 @@ class CreateServeursTable extends Migration {
 		{
 			$table->engine = 'InnoDB';
 			$table->integer('id', true);
+			$table->integer('workspace_id')->nullable()->index('workspace_id');
 			$table->string('host', 191);
 			$table->integer('port');
 			$table->string('username', 191);
