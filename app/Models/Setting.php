@@ -14,6 +14,7 @@ class Setting extends Model
     ];
 
     protected $casts = [
+        'workspace_id' =>'integer',
         'currency_id' => 'integer',
         'client_id' => 'integer',
         'quotation_with_stock' => 'integer',
@@ -30,5 +31,8 @@ class Setting extends Model
     {
         return $this->belongsTo('App\Models\Client');
     }
-
+    public function workspace()
+    {
+        return $this->belongsTo('App\Models\Workspace');
+    }
 }

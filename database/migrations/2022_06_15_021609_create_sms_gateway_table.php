@@ -18,7 +18,7 @@ class CreateSmsGatewayTable extends Migration {
 			$table->engine = 'InnoDB';
 			$table->integer('id', true);
 			$table->integer('workspace_id')->nullable()->index('workspace_id');
-			$table->string('title', 192);
+			$table->string('title', 192)->nullable();
 			$table->timestamps(6);
 			$table->softDeletes();
 		});
