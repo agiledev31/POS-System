@@ -9,7 +9,16 @@ class EmailMessage extends Model
     protected $table = 'email_messages';
 
     protected $fillable = [
-        'subject','body'
+        'subject','body', 'workspace_id',
     ];
+
+    protected $casts = [
+        'workspace_id' => 'integer',
+    ];
+
+    public function workspace()
+    {
+        return $this->belongsTo('App\Models\Workspace');
+    }
 
 }

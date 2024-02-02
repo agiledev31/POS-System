@@ -9,10 +9,11 @@ class PosSetting extends Model
 
     protected $fillable = [
         'note_customer', 'show_note', 'show_barcode', 'show_discount', 'show_customer',
-         'show_email','show_phone','show_address','is_printable','show_Warehouse'
+         'show_email','show_phone','show_address','is_printable','show_Warehouse',  'workspace_id', 
     ];
 
     protected $casts = [
+        'workspace_id' => 'integer',
         'show_note' => 'integer',
         'show_barcode' => 'integer',
         'show_discount' => 'integer',
@@ -24,5 +25,9 @@ class PosSetting extends Model
         'is_printable' => 'integer',
     ];
 
+    public function workspace()
+    {
+        return $this->belongsTo('App\Models\Workspace');
+    }
 
 }

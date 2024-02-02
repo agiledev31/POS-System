@@ -16,6 +16,7 @@ class CreatePosSettings extends Migration
         Schema::create('pos_settings', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->integer('id', true);
+            $table->integer('workspace_id')->nullable()->index('workspace_id');
             $table->string('note_customer', 192)->default('Thank You For Shopping With Us . Please Come Again');
             $table->boolean('show_note')->default(1);
             $table->boolean('show_barcode')->default(1);

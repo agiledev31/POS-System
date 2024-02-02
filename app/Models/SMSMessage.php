@@ -9,7 +9,15 @@ class SMSMessage extends Model
     protected $table = 'sms_messages';
 
     protected $fillable = [
-        'text','name'
+        'text','name', 'workspace_id', 
     ];
 
+    protected $casts = [
+        'workspace_id' => 'integer',
+    ];
+
+    public function workspace()
+    {
+        return $this->belongsTo('App\Models\Workspace');
+    }
 }
