@@ -29,8 +29,8 @@ Object.keys(rules).forEach(rule => {
 Vue.component("ValidationObserver", ValidationObserver);
 Vue.component('ValidationProvider', ValidationProvider);
 
-import StockyKit from "./plugins/stocky.kit";
-Vue.use(StockyKit);
+import AhmedPOSKit from "./plugins/ahmedPOS.kit.js";
+Vue.use(AhmedPOSKit);
 import VueCookies from 'vue-cookies'
 Vue.use(VueCookies);
 

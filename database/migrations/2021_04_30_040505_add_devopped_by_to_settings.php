@@ -16,7 +16,7 @@ class AddDevoppedByToSettings extends Migration
         if (! Schema::hasColumn('settings', 'developed_by')) {
             Schema::table('settings', function (Blueprint $table) {
                 $table->engine = 'InnoDB';
-                $table->string('developed_by', 192)->after('footer')->default('Stocky');
+                $table->string('developed_by', 192)->after('footer')->default('Ahmed');
     
             });
         }

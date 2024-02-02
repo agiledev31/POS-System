@@ -1176,6 +1176,7 @@ export default {
       axios
         .get("get_Products_by_warehouse/" + id + "?stock=" + 1 + "&is_sale=" + 1 + "&product_service=" + 1)
          .then(response => {
+          console.log("products", response.data);
             this.products = response.data;
              NProgress.done();
 

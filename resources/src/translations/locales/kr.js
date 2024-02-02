@@ -180,7 +180,7 @@ export default {
        Reports_payments_Purchases : "결제 신고",
        Reports_payments_Return_Customers : "고객반환 신고",
        Reports_payments_Return_Suppliers : "보고서 지불의 반환 공급자",
-       stockyVersion : "당신은 스타킹 버전에서이 작업을 수행 할 수 없습니다",
+       ahmedPOSVersion : "당신은 스타킹 버전에서이 작업을 수행 할 수 없습니다",
        Expense_Deleted : "이 비용은 제거되었습니다.",
        Expense_Updated : "이 지출이 업데이트되었습니다",
        Expense_Created : "이 비용이 만들어졌습니다.",
