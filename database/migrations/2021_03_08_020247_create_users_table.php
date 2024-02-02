@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration {
 			$table->string('phone', 192);
 			$table->integer('role_id');
 			$table->boolean('statut')->default(1);
+			$table->date('expire_date')->nullable();
 			$table->timestamps(6);
 			$table->softDeletes();
 		});
