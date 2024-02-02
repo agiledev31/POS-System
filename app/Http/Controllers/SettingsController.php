@@ -108,10 +108,9 @@ class SettingsController extends Controller
             'logo' => $filename,
         ]);
 
-        $this->setEnvironmentValue([
-            'APP_TIMEZONE' => $request['timezone'] !== null?'"' . $request['timezone'] . '"':'"UTC"',
-        ]);
-
+        // $this->setEnvironmentValue([
+        //     'APP_TIMEZONE' => $request['timezone'] !== null?'"' . $request['timezone'] . '"':'"UTC"',
+        // ]);
         Artisan::call('config:cache');
         Artisan::call('config:clear');
 
@@ -125,7 +124,13 @@ class SettingsController extends Controller
      {
          $this->authorizeForUser($request->user('api'), 'pos_settings', Setting::class);
  
-         $PosSetting = PosSetting::where('deleted_at', '=', null)->first();
+         $PosSetting = PosSetting::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if(auth()->user()->workspace_id){
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
+            ->first();
 
          return response()->json([
              'pos_settings' => $PosSetting
@@ -173,7 +178,13 @@ class SettingsController extends Controller
     {
         $this->authorizeForUser($request->user('api'), 'view', Setting::class);
 
-        $settings = Setting::where('deleted_at', '=', null)->first();
+        $settings = Setting::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if(auth()->user()->workspace_id){
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
+            ->first();
         if ($settings) {
             if ($settings->currency_id) {
                 if (Currency::where('id', $settings->currency_id)->where('deleted_at', '=', null)->first()) {
@@ -239,7 +250,13 @@ class SettingsController extends Controller
             }
 
             $Currencies = Currency::where('deleted_at', null)->get(['id', 'name']);
-            $clients = client::where('deleted_at', '=', null)->get(['id', 'name']);
+            $clients = client::where('deleted_at', '=', null)
+                ->where(function ($query) {
+                    if(auth()->user()->workspace_id){
+                        return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                    }
+                })
+                ->get(['id', 'name']);
             $sms_gateway = sms_gateway::where('deleted_at', '=', null)->get(['id', 'title']);
 
             //get warehouses assigned to user

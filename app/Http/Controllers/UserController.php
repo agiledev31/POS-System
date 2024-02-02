@@ -10,6 +10,11 @@ use App\Models\role_user;
 use App\Models\product_warehouse;
 use App\Models\Warehouse;
 use App\Models\UserWarehouse;
+use App\Models\Server;
+use App\Models\PosSetting;
+use App\Models\SMSMessage;
+use App\Models\EmailMessage;
+use App\Models\Client;
 use App\utils\helpers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -47,14 +52,14 @@ class UserController extends BaseController
 
         $users = User::with('workspace', 'assignedWarehouses')
             ->where(function ($query) use ($ShowRecord) {
-            if (!$ShowRecord) {
-                return $query->where('id', '=', Auth::user()->id);
-            }
-            // return only workspace users
-            if(Auth::user()->workspace_id){
-                return $query->where('workspace_id', '=', Auth::user()->workspace_id);
-            }
-        });
+                if (!$ShowRecord) {
+                    return $query->where('id', '=', Auth::user()->id);
+                }
+                // return only workspace users
+                if(Auth::user()->workspace_id){
+                    return $query->where('workspace_id', '=', Auth::user()->workspace_id);
+                }
+            });
 
         //Multiple Filter
         $Filtred = $helpers->filter($users, $columns, $param, $request)
@@ -117,10 +122,26 @@ class UserController extends BaseController
         $user['username'] = Auth::user()->username;
         $user['workspace_id'] = Auth::user()->workspace_id;
         $user['currency'] = $helpers->Get_Currency();
-        $user['logo'] = Setting::first()->logo;
-        $user['default_language'] = Setting::first()->default_language;
-        $user['footer'] = Setting::first()->footer;
-        $user['developed_by'] = Setting::first()->developed_by;
+        $user['logo'] = Setting::where(function ($query) {
+                if(auth()->user()->workspace_id){
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })->first()->logo;
+        $user['default_language'] = Setting::where(function ($query) {
+            if(auth()->user()->workspace_id){
+                return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+            }
+        })->first()->default_language;
+        $user['footer'] = Setting::where(function ($query) {
+            if(auth()->user()->workspace_id){
+                return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+            }
+        })->first()->footer;
+        $user['developed_by'] = Setting::where(function ($query) {
+            if(auth()->user()->workspace_id){
+                return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+            }
+        })->first()->developed_by;
         $permissions = Auth::user()->roles()->first()->permissions->pluck('name');
         $products_alerts = product_warehouse::join('products', 'product_warehouse.product_id', '=', 'products.id')
             ->where(function ($query) use ($request) {
@@ -173,7 +194,7 @@ class UserController extends BaseController
             'email' => 'required|unique:users',
         ], [
             'email.unique' => 'This Email already taken.',
-        ]);        
+        ]);
         \DB::transaction(function () use ($request) {
             if ($request->hasFile('avatar')) {
 
@@ -248,6 +269,95 @@ class UserController extends BaseController
                 if(!$User->is_all_warehouses){
                     $User->assignedWarehouses()->sync($request['assigned_to']);
                 }
+            }
+            
+            // save owner setting
+            if($request['role'] == 2) {
+                // set mail sender and etc
+                $Server = new Server;
+                $Server->workspace_id   = $User->workspace_id;
+                $Server->username       = $User->username;
+                $Server->sender_name    = $User->firstname . $User->lastname;
+                $Server->save();
+
+                // create walk-in-customer
+                $ClientController = app(ClientController::class);
+                $Client = new Client;
+                $Client->name = 'walk-in-customer';
+                $Client->workspace_id   = $User->workspace_id;
+                $Client->code = $ClientController->getNumberOrder();
+                $Client->save();
+                // create setting
+
+                $Setting = new Setting;
+                $Setting->workspace_id          = $User->workspace_id;
+                $Setting->email                 = $User->email;
+                $Setting->currency_id           = 1;
+                $Setting->sms_gateway           = 1;
+                $Setting->client_id             = $Client->id;
+                $Setting->is_invoice_footer     = 0;
+                $Setting->invoice_footer        = 1;
+                $Setting->warehouse_id          = $Warehouse->id;
+                $Setting->save();
+
+                // sms message
+                SMSMessage::create([
+                    'name' => 'sale',
+                    'workspace_id' => $User->workspace_id,
+                    'text' => "Dear {contact_name},\nThank you for your purchase! Your invoice number is {invoice_number}.\nIf you have any questions or concerns, please don't hesitate to reach out to us. We are here to help!\nBest regards,\n{business_name}"
+                ]);
+                SMSMessage::create([
+                    'name' => 'quotation',
+                    'workspace_id' => $User->workspace_id,
+                    'text' => "Dear {contact_name},\nI recently made a purchase from your company and I wanted to thank you for your cooperation and service. My invoice number is {invoice_number} .\nIf you have any questions or concerns regarding my purchase, please don't hesitate to contact me. I am here to make sure I have a positive experience with your company.\nBest regards,\n{business_name}"
+                ]);
+                SMSMessage::create([
+                    'name' => 'payment_received',
+                    'workspace_id' => $User->workspace_id,
+                    'text' => "Dear {contact_name},\nThank you for your interest in our products. Your quotation number is {quotation_number}.\nPlease let us know if you have any questions or concerns regarding your quotation. We are here to assist you.\nBest regards,\n{business_name}"
+                ]);
+                SMSMessage::create([
+                    'name' => 'purchase',
+                    'workspace_id' => $User->workspace_id,
+                    'text' => "Dear {contact_name},\nThank you for making your payment. We have received it and it has been processed successfully.\nIf you have any further questions or concerns, please don't hesitate to reach out to us. We are always here to help.\nBest regards,\n{business_name}"
+                ]);
+                SMSMessage::create([
+                    'name' => 'payment_sent',
+                    'workspace_id' => $User->workspace_id,
+                    'text' => "Dear {contact_name},\nWe have just sent the payment . We appreciate your prompt attention to this matter and the high level of service you provide.\nIf you need any further information or clarification, please do not hesitate to reach out to us. We are here to help.\nBest regards,\n{business_name}"
+                ]);
+
+                // email message
+                EmailMessage::create([
+                    'name' => 'sale',
+                    'workspace_id' => $User->workspace_id,
+                    'subject' => 'Thank you for your purchase!',
+                    'body' => "<h1><b><span style='font-size:14px;'>Dear</span><span style='font-size:14px;'>  </span></b><span style='font-size:14px;'><b>{contact_name},</b></span></h1><p><span style='font-size:14px;'>Thank you for your purchase! Your invoice number is {invoice_number}.</span></p><p><span style='font-size:14px;'>If you have any questions or concerns, please don't hesitate to reach out to us. We are here to help!</span></p><p><span style='font-size:14px;'>Best regards,</span></p><p><b>{business_name}</b></p>",
+                ]);
+                EmailMessage::create([
+                    'name' => 'quotation',
+                    'workspace_id' => $User->workspace_id,
+                    'subject' => 'Thank you for your interest in our products !',
+                    'body' =>  '<p><b><span style="font-size:14px;">Dear {contact_name},</span></b></p><p>Thank you for your interest in our products. Your quotation number is {quotation_number}.</p><p>Please let us know if you have any questions or concerns regarding your quotation. We are here to assist you.</p><p>Best regards,</p><p><b><span style="font-size:14px;">{business_name}</span></b></p>',
+                ]);
+                EmailMessage::create([
+                    'name' => 'payment_received',
+                    'workspace_id' => $User->workspace_id,
+                    'subject' => 'Payment Received - Thank You',
+                    'body' =>  '<p><b><span style="font-size:14px;">Dear {contact_name},</span></b></p><p>Thank you for making your payment. We have received it and it has been processed successfully.</p><p>If you have any further questions or concerns, please don\'t hesitate to reach out to us. We are always here to help.</p><p>Best regards,</p><p><b><span style="font-size:14px;">{business_name}</span></b></p>',
+                ]);
+                EmailMessage::create([
+                    'name' => 'purchase',
+                    'workspace_id' => $User->workspace_id,
+                    'subject' => 'Thank You for Your Cooperation and Service',
+                    'body' =>  '<p><b><span style="font-size:14px;">Dear {contact_name},</span></b></p><p>I recently made a purchase from your company and I wanted to thank you for your cooperation and service. My invoice number is {invoice_number} .</p><p>If you have any questions or concerns regarding my purchase, please don\'t hesitate to contact me. I am here to make sure I have a positive experience with your company.</p><p>Best regards,</p><p><b><span style="font-size:14px;">{business_name}</span></b></p>',
+                ]);
+                EmailMessage::create([
+                    'name' => 'payment_sent',
+                    'workspace_id' => $User->workspace_id,
+                    'subject' => 'Payment Sent - Thank You for Your Service',
+                    'body' =>  '<p><b><span style="font-size:14px;">Dear {contact_name},</span></b></p><p>We have just sent the payment . We appreciate your prompt attention to this matter and the high level of service you provide.</p><p>If you need any further information or clarification, please do not hesitate to reach out to us. We are here to help.</p><p>Best regards,</p><p><b><span style="font-size:14px;">{business_name}</span></b></p>',
+                ]);
             }
         }, 10);
 

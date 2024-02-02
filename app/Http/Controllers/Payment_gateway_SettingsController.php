@@ -33,16 +33,16 @@ class Payment_gateway_SettingsController extends Controller
           $this->authorizeForUser($request->user('api'), 'payment_gateway', Setting::class);
 
           if($request['deleted'] == 'true'){
-            $this->setEnvironmentValue([
-                'STRIPE_KEY' => '',
-                'STRIPE_SECRET' => '',
-            ]);
+            // $this->setEnvironmentValue([
+            //     'STRIPE_KEY' => '',
+            //     'STRIPE_SECRET' => '',
+            // ]);
 
         }else{
-            $this->setEnvironmentValue([
-                'STRIPE_KEY' => $request['stripe_key'] !== null?'"' . $request['stripe_key'] . '"':'',
-                'STRIPE_SECRET' => $request['stripe_secret'] !== null?'"' . $request['stripe_secret'] . '"':'"' . env('STRIPE_SECRET') . '"',
-            ]);
+            // $this->setEnvironmentValue([
+            //     'STRIPE_KEY' => $request['stripe_key'] !== null?'"' . $request['stripe_key'] . '"':'',
+            //     'STRIPE_SECRET' => $request['stripe_secret'] !== null?'"' . $request['stripe_secret'] . '"':'"' . env('STRIPE_SECRET') . '"',
+            // ]);
         }
 
             Artisan::call('config:cache');

@@ -9,7 +9,7 @@ class SMSMessage extends Model
     protected $table = 'sms_messages';
 
     protected $fillable = [
-        'text','name', 'workspace_id', 
+        'text','name','workspace_id', 
     ];
 
     protected $casts = [

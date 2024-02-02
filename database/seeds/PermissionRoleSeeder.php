@@ -1158,26 +1158,26 @@ class PermissionRoleSeeder extends Seeder
 				'permission_id' => 105,
 				'role_id'       => 2,
 			],
-			// [
-			// 	'id'            => 229,
-			// 	'permission_id' => 106,
-			// 	'role_id'       => 2,
-			// ],
-			// [
-			// 	'id'            => 230,
-			// 	'permission_id' => 107,
-			// 	'role_id'       => 2,
-			// ],
+			[
+				'id'            => 229,
+				'permission_id' => 106,
+				'role_id'       => 2,
+			],
+			[
+				'id'            => 230,
+				'permission_id' => 107,
+				'role_id'       => 2,
+			],
 			// [
 			// 	'id'            => 231,
 			// 	'permission_id' => 108,
 			// 	'role_id'       => 2,
 			// ],
-			// [
-			// 	'id'            => 232,
-			// 	'permission_id' => 109,
-			// 	'role_id'       => 2,
-			// ],
+			[
+				'id'            => 232,
+				'permission_id' => 109,
+				'role_id'       => 2,
+			],
 			[
 				'id'            => 233,
 				'permission_id' => 110,
@@ -1218,11 +1218,11 @@ class PermissionRoleSeeder extends Seeder
 				'permission_id' => 117,
 				'role_id'       => 2,
 			],
-			// [
-			// 	'id'            => 241,
-			// 	'permission_id' => 118,
-			// 	'role_id'       => 2,
-			// ],
+			[
+				'id'            => 241,
+				'permission_id' => 118,
+				'role_id'       => 2,
+			],
 			[
 				'id'            => 242,
 				'permission_id' => 119,

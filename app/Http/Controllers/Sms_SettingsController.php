@@ -66,11 +66,11 @@ class Sms_SettingsController extends Controller
         $this->authorizeForUser($request->user('api'), 'sms_settings', Setting::class);
 
         
-            $this->setEnvironmentValue([
-                'TWILIO_SID' => $request['TWILIO_SID'] !== null?'"' . $request['TWILIO_SID'] . '"':'"' . env('TWILIO_SID') . '"',
-                'TWILIO_TOKEN' => $request['TWILIO_TOKEN'] !== null?'"' . $request['TWILIO_TOKEN'] . '"':'"' . env('TWILIO_TOKEN') . '"',
-                'TWILIO_FROM' => $request['TWILIO_FROM'] !== null?'"' . $request['TWILIO_FROM'] . '"':'"' . env('TWILIO_FROM') . '"',
-            ]);
+            // $this->setEnvironmentValue([
+            //     'TWILIO_SID' => $request['TWILIO_SID'] !== null?'"' . $request['TWILIO_SID'] . '"':'"' . env('TWILIO_SID') . '"',
+            //     'TWILIO_TOKEN' => $request['TWILIO_TOKEN'] !== null?'"' . $request['TWILIO_TOKEN'] . '"':'"' . env('TWILIO_TOKEN') . '"',
+            //     'TWILIO_FROM' => $request['TWILIO_FROM'] !== null?'"' . $request['TWILIO_FROM'] . '"':'"' . env('TWILIO_FROM') . '"',
+            // ]);
 
             Artisan::call('config:cache');
             Artisan::call('config:clear');
@@ -87,11 +87,11 @@ class Sms_SettingsController extends Controller
      {
          $this->authorizeForUser($request->user('api'), 'sms_settings', Setting::class);
 
-        $this->setEnvironmentValue([
-            'NEXMO_KEY' => $request['nexmo_key'] !== null?'"' . $request['nexmo_key'] . '"':'"' . env('NEXMO_KEY') . '"',
-            'NEXMO_SECRET' => $request['nexmo_secret'] !== null?'"' . $request['nexmo_secret'] . '"':'"' . env('NEXMO_SECRET') . '"',
-            'NEXMO_FROM' => $request['nexmo_from'] !== null?'"' . $request['nexmo_from'] . '"':'"' . env('NEXMO_FROM') . '"',
-        ]);
+        // $this->setEnvironmentValue([
+        //     'NEXMO_KEY' => $request['nexmo_key'] !== null?'"' . $request['nexmo_key'] . '"':'"' . env('NEXMO_KEY') . '"',
+        //     'NEXMO_SECRET' => $request['nexmo_secret'] !== null?'"' . $request['nexmo_secret'] . '"':'"' . env('NEXMO_SECRET') . '"',
+        //     'NEXMO_FROM' => $request['nexmo_from'] !== null?'"' . $request['nexmo_from'] . '"':'"' . env('NEXMO_FROM') . '"',
+        // ]);
 
         Artisan::call('config:cache');
         Artisan::call('config:clear');
@@ -108,11 +108,11 @@ class Sms_SettingsController extends Controller
         $this->authorizeForUser($request->user('api'), 'sms_settings', Setting::class);
 
         
-            $this->setEnvironmentValue([
-                'base_url' => $request['base_url'] !== null?'"' . $request['base_url'] . '"':'"' . env('base_url') . '"',
-                'api_key' => $request['api_key'] !== null?'"' . $request['api_key'] . '"':'"' . env('api_key') . '"',
-                'sender_from' => $request['sender_from'] !== null?'"' . $request['sender_from'] . '"':'"' . env('sender_from') . '"',
-            ]);
+            // $this->setEnvironmentValue([
+            //     'base_url' => $request['base_url'] !== null?'"' . $request['base_url'] . '"':'"' . env('base_url') . '"',
+            //     'api_key' => $request['api_key'] !== null?'"' . $request['api_key'] . '"':'"' . env('api_key') . '"',
+            //     'sender_from' => $request['sender_from'] !== null?'"' . $request['sender_from'] . '"':'"' . env('sender_from') . '"',
+            // ]);
 
             Artisan::call('config:cache');
             Artisan::call('config:clear');
