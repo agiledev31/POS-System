@@ -225,7 +225,7 @@
                   </b-col>
 
                    <!-- Time_Zone -->
-                  <b-col lg="4" md="4" sm="12">
+                  <!-- <b-col lg="4" md="4" sm="12">
                     <b-form-group :label="$t('Time_Zone')">
                      <v-select @input="Selected_Time_Zone"
                           :placeholder="$t('Time_Zone')"
@@ -233,7 +233,7 @@
                           :options="zones_array.map(zones_array => ({label: zones_array.label, value: zones_array.zone}))">
                       </v-select>
                     </b-form-group>
-                  </b-col>
+                  </b-col> -->
 
                    <!-- Company Adress -->
                   <b-col lg="12" md="12" sm="12">

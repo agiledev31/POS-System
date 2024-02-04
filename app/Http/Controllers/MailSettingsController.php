@@ -18,7 +18,12 @@ class MailSettingsController extends Controller
       {
           $this->authorizeForUser($request->user('api'), 'mail_settings', Setting::class);
   
-          $server = Server::where('deleted_at', '=', null)->first();
+          $server = Server::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if(auth()->user()->workspace_id){
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })->first();
   
           if ($server) {
               return response()->json(['server' => $server], 200);

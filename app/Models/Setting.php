@@ -10,7 +10,7 @@ class Setting extends Model
     protected $fillable = [
         'workspace_id', 'currency_id', 'email', 'CompanyName', 'CompanyPhone', 'CompanyAdress','quotation_with_stock',
         'logo','footer','developed_by','client_id','warehouse_id','default_language',
-        'is_invoice_footer','invoice_footer',
+        'is_invoice_footer','invoice_footer','timezone',
     ];
 
     protected $casts = [

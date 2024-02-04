@@ -20,7 +20,7 @@
                       :rules="{ required: true}"
                       v-slot="validationContext"
                     >
-                      <b-form-group label="MAIL_MAILER *">
+                      <b-form-group label="MAIL_MAILER *" v-if="currentUser.role_id == 1">
                         <b-form-input
                           :state="getValidationState(validationContext)"
                           aria-describedby="MAIL_MAILER-feedback"
@@ -32,7 +32,7 @@
                           id="MAIL_MAILER-feedback"
                         >{{ validationContext.errors[0] }}</b-form-invalid-feedback>
                       </b-form-group>
-                      <p class="text-danger">Supported: "smtp", "sendmail", "mailgun", "ses","postmark", "log"</p>
+                      <p class="text-danger" v-if="currentUser.role_id == 1">Supported: "smtp", "sendmail", "mailgun", "ses","postmark", "log"</p>
                     </validation-provider>
                   </b-col>
 
@@ -43,7 +43,7 @@
                       :rules="{ required: true}"
                       v-slot="validationContext"
                     >
-                      <b-form-group label="MAIL_HOST *">
+                      <b-form-group label="MAIL_HOST *"  v-if="currentUser.role_id == 1">
                         <b-form-input
                           :state="getValidationState(validationContext)"
                           aria-describedby="HOST-feedback"
@@ -65,7 +65,7 @@
                       :rules="{ required: true}"
                       v-slot="validationContext"
                     >
-                      <b-form-group label="MAIL_PORT *">
+                      <b-form-group label="MAIL_PORT *"  v-if="currentUser.role_id == 1">
                         <b-form-input
                           :state="getValidationState(validationContext)"
                           aria-describedby="PORT-feedback"
@@ -109,7 +109,7 @@
                       :rules="{ required: true}"
                       v-slot="validationContext"
                     >
-                      <b-form-group label="MAIL_USERNAME *">
+                      <b-form-group label="MAIL_USERNAME *" v-if="currentUser.role_id == 1">
                         <b-form-input
                           :state="getValidationState(validationContext)"
                           aria-describedby="Username-feedback"
@@ -131,7 +131,7 @@
                       :rules="{ required: true}"
                       v-slot="validationContext"
                     >
-                      <b-form-group label="MAIL_PASSWORD *">
+                      <b-form-group label="MAIL_PASSWORD *" v-if="currentUser.role_id == 1">
                         <b-form-input
                           :state="getValidationState(validationContext)"
                           aria-describedby="Password-feedback"
@@ -153,7 +153,7 @@
                       :rules="{ required: true}"
                       v-slot="validationContext"
                     >
-                      <b-form-group label="MAIL_ENCRYPTION *">
+                      <b-form-group label="MAIL_ENCRYPTION *" v-if="currentUser.role_id == 1">
                         <b-form-input
                           :state="getValidationState(validationContext)"
                           aria-describedby="encryption-feedback"
@@ -208,22 +208,31 @@ export default {
     };
   },
 
+  computed: {
+    ...mapGetters(["currentUser",]),
+  },
+
   methods: {
-    ...mapActions(["refreshUserPermissions"]),
+    ...mapActions(["refreshUserPermissions", "changeSidebarProperties"]),
 
     //------------- Submit Validation SMTP
     Submit_config_mail() {
-      this.$refs.form_config_mail.validate().then(success => {
-        if (!success) {
-          this.makeToast(
-            "danger",
-            this.$t("Please_fill_the_form_correctly"),
-            this.$t("Failed")
-          );
-        } else {
-            this.Update_config_mail();
-        }
-      });
+      if(this.currentUser.role_id === 1) {
+        this.$refs.form_config_mail.validate().then(success => {
+          if (!success) {
+            this.makeToast(
+              "danger",
+              this.$t("Please_fill_the_form_correctly"),
+              this.$t("Failed")
+            );
+          } else {
+              this.Update_config_mail();
+          }
+        });
+      } else {
+        this.Update_config_mail();
+      }
+      
     },
 
     //------ Toast
@@ -270,6 +279,7 @@ export default {
 
     //---------------------------------- GET SMTP ----------------\\ 
     get_config_mail() {
+      console.log("user", this.currentUser);
       axios
         .get("get_config_mail")
         .then(response => {

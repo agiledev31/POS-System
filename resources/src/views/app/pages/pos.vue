@@ -1444,7 +1444,7 @@ export default {
   },
   methods: {
     ...mapActions(["changeSidebarProperties", "changeThemeMode", "logout"]),
-    // ...mapGetters(["currentUser"]),
+
     logoutUser() {
       this.$store.dispatch("logout");
     },

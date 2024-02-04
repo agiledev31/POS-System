@@ -24,6 +24,7 @@ class CreateSettingsTable extends Migration {
 			$table->string('CompanyPhone')->nullable();
 			$table->string('CompanyAdress')->nullable();
 			$table->string('logo', 191)->nullable();
+			$table->string('timezone')->nullable();
 			$table->timestamps(6);
 			$table->softDeletes();
 		});

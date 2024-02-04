@@ -118,6 +118,8 @@ class UserController extends BaseController
     public function GetUserAuth(Request $request)
     {
         $helpers = new helpers();
+        $user['id'] = Auth::user()->id;
+        $user['role_id'] = Auth::user()->role_id;
         $user['avatar'] = Auth::user()->avatar;
         $user['username'] = Auth::user()->username;
         $user['workspace_id'] = Auth::user()->workspace_id;
