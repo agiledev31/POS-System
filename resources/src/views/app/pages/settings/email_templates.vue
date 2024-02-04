@@ -291,7 +291,7 @@ export default {
     ...mapActions(["refreshUserPermissions"]),
 
     
-      //------ Toast
+    //------ Toast
     makeToast(variant, msg, title) {
       this.$root.$bvToast.toast(msg, {
         title: title,
@@ -301,57 +301,57 @@ export default {
     },
 
      //---------------------------------- update_custom_email ----------------\\
-          update_custom_email(email_type) {
-              this.Submit_Processing = true;
-              NProgress.start();
-              NProgress.set(0.1);
+    update_custom_email(email_type) {
+        this.Submit_Processing = true;
+        NProgress.start();
+        NProgress.set(0.1);
 
-              if(email_type == 'sale'){
-                this.custom_email_body = this.sale.body;
-                this.custom_email_subject =  this.sale.subject;
-              }else if(email_type == 'quotation'){
-                this.custom_email_body = this.quotation.body;
-                this.custom_email_subject =  this.quotation.subject;
-              }else if(email_type == 'payment_received'){
-                this.custom_email_body = this.payment_received.body;
-                this.custom_email_subject =  this.payment_received.subject;
-              }else if(email_type == 'purchase'){
-                this.custom_email_body = this.purchase.body;
-                this.custom_email_subject =  this.purchase.subject;
-              }else if(email_type == 'payment_sent'){
-                this.custom_email_body = this.payment_sent.body;
-                this.custom_email_subject =  this.payment_sent.subject;
-              }
-              
-              axios.put("/update_custom_email", {
-                custom_email_body: this.custom_email_body,
-                custom_email_subject: this.custom_email_subject,
-                email_type: email_type
-              }, {
-                headers: {
-                  'Content-Type': 'text/html'
-                }
-              })
-              .then(response => {
-                 Fire.$emit("Event_email");
-                 this.makeToast(
-                  "success",
-                  this.$t("Successfully_Updated"),
-                  this.$t("Success")
-                );
-                NProgress.done();
-                this.Submit_Processing = false;
-              })
-              .catch(error => {
-                NProgress.done();
-               this.makeToast("danger", this.$t("InvalidData"), this.$t("Failed"));
-                this.Submit_Processing = false;
-              });
-          },
+        if(email_type == 'sale'){
+          this.custom_email_body = this.sale.body;
+          this.custom_email_subject =  this.sale.subject;
+        }else if(email_type == 'quotation'){
+          this.custom_email_body = this.quotation.body;
+          this.custom_email_subject =  this.quotation.subject;
+        }else if(email_type == 'payment_received'){
+          this.custom_email_body = this.payment_received.body;
+          this.custom_email_subject =  this.payment_received.subject;
+        }else if(email_type == 'purchase'){
+          this.custom_email_body = this.purchase.body;
+          this.custom_email_subject =  this.purchase.subject;
+        }else if(email_type == 'payment_sent'){
+          this.custom_email_body = this.payment_sent.body;
+          this.custom_email_subject =  this.payment_sent.subject;
+        }
+        
+        axios.put("/update_custom_email", {
+          custom_email_body: this.custom_email_body,
+          custom_email_subject: this.custom_email_subject,
+          email_type: email_type
+        }, {
+          headers: {
+            'Content-Type': 'text/html'
+          }
+        })
+        .then(response => {
+            Fire.$emit("Event_email");
+            this.makeToast(
+            "success",
+            this.$t("Successfully_Updated"),
+            this.$t("Success")
+          );
+          NProgress.done();
+          this.Submit_Processing = false;
+        })
+        .catch(error => {
+          NProgress.done();
+          this.makeToast("danger", this.$t("InvalidData"), this.$t("Failed"));
+          this.Submit_Processing = false;
+        });
+    },
 
    
 
-     //---------------------------------- get_emails_template ----------------\\
+    //---------------------------------- get_emails_template ----------------\\
     get_emails_template() {
       axios
         .get("get_emails_template")

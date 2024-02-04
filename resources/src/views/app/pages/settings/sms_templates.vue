@@ -246,8 +246,16 @@ export default {
   methods: {
     ...mapActions(["refreshUserPermissions"]),
 
+    //------ Toast
+    makeToast(variant, msg, title) {
+      this.$root.$bvToast.toast(msg, {
+        title: title,
+        variant: variant,
+        solid: true
+      });
+    },
     
-     //---------------------------------- update_sms_body_sale ----------------\\
+    //---------------------------------- update_sms_body_sale ----------------\\
     update_sms_body(sms_body_type) {
         this.Submit_Processing = true;
         NProgress.start();
