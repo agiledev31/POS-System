@@ -73,7 +73,7 @@
             </a>
           </span>
 
-          <div v-else-if="props.column.field == 'statut'">
+          <span v-else-if="props.column.field == 'statut'">
             <label 
               v-if="current_user.id === 1 ||
                 (
@@ -88,7 +88,12 @@
               <input @change="isChecked(props.row)" type="checkbox" v-model="props.row.statut" >
               <span class="slider"></span>
             </label>
-          </div>
+          </span>
+
+          <span v-else-if="props.column.field == 'role'">
+            {{ props.row.roles[0].name }}{{ props.row.id === props.row.workspace?.owner ? '(' + userCountByWorkspace[props.row.workspace_id].length + ')' : "" }}
+          </span>
+          
         </template>
       </vue-good-table>
     </div>
@@ -126,10 +131,10 @@
                 :reduce="label => label.value"
                 :placeholder="$t('Choose_Status')"
                 :options="
-                        [
-                           {label: 'Actif', value: '1'},
-                           {label: 'Inactif', value: '0'}
-                        ]"
+                  [
+                      {label: 'Actif', value: '1'},
+                      {label: 'Inactif', value: '0'}
+                  ]"
               ></v-select>
             </b-form-group>
           </b-col>
@@ -405,6 +410,7 @@ export default {
       Filter_Phone: "",
       permissions: {},
       users: [],
+      userCountByWorkspace: [],
       roles: [],
       warehouses: [],
       data: new FormData(),
@@ -470,13 +476,21 @@ export default {
           tdClass: "text-center",
           thClass: "text-center"
         },
+        {
+          label: this.$t("RoleName") + "(" + this.$t("Users") + ")",
+          field: "role",
+          html: true,
+          sortable: false,
+          tdClass: "text-left",
+          thClass: "text-left"
+        },
 
         {
           label: this.$t("Action"),
           field: "actions",
           html: true,
-          tdClass: "text-right",
-          thClass: "text-right",
+          tdClass: "text-center",
+          thClass: "text-center",
           sortable: false
         }
       ];
@@ -669,6 +683,8 @@ export default {
         )
         .then(response => {
           this.users = response.data.users;
+          this.userCountByWorkspace = response.data.userCountByWorkspace;
+          console.log("asd", response.data.userCountByWorkspace);
           this.roles = response.data.roles;
           if(this.current_user.role_id === 1 ){
             this.roles = response.data.roles.slice(0, 2);

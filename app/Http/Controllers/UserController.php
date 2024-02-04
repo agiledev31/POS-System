@@ -50,7 +50,7 @@ class UserController extends BaseController
         $Role = Auth::user()->roles()->first();
         $ShowRecord = Role::findOrFail($Role->id)->inRole('record_view');
 
-        $users = User::with('workspace', 'assignedWarehouses')
+        $users = User::with('workspace', 'assignedWarehouses', 'roles')
             ->where(function ($query) use ($ShowRecord) {
                 if (!$ShowRecord) {
                     return $query->where('id', '=', Auth::user()->id);
@@ -81,7 +81,14 @@ class UserController extends BaseController
             ->limit($perPage)
             ->orderBy($order, $dir)
             ->get();
+        // $userCountByWorkspace = User::groupBy('workspace_id')->get();
+        $userCountByWorkspace = User::all()
+            ->where('workspace_id', '<>', null)
+            ->groupBy('workspace_id')
+            ->toArray();
 
+            // ->select('workspace_id', DB::raw('count(*) as user_count'));
+        
         if(Auth::user()->role_id == 1) {
             $roles = Role::where('deleted_at', null)->get(['id', 'name']);
         } else {
@@ -107,6 +114,7 @@ class UserController extends BaseController
 
         return response()->json([
             'users' => $users,
+            'userCountByWorkspace' => $userCountByWorkspace,
             'roles' => $roles,
             'warehouses' => $warehouses,
             'totalRows' => $totalRows,
