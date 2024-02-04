@@ -302,6 +302,19 @@ class UserController extends BaseController
                 $Setting->warehouse_id          = $Warehouse->id;
                 $Setting->save();
 
+                // create pos setting
+                PosSetting::create([
+                    'workspace_id' => $User->workspace_id,
+                    'note_customer' => $User->username . 'Thank You For Shopping With Us . Please Come Again',
+                    'show_note' => 1,
+                    'show_barcode' => 1,
+                    'show_discount' => 1,
+                    'show_customer' => 1,
+                    'show_email' => 1,
+                    'show_phone' => 1,
+                    'show_address' => 1,
+                ]);
+
                 // sms message
                 SMSMessage::create([
                     'name' => 'sale',
