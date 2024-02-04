@@ -24,11 +24,14 @@ class UnitsController extends BaseController
         $dir = $request->SortType;
         $data = array();
 
-        $Units = Unit::where('deleted_at', '=', null);
-
-        if(auth()->user()->workspace_id) {
-            $Units->where('workspace_id', '=', auth()->user()->workspace_id);
-        };
+        $Units = Unit::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                // return  workspace and admin units
+                if(auth()->user()->workspace_id){
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id)
+                        ->orWhere('workspace_id', '=', null);
+                }
+            });
 
         // Search With Multiple Param
         $Units->where(function ($query) use ($request) {
@@ -67,16 +70,14 @@ class UnitsController extends BaseController
 
         $Units_base = Unit::where('base_unit', null)
             ->where('deleted_at', null)
+            ->where(function ($query) {
+                if(auth()->user()->workspace_id){
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id)
+                        ->orWhere('workspace_id', '=', null);
+                }
+            })
             ->orderBy('id', 'DESC')
             ->get(['id', 'name']);
-            
-        if(auth()->user()->workspace_id) {
-            $Units_base = Unit::where('base_unit', null)
-            ->where('deleted_at', null)
-            ->where('workspace_id', auth()->user()->workspace_id)
-            ->orderBy('id', 'DESC')
-            ->get(['id', 'name']);
-        }
 
         return response()->json([
             'Units' => $data,

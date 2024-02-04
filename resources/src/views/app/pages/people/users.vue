@@ -684,7 +684,6 @@ export default {
         .then(response => {
           this.users = response.data.users;
           this.userCountByWorkspace = response.data.userCountByWorkspace;
-          console.log("asd", response.data.userCountByWorkspace);
           this.roles = response.data.roles;
           if(this.current_user.role_id === 1 ){
             this.roles = response.data.roles.slice(0, 2);

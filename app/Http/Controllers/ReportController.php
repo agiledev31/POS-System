@@ -1608,13 +1608,13 @@ class ReportController extends BaseController
     {
 
         $products_alerts = product_warehouse::join('products', 'product_warehouse.product_id', '=', 'products.id')
-            ->where(function ($query) use ($request) {
+            ->where(function ($query){
                 if (auth()->user()->workspace_id) {
                     $query->where('products.workspace_id', '=', auth()->user()->workspace_id);
                 }
             })
             ->join('warehouses', 'product_warehouse.warehouse_id', '=', 'warehouses.id')
-            ->where(function ($query) use ($request) {
+            ->where(function ($query){
                 if (auth()->user()->workspace_id) {
                     $query->where('warehouses.workspace_id', '=', auth()->user()->workspace_id);
                 }

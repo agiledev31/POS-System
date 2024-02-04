@@ -26,11 +26,14 @@ class BrandsController extends Controller
         $dir = $request->SortType;
         $helpers = new helpers();
 
-        $brands = Brand::where('deleted_at', '=', null);
-
-        if(auth()->user()->workspace_id) {
-            $brands->where('workspace_id', '=', auth()->user()->workspace_id);
-        };
+        $brands = Brand::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                // return  workspace and admin brands
+                if(auth()->user()->workspace_id){
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id)
+                        ->orWhere('workspace_id', '=', null);
+                }
+            });
 
         // Search With Multiple Param
         $brands->where(function ($query) use ($request) {

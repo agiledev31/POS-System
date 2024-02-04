@@ -43,11 +43,12 @@ class ProductsController extends BaseController
         $data = array();
 
         $products = Product::with('unit', 'category', 'brand', 'workspace')
-            ->where('deleted_at', '=', null);
-        
-        if(auth()->user()->workspace_id) {
-            $products->where('workspace_id', '=', auth()->user()->workspace_id);
-        }
+            ->where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if(auth()->user()->workspace_id){
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            });
 
         //Multiple Filter
         $Filtred = $helpers->filter($products, $columns, $param, $request)
@@ -148,13 +149,22 @@ class ProductsController extends BaseController
             $warehouses = Warehouse::where('deleted_at', '=', null)->whereIn('id', $warehouses_id)->get(['id', 'name']);
         }
 
-        $categories = Category::where('deleted_at', null)->get(['id', 'name']);
-        $brands = Brand::where('deleted_at', null)->get(['id', 'name']);
-
-        if(auth()->user()->workspace_id) {
-            $categories = Category::where('deleted_at', null)->where('workspace_id', auth()->user()->workspace_id)->get(['id', 'name']);
-            $brands = Brand::where('deleted_at', null)->where('workspace_id', auth()->user()->workspace_id)->get(['id', 'name']);
-        }
+        $categories = Category::where('deleted_at', null)
+            ->where(function ($query) {
+                    if(auth()->user()->workspace_id){
+                        return $query->where('workspace_id', '=', auth()->user()->workspace_id)
+                            ->orWhere('workspace_id', '=', null);
+                    }
+                })
+            ->get(['id', 'name']);
+        $brands = Brand::where('deleted_at', null)
+            ->where(function ($query) {
+                if(auth()->user()->workspace_id){
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id)
+                        ->orWhere('workspace_id', '=', null);
+                }
+            })
+            ->get(['id', 'name']);
 
         return response()->json([
             'warehouses' => $warehouses,
@@ -380,7 +390,7 @@ class ProductsController extends BaseController
 
                     $Product->stock_alert = 0;
 
-                    $manage_stock = 0;
+                    $manage_stock = 1; //0;
 
                 }
                 
@@ -1126,8 +1136,8 @@ class ProductsController extends BaseController
                             }
                         });
                     })
-                    ->where(function ($query) use ($request) {
-                        return $query->whereHas('product', function ($q) use ($request) {
+                    ->where(function ($query) {
+                        return $query->whereHas('product', function ($q) {
                             if (auth()->user()->workspace_id) {
                                 $q->where('workspace_id', '=', auth()->user()->workspace_id);
                             }
@@ -1441,14 +1451,31 @@ class ProductsController extends BaseController
 
         $this->authorizeForUser($request->user('api'), 'create', Product::class);
 
-        $categories = Category::where('deleted_at', null)->get(['id', 'name']);
-        $brands = Brand::where('deleted_at', null)->get(['id', 'name']);
-        $units = Unit::where('deleted_at', null)->where('base_unit', null)->get();
-        if(auth()->user()->workspace_id) {
-            $categories = Category::where('deleted_at', null)->where('workspace_id', auth()->user()->workspace_id)->get(['id', 'name']);
-            $brands = Brand::where('deleted_at', null)->where('workspace_id', auth()->user()->workspace_id)->get(['id', 'name']);
-            $units = Unit::where('deleted_at', null)->where('workspace_id', auth()->user()->workspace_id)->get(['id', 'name']);
-        }
+        $categories = Category::where('deleted_at', null)
+            ->where(function ($query) {
+                if(auth()->user()->workspace_id){
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id)
+                        ->orWhere('workspace_id', '=', null);
+                }
+            })
+            ->get(['id', 'name']);
+        $brands = Brand::where('deleted_at', null)
+            ->where(function ($query) {
+                if(auth()->user()->workspace_id){
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id)
+                        ->orWhere('workspace_id', '=', null);
+                }
+            })
+            ->get(['id', 'name']);
+        $units = Unit::where('deleted_at', null)
+            ->where(function ($query) {
+                if(auth()->user()->workspace_id){
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id)
+                        ->orWhere('workspace_id', '=', null);
+                }
+            })
+            ->where('base_unit', null)->get();
+
         return response()->json([
             'categories' => $categories,
             'brands' => $brands,
@@ -1596,27 +1623,39 @@ class ProductsController extends BaseController
         $product_units = Unit::where('id', $Product->unit_id)
             ->orWhere('base_unit', $Product->unit_id)
             ->where('deleted_at', null)
+            ->where(function ($query) {
+                if(auth()->user()->workspace_id){
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id)
+                        ->orWhere('workspace_id', '=', null);
+                }
+            })
             ->get();
 
-        $categories = Category::where('deleted_at', null)->get(['id', 'name']);
-        $brands = Brand::where('deleted_at', null)->get(['id', 'name']);
+        $categories = Category::where('deleted_at', null)
+            ->where(function ($query) {
+                if(auth()->user()->workspace_id){
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id)
+                        ->orWhere('workspace_id', '=', null);
+                }
+            })
+            ->get(['id', 'name']);
+        $brands = Brand::where('deleted_at', null)
+            ->where(function ($query) {
+                if(auth()->user()->workspace_id){
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id)
+                        ->orWhere('workspace_id', '=', null);
+                }
+            })
+            ->get(['id', 'name']);
         $units = Unit::where('deleted_at', null)
             ->where('base_unit', null)
+            ->where(function ($query) {
+                if(auth()->user()->workspace_id){
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id)
+                        ->orWhere('workspace_id', '=', null);
+                }
+            })
             ->get(['id', 'name']);
-
-        if(auth()->user()->workspace_id) {
-            $categories = Category::where('deleted_at', null)->where('workspace_id', auth()->user()->workspace_id)->get(['id', 'name']);
-            $brands = Brand::where('deleted_at', null)->where('workspace_id', auth()->user()->workspace_id)->get(['id', 'name']);
-            $units = Unit::where('deleted_at', null)
-                ->where('base_unit', null)
-                ->where('workspace_id', auth()->user()->workspace_id)
-                ->get();
-            $product_units = Unit::where('id', $Product->unit_id)
-                ->orWhere('base_unit', $Product->unit_id)
-                ->where('deleted_at', null)
-                ->where('workspace_id', auth()->user()->workspace_id)
-                ->get();
-        }
 
         return response()->json([
             'product' => $data,

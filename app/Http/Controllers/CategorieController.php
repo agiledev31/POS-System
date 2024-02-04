@@ -24,11 +24,14 @@ class CategorieController extends BaseController
         $dir = $request->SortType;
         $helpers = new helpers();
 
-        $categories = Category::where('deleted_at', '=', null);
-
-        if(auth()->user()->workspace_id) {
-            $categories->where('workspace_id', '=', auth()->user()->workspace_id);
-        };
+        $categories = Category::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                // return  workspace and admin categories
+                if(auth()->user()->workspace_id){
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id)
+                        ->orWhere('workspace_id', '=', null);
+                }
+            });
 
         // Search With Multiple Param
         $categories->where(function ($query) use ($request) {

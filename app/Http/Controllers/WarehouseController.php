@@ -93,7 +93,13 @@ class WarehouseController extends Controller
             $Warehouse->email           = $request['email'];
             $Warehouse->save();
 
-            $products = Product::where('deleted_at', '=', null)->get(['id','type']);
+            $products = Product::where('deleted_at', '=', null)
+                ->where(function ($query) {
+                    if(auth()->user()->workspace_id){
+                        return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                    }
+                })
+                ->get(['id','type']);
 
             if ($products) {
                 foreach ($products as $product) {

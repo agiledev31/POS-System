@@ -1748,7 +1748,12 @@ export default {
     Get_Client_Without_Paginate() {
       axios
         .get("get_clients_without_paginate")
-        .then(({ data }) => (this.clients = data));
+        .then(({ data }) => {
+          this.clients = data;
+          let createdUser = data.filter(item => item.name == this.client.name);
+          this.selectedClient = createdUser.length ? createdUser[0] : {};
+          this.sale.client_id = createdUser.length ? createdUser[0].id : "";
+        });
     },
     //---Validate State Fields
     getValidationState({ dirty, validated, valid = null }) {

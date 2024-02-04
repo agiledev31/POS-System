@@ -308,6 +308,7 @@ class UserController extends BaseController
                 $Setting->is_invoice_footer     = 0;
                 $Setting->invoice_footer        = 1;
                 $Setting->warehouse_id          = $Warehouse->id;
+                $Setting->logo                  = 'logo-2.png';
                 $Setting->save();
 
                 // create pos setting
