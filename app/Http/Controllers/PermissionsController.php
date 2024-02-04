@@ -115,6 +115,25 @@ class PermissionsController extends BaseController
     {
         $this->authorizeForUser($request->user('api'), 'update', Role::class);
 
+        if(auth()->user()->role_id > 2) {
+            return response()->json([
+                'status' => 403,
+                'msg' => 'error',
+                'errors' => "User doesn't have permission to change this role",
+            ], 403);
+        }
+
+        if(auth()->user()->workspace_id) {
+            $role = Role::findOrFail($id);
+            if($role->workspace_id !== auth()->user()->workspace_id) {
+                return response()->json([
+                    'status' => 403,
+                    'msg' => 'error',
+                    'errors' => "User doesn't have permission to change this role",
+                ], 403);
+            }
+        }
+
         try {
             request()->validate([
                 'role.name' => 'required',
