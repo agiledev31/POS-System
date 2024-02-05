@@ -521,10 +521,17 @@ class ReportController extends BaseController
             );
             $data = array();
             $total = 0;
+
+            $user_auth = auth()->user();
+            $warehouses_ids = Warehouse::where('deleted_at', '=', null)->pluck('id')->toArray();
+            if(!$user_auth->is_all_warehouses){
+                $warehouses_ids = UserWarehouse::where('user_id', $user_auth->id)->pluck('warehouse_id')->toArray();
+            }
     
             $Purchases = Purchase::select('purchases.*')
                 ->with('facture', 'provider', 'warehouse')
                 ->join('providers', 'purchases.provider_id', '=', 'providers.id')
+                ->whereIn('warehouse_id', $warehouses_ids)
                 ->where('purchases.deleted_at', '=', null)
                 ->where(function($query) use($request) {
                     if(auth()->user()->workspace_id) {
@@ -638,11 +645,18 @@ class ReportController extends BaseController
             );
             
             $data = array();
+
+            $user_auth = auth()->user();
+            $warehouses_ids = Warehouse::where('deleted_at', '=', null)->pluck('id')->toArray();
+            if(!$user_auth->is_all_warehouses){
+                $warehouses_ids = UserWarehouse::where('user_id', $user_auth->id)->pluck('warehouse_id')->toArray();
+            }
     
             $Sales = Sale::select('sales.*')
                 ->with('facture', 'client', 'warehouse')
                 ->join('clients', 'sales.client_id', '=', 'clients.id')
                 ->where('sales.deleted_at', '=', null)
+                ->whereIn('warehouse_id', $warehouses_ids)
                 ->where(function($query) use($request) {
                     if(auth()->user()->workspace_id) {
                         $query->where('workspace_id', '=', auth()->user()->workspace_id);
@@ -1051,13 +1065,21 @@ class ReportController extends BaseController
 
         $this->authorizeForUser($request->user('api'), 'WarehouseStock', Product::class);
 
+        $user_auth = auth()->user();
+        $warehouses_ids = Warehouse::where('deleted_at', '=', null)->pluck('id')->toArray();
+        if(!$user_auth->is_all_warehouses){
+            $warehouses_ids = UserWarehouse::where('user_id', $user_auth->id)->pluck('warehouse_id')->toArray();
+        }
+
         $data['sales'] = Sale::where('deleted_at', '=', null)
             ->with('warehouse')
             ->where(function ($query) use ($request) {
                 return $query->when($request->filled('warehouse_id'), function ($query) use ($request) {
                     return $query->where('warehouse_id', $request->warehouse_id);
                 });
-            })->where(function ($query) use ($request) {
+            })
+            ->whereIn('warehouse_id', $warehouses_ids)
+            ->where(function ($query) use ($request) {
                 return $query->whereHas('warehouse', function ($q) use ($request) {
                     if (auth()->user()->workspace_id) {
                         $q->where('workspace_id', '=', auth()->user()->workspace_id);
@@ -1071,7 +1093,9 @@ class ReportController extends BaseController
                 return $query->when($request->filled('warehouse_id'), function ($query) use ($request) {
                     return $query->where('warehouse_id', $request->warehouse_id);
                 });
-            })->where(function ($query) use ($request) {
+            })
+            ->whereIn('warehouse_id', $warehouses_ids)
+            ->where(function ($query) use ($request) {
                 return $query->whereHas('warehouse', function ($q) use ($request) {
                     if (auth()->user()->workspace_id) {
                         $q->where('workspace_id', '=', auth()->user()->workspace_id);
@@ -1085,7 +1109,9 @@ class ReportController extends BaseController
                 return $query->when($request->filled('warehouse_id'), function ($query) use ($request) {
                     return $query->where('warehouse_id', $request->warehouse_id);
                 });
-            })->where(function ($query) use ($request) {
+            })
+            ->whereIn('warehouse_id', $warehouses_ids)
+            ->where(function ($query) use ($request) {
                 return $query->whereHas('warehouse', function ($q) use ($request) {
                     if (auth()->user()->workspace_id) {
                         $q->where('workspace_id', '=', auth()->user()->workspace_id);
@@ -1099,7 +1125,9 @@ class ReportController extends BaseController
                 return $query->when($request->filled('warehouse_id'), function ($query) use ($request) {
                     return $query->where('warehouse_id', $request->warehouse_id);
                 });
-            })->where(function ($query) use ($request) {
+            })
+            ->whereIn('warehouse_id', $warehouses_ids)
+            ->where(function ($query) use ($request) {
                 return $query->whereHas('warehouse', function ($q) use ($request) {
                     if (auth()->user()->workspace_id) {
                         $q->where('workspace_id', '=', auth()->user()->workspace_id);
@@ -1139,12 +1167,19 @@ class ReportController extends BaseController
         $Role = Auth::user()->roles()->first();
         $ShowRecord = Role::findOrFail($Role->id)->inRole('record_view');
 
+        $user_auth = auth()->user();
+        $warehouses_ids = Warehouse::where('deleted_at', '=', null)->pluck('id')->toArray();
+        if(!$user_auth->is_all_warehouses){
+            $warehouses_ids = UserWarehouse::where('user_id', $user_auth->id)->pluck('warehouse_id')->toArray();
+        }
+
         $sales = Sale::where('deleted_at', '=', null)->with('client','warehouse')
             ->where(function ($query) use ($ShowRecord) {
                 if (!$ShowRecord) {
                     return $query->where('user_id', '=', Auth::user()->id);
                 }
             })
+            ->whereIn('warehouse_id', $warehouses_ids)
             ->where(function ($query) use ($request) {
                 return $query->when($request->filled('warehouse_id'), function ($query) use ($request) {
                     return $query->where('warehouse_id', $request->warehouse_id);
@@ -1219,6 +1254,12 @@ class ReportController extends BaseController
         $Role = Auth::user()->roles()->first();
         $ShowRecord = Role::findOrFail($Role->id)->inRole('record_view');
 
+        $user_auth = auth()->user();
+        $warehouses_ids = Warehouse::where('deleted_at', '=', null)->pluck('id')->toArray();
+        if(!$user_auth->is_all_warehouses){
+            $warehouses_ids = UserWarehouse::where('user_id', $user_auth->id)->pluck('warehouse_id')->toArray();
+        }
+
         $Quotations = Quotation::where('deleted_at', '=', null)
             ->with('client','warehouse')
             ->where(function ($query) use ($ShowRecord) {
@@ -1226,6 +1267,7 @@ class ReportController extends BaseController
                     return $query->where('user_id', '=', Auth::user()->id);
                 }
             })
+            ->whereIn('warehouse_id', $warehouses_ids)
             ->where(function ($query) use ($request) {
                 return $query->when($request->filled('warehouse_id'), function ($query) use ($request) {
                     return $query->where('warehouse_id', $request->warehouse_id);
@@ -1295,6 +1337,12 @@ class ReportController extends BaseController
         $Role = Auth::user()->roles()->first();
         $ShowRecord = Role::findOrFail($Role->id)->inRole('record_view');
 
+        $user_auth = auth()->user();
+        $warehouses_ids = Warehouse::where('deleted_at', '=', null)->pluck('id')->toArray();
+        if(!$user_auth->is_all_warehouses){
+            $warehouses_ids = UserWarehouse::where('user_id', $user_auth->id)->pluck('warehouse_id')->toArray();
+        }
+
         $SaleReturn = SaleReturn::where('deleted_at', '=', null)
             ->with('sale','client','warehouse')
             ->where(function ($query) use ($ShowRecord) {
@@ -1302,6 +1350,7 @@ class ReportController extends BaseController
                     return $query->where('user_id', '=', Auth::user()->id);
                 }
             })
+            ->whereIn('warehouse_id', $warehouses_ids)
             ->where(function ($query) use ($request) {
                 return $query->when($request->filled('warehouse_id'), function ($query) use ($request) {
                     return $query->where('warehouse_id', $request->warehouse_id);
@@ -1383,6 +1432,12 @@ class ReportController extends BaseController
         $Role = Auth::user()->roles()->first();
         $ShowRecord = Role::findOrFail($Role->id)->inRole('record_view');
 
+        $user_auth = auth()->user();
+        $warehouses_ids = Warehouse::where('deleted_at', '=', null)->pluck('id')->toArray();
+        if(!$user_auth->is_all_warehouses){
+            $warehouses_ids = UserWarehouse::where('user_id', $user_auth->id)->pluck('warehouse_id')->toArray();
+        }
+
         $PurchaseReturn = PurchaseReturn::where('deleted_at', '=', null)
             ->with('warehouse', 'purchase', 'provider')
             ->where(function ($query) use ($ShowRecord) {
@@ -1390,6 +1445,7 @@ class ReportController extends BaseController
                     return $query->where('user_id', '=', Auth::user()->id);
                 }
             })
+            ->whereIn('warehouse_id', $warehouses_ids)
             ->where(function ($query) use ($request) {
                 return $query->whereHas('warehouse', function ($q) use ($request) {
                     if (auth()->user()->workspace_id) {
@@ -1474,6 +1530,12 @@ class ReportController extends BaseController
         $Role = Auth::user()->roles()->first();
         $ShowRecord = Role::findOrFail($Role->id)->inRole('record_view');
 
+        $user_auth = auth()->user();
+        $warehouses_ids = Warehouse::where('deleted_at', '=', null)->pluck('id')->toArray();
+        if(!$user_auth->is_all_warehouses){
+            $warehouses_ids = UserWarehouse::where('user_id', $user_auth->id)->pluck('warehouse_id')->toArray();
+        }
+
         $Expenses = Expense::where('deleted_at', '=', null)
             ->with('expense_category', 'warehouse')
             ->where(function ($query) use ($ShowRecord) {
@@ -1481,6 +1543,7 @@ class ReportController extends BaseController
                     return $query->where('user_id', '=', Auth::user()->id);
                 }
             })
+            ->whereIn('warehouse_id', $warehouses_ids)
             ->where(function ($query) use ($request) {
                 return $query->when($request->filled('warehouse_id'), function ($query) use ($request) {
                     return $query->where('warehouse_id', $request->warehouse_id);
@@ -1539,6 +1602,12 @@ class ReportController extends BaseController
     {
         $this->authorizeForUser($request->user('api'), 'WarehouseStock', Product::class);
 
+        $user_auth = auth()->user();
+        $warehouses_ids = Warehouse::where('deleted_at', '=', null)->pluck('id')->toArray();
+        if(!$user_auth->is_all_warehouses){
+            $warehouses_ids = UserWarehouse::where('user_id', $user_auth->id)->pluck('warehouse_id')->toArray();
+        }
+
         $stock_count = product_warehouse::join('products', 'product_warehouse.product_id', '=', 'products.id')
             ->join('warehouses', 'product_warehouse.warehouse_id', '=', 'warehouses.id')
             ->where('product_warehouse.deleted_at', '=', null)
@@ -1549,6 +1618,7 @@ class ReportController extends BaseController
                     }
                 });
             })
+            ->whereIn('warehouse_id', $warehouses_ids)
             ->select(
                 DB::raw("count(DISTINCT products.id) as value"),
                 DB::raw("warehouses.name as name"),
@@ -1561,6 +1631,7 @@ class ReportController extends BaseController
         $stock_value = product_warehouse::join('products', 'product_warehouse.product_id', '=', 'products.id')
             ->join('warehouses', 'product_warehouse.warehouse_id', '=', 'warehouses.id')
             ->where('product_warehouse.deleted_at', '=', null)
+            ->whereIn('warehouse_id', $warehouses_ids)
             ->where(function ($query) use ($request) {
                 return $query->whereHas('warehouse', function ($q) use ($request) {
                     if (auth()->user()->workspace_id) {
@@ -2212,9 +2283,7 @@ class ReportController extends BaseController
             }
         })
         ->where(function ($query) use ($view_records) {
-            if (!$view_records) {
-                return $query->where('sales.user_id', '=', Auth::user()->id);
-            }
+            return $query->where('sales.user_id', '=', Auth::user()->id);
         })
         ->whereBetween('sale_details.date', array($request->from, $request->to))
         ->where(function ($query) use ($request) {
@@ -2267,10 +2336,8 @@ class ReportController extends BaseController
         $offSet = ($pageStart * $perPage) - $perPage;
 
         $customers_count = Sale::where('sales.deleted_at', '=', null)
-            ->where(function ($query) use ($view_records) {
-                if (!$view_records) {
-                    return $query->where('sales.user_id', '=', Auth::user()->id);
-                }
+            ->where(function ($query) {
+                return $query->where('user_id', '=', Auth::user()->id);
             })
             ->join('clients', 'sales.client_id', '=', 'clients.id')
             ->where(function ($query) use ($request) {
@@ -2287,10 +2354,8 @@ class ReportController extends BaseController
         }
 
         $customers_data = Sale::where('sales.deleted_at', '=', null)
-            ->where(function ($query) use ($view_records) {
-                if (!$view_records) {
-                    return $query->where('sales.user_id', '=', Auth::user()->id);
-                }
+            ->where(function ($query) {
+                return $query->where('user_id', '=', Auth::user()->id);
             })
             ->join('clients', 'sales.client_id', '=', 'clients.id')
             ->where(function ($query) use ($request) {
@@ -3863,14 +3928,13 @@ class ReportController extends BaseController
 
         //get warehouses assigned to user
         $user_auth = auth()->user();
-        if($user_auth->is_all_warehouses){
-            $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name']);
-            $array_warehouses_id = Warehouse::where('deleted_at', '=', null)->pluck('id')->toArray();
-        }else{
-            $array_warehouses_id = UserWarehouse::where('user_id', $user_auth->id)->pluck('warehouse_id')->toArray();
+        
+        $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name']);
+        $array_warehouses_id = Warehouse::where('deleted_at', '=', null)->pluck('id')->toArray();
+        if(!$user_auth->is_all_warehouses){
+            $array_warehouses_id = UserWarehouse::where('user_id', '=', $user_auth->id)->pluck('warehouse_id')->toArray();
             $warehouses = Warehouse::where('deleted_at', '=', null)->whereIn('id', $array_warehouses_id)->get(['id', 'name']);
         }
-
     
         $products_data = Product::where('deleted_at', '=', null)
             ->where(function($query) use($request) {
@@ -3896,7 +3960,6 @@ class ReportController extends BaseController
         ->limit($perPage)
         ->get();
 
-
         $product_details = [];
         $total_sales = 0;
         foreach ($products as $product) {
@@ -3906,7 +3969,7 @@ class ReportController extends BaseController
                 $nestedData['name'] = $product->name;
                 $nestedData['code'] = $product->code;
 
-                $nestedData['sold_amount'] = SaleDetail::with('sale')->where('product_id', $product->id)
+                $nestedData['sold_amount'] = SaleDetail::with('sale')->where('product_id', '=', $product->id)
                 ->where(function ($query) use ($view_records) {
                     if (!$view_records) {
                         return $query->whereHas('sale', function ($q) use ($request) {
@@ -3917,11 +3980,11 @@ class ReportController extends BaseController
                 })
                 ->where(function ($query) use ($request, $array_warehouses_id) {
                     if ($request->warehouse_id) {
-                        return $query->whereHas('sale', function ($q) use ($request, $array_warehouses_id) {
+                        return $query->whereHas('sale', function ($q) use ($request) {
                             $q->where('warehouse_id', $request->warehouse_id);
                         });
                     }else{
-                        return $query->whereHas('sale', function ($q) use ($request, $array_warehouses_id) {
+                        return $query->whereHas('sale', function ($q) use ($array_warehouses_id) {
                             $q->whereIn('warehouse_id', $array_warehouses_id);
                         });
 
@@ -4221,36 +4284,34 @@ class ReportController extends BaseController
     public function product_sales_report(request $request)
     {
  
-         $this->authorizeForUser($request->user('api'), 'product_sales_report', Sale::class);
-         $role = Auth::user()->roles()->first();
-         $view_records = Role::findOrFail($role->id)->inRole('record_view');
-         // How many items do you want to display.
-         $perPage = $request->limit;
- 
-         $pageStart = \Request::get('page', 1);
-         // Start displaying items from this number;
-         $offSet = ($pageStart * $perPage) - $perPage;
-         $order = $request->SortField;
-         $dir = $request->SortType;
-         $helpers = new helpers();
-         // Filter fields With Params to retrieve
-         $param = array(
-             0 => '=',
-             1 => '=',
-         );
-         $columns = array(
-             0 => 'client_id',
-             1 => 'warehouse_id',
-         );
-         $data = array();
+        $this->authorizeForUser($request->user('api'), 'product_sales_report', Sale::class);
+        $role = Auth::user()->roles()->first();
+        $view_records = Role::findOrFail($role->id)->inRole('record_view');
+        // How many items do you want to display.
+        $perPage = $request->limit;
 
-         $sale_details_data = SaleDetail::with('product','sale','sale.client','sale.warehouse')
-            ->where(function ($query) use ($view_records) {
-                if (!$view_records) {
-                    return $query->whereHas('sale', function ($q) use ($request) {
-                        $q->where('user_id', '=', Auth::user()->id);
-                    });
-                }
+        $pageStart = \Request::get('page', 1);
+        // Start displaying items from this number;
+        $offSet = ($pageStart * $perPage) - $perPage;
+        $order = $request->SortField;
+        $dir = $request->SortType;
+        $helpers = new helpers();
+        // Filter fields With Params to retrieve
+        $param = array(
+            0 => '=',
+            1 => '=',
+        );
+        $columns = array(
+            0 => 'client_id',
+            1 => 'warehouse_id',
+        );
+        $data = array();
+
+        $sale_details_data = SaleDetail::with('product','sale','sale.client','sale.warehouse')
+            ->where(function ($query) {
+                return $query->whereHas('sale', function ($q) {
+                    $q->where('user_id', '=', Auth::user()->id);
+                });
             })
             ->where(function ($query) use ($request) {
                 if (Auth::user()->workspace_id) {
@@ -4261,22 +4322,22 @@ class ReportController extends BaseController
             })
             ->whereBetween('date', array($request->from, $request->to));
 
-         // Filter
-         $sale_details_Filtred = $sale_details_data->where(function ($query) use ($request) {
-             return $query->when($request->filled('client_id'), function ($query) use ($request) {
-                 return $query->whereHas('sale.client', function ($q) use ($request) {
-                     $q->where('client_id', '=', $request->client_id);
-                 });
-             });
-         })
-        
-         ->where(function ($query) use ($request) {
-             return $query->when($request->filled('warehouse_id'), function ($query) use ($request) {
-                 return $query->whereHas('sale.warehouse', function ($q) use ($request) {
-                     $q->where('warehouse_id', '=', $request->warehouse_id);
-                 });
-             });
-         })
+        // Filter
+        $sale_details_Filtred = $sale_details_data->where(function ($query) use ($request) {
+            return $query->when($request->filled('client_id'), function ($query) use ($request) {
+                return $query->whereHas('sale.client', function ($q) use ($request) {
+                    $q->where('client_id', '=', $request->client_id);
+                });
+            });
+        })
+    
+        ->where(function ($query) use ($request) {
+            return $query->when($request->filled('warehouse_id'), function ($query) use ($request) {
+                return $query->whereHas('sale.warehouse', function ($q) use ($request) {
+                    $q->where('warehouse_id', '=', $request->warehouse_id);
+                });
+            });
+        })
 
         // Search With Multiple Param
         ->where(function ($query) use ($request) {
@@ -4408,12 +4469,10 @@ class ReportController extends BaseController
          $data = array();
 
          $purchase_details_data = PurchaseDetail::with('product','purchase','purchase.provider','purchase.warehouse')
-            ->where(function ($query) use ($view_records) {
-                if (!$view_records) {
-                    return $query->whereHas('purchase', function ($q) use ($request) {
-                        $q->where('user_id', '=', Auth::user()->id);
-                    });
-                }
+            ->where(function ($query) {
+                return $query->whereHas('purchase', function ($q) {
+                    $q->where('user_id', '=', Auth::user()->id);
+                });
             })
             ->where(function ($query) use ($request) {
                 if (Auth::user()->workspace_id) {
