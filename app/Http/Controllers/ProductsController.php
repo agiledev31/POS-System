@@ -1379,6 +1379,15 @@ class ProductsController extends BaseController
     {
         $this->authorizeForUser($request->user('api'), 'Stock_Alerts', Product::class);
 
+        //get warehouses assigned to user
+        $user_auth = auth()->user();
+        $warehouses_ids = Warehouse::where('deleted_at', '=', null)->pluck('id')->toArray();
+        if($user_auth->is_all_warehouses){
+            $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name']);
+        }else{
+            $warehouses_ids = UserWarehouse::where('user_id', $user_auth->id)->pluck('warehouse_id')->toArray();
+            $warehouses = Warehouse::where('deleted_at', '=', null)->whereIn('id', $warehouses_ids)->get(['id', 'name']);
+        }
         $product_warehouse_data = product_warehouse::with('warehouse', 'product', 'productVariant')
             ->join('products', 'product_warehouse.product_id', '=', 'products.id')
             ->where('manage_stock', true)
@@ -1395,6 +1404,7 @@ class ProductsController extends BaseController
                     }
                 });
             })
+            ->whereIn('warehouse_id', $warehouses_ids)
             ->where('product_warehouse.deleted_at', null)
             ->get();
 
@@ -1428,15 +1438,6 @@ class ProductsController extends BaseController
         $data_collection = $collection->slice($offSet, $perPage)->values();
 
         $products = new LengthAwarePaginator($data_collection, count($data), $perPage, Paginator::resolveCurrentPage(), array('path' => Paginator::resolveCurrentPath()));
-       
-         //get warehouses assigned to user
-         $user_auth = auth()->user();
-         if($user_auth->is_all_warehouses){
-             $warehouses = Warehouse::where('deleted_at', '=', null)->get(['id', 'name']);
-         }else{
-             $warehouses_id = UserWarehouse::where('user_id', $user_auth->id)->pluck('warehouse_id')->toArray();
-             $warehouses = Warehouse::where('deleted_at', '=', null)->whereIn('id', $warehouses_id)->get(['id', 'name']);
-         }
  
         return response()->json([
             'products' => $products,

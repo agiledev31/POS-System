@@ -84,6 +84,12 @@ class SalesController extends BaseController
         );
         $data = array();
 
+        $user_auth = auth()->user();
+        $warehouses_ids = Warehouse::where('deleted_at', '=', null)->pluck('id')->toArray();
+        if(!$user_auth->is_all_warehouses){
+            $warehouses_ids = UserWarehouse::where('user_id', $user_auth->id)->pluck('warehouse_id')->toArray();
+        }
+
         // Check If User Has Permission View  All Records
         $Sales = Sale::with('facture', 'client', 'warehouse','user')
             ->where('deleted_at', '=', null)
@@ -91,12 +97,14 @@ class SalesController extends BaseController
                 if (!$view_records) {
                     return $query->where('user_id', '=', Auth::user()->id);
                 }
+            }) ->whereIn('warehouse_id', $warehouses_ids)
+            ->where(function ($query) {
+                return $query->whereHas('warehouse', function ($q) {
+                    if (auth()->user()->workspace_id) {
+                        $q->where('workspace_id', '=', auth()->user()->workspace_id);
+                    }
+                });
             });
-        if(Auth::user()->role_id !== 1){
-            $Sales->whereHas('warehouse', function ($q) {
-                $q->where('workspace_id', '=', Auth::user()->workspace_id);
-            });
-        }
         //Multiple Filter
         $Filtred = $helpers->filter($Sales, $columns, $param, $request)
         // Search With Multiple Param

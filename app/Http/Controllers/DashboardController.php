@@ -300,6 +300,7 @@ class DashboardController extends Controller
             ->get();
 
         // Stock Alerts
+
         $product_warehouse_data = product_warehouse::with('warehouse', 'product' ,'productVariant')
         ->join('products', 'product_warehouse.product_id', '=', 'products.id')
         ->where(function($query) {

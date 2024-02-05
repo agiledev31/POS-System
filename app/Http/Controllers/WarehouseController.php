@@ -115,7 +115,7 @@ class WarehouseController extends Controller
                                 'product_id'         => $product->id,
                                 'warehouse_id'       => $Warehouse->id,
                                 'product_variant_id' => $product_variant->id,
-                                'manage_stock'       => $product->type == 'is_service'?0:1,
+                                'manage_stock'       => 1, //$product->type == 'is_service'? 0:1,
                             ];
                         }
                     } else {
@@ -123,7 +123,7 @@ class WarehouseController extends Controller
                             'product_id'         => $product->id,
                             'warehouse_id'       => $Warehouse->id,
                             'product_variant_id' => null,
-                            'manage_stock'       => $product->type == 'is_service'?0:1,
+                            'manage_stock'       => 1, //$product->type == 'is_service'? 0:1,
                         ];
                     }
 

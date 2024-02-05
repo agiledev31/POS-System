@@ -153,16 +153,24 @@ class UserController extends BaseController
             }
         })->first()->developed_by;
         $permissions = Auth::user()->roles()->first()->permissions->pluck('name');
+
+        $user_auth = auth()->user();
+        $warehouses_ids = Warehouse::where('deleted_at', '=', null)->pluck('id')->toArray();
+        if(!$user_auth->is_all_warehouses){
+            $warehouses_ids = UserWarehouse::where('user_id', $user_auth->id)->pluck('warehouse_id')->toArray();
+        }
+
         $products_alerts = product_warehouse::join('products', 'product_warehouse.product_id', '=', 'products.id')
-            ->where(function ($query) use ($request) {
+            ->where(function ($query){
                 if (auth()->user()->workspace_id) {
                     $query->where('products.workspace_id', '=', auth()->user()->workspace_id);
                 }
             })
+            ->whereIn('warehouse_id', $warehouses_ids)
             ->whereRaw('qte <= stock_alert')
             ->where('product_warehouse.deleted_at', null)
             ->join('warehouses', 'product_warehouse.warehouse_id', '=', 'warehouses.id')
-            ->where(function ($query) use ($request) {
+            ->where(function ($query) {
                 if (auth()->user()->workspace_id) {
                     $query->where('warehouses.workspace_id', '=', auth()->user()->workspace_id);
                 }

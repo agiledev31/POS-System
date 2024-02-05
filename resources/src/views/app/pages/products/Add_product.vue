@@ -203,7 +203,7 @@
                             [
                             {label: 'Standard Product', value: 'is_single'},
                             {label: 'Variable Product', value: 'is_variant'},
-                            {label: 'Service Product', value: 'is_service'}
+                            // {label: 'Service Product', value: 'is_service'}
                             ]"
                       ></v-select>
                       <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>

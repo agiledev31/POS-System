@@ -37,6 +37,12 @@ class ExpensesController extends BaseController
         $param = array(0 => 'like', 1 => '=', 2 => '=', 3 => '=');
         $data = array();
 
+        $user_auth = auth()->user();
+        $warehouses_ids = Warehouse::where('deleted_at', '=', null)->pluck('id')->toArray();
+        if(!$user_auth->is_all_warehouses){
+            $warehouses_ids = UserWarehouse::where('user_id', $user_auth->id)->pluck('warehouse_id')->toArray();
+        }
+
         // Check If User Has Permission View  All Records
         $Expenses = Expense::with('expense_category', 'warehouse')
             ->where('deleted_at', '=', null)
@@ -44,11 +50,12 @@ class ExpensesController extends BaseController
                 if (!$view_records) {
                     return $query->where('user_id', '=', Auth::user()->id);
                 }
+            })->whereIn('warehouse_id', $warehouses_ids)
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
+                    $q->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
             });
-
-        if(auth()->user()->workspace_id) {
-            $Expenses->where('workspace_id', '=', auth()->user()->workspace_id);
-        }
 
         //Multiple Filter
         $Filtred = $helpers->filter($Expenses, $columns, $param, $request)

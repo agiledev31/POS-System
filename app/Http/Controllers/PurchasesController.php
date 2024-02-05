@@ -79,6 +79,12 @@ class PurchasesController extends BaseController
         $data = array();
         $total = 0;
 
+        $user_auth = auth()->user();
+        $warehouses_ids = Warehouse::where('deleted_at', '=', null)->pluck('id')->toArray();
+        if(!$user_auth->is_all_warehouses){
+            $warehouses_ids = UserWarehouse::where('user_id', $user_auth->id)->pluck('warehouse_id')->toArray();
+        }
+
         // Check If User Has Permission View  All Records
         $Purchases = Purchase::with('facture', 'provider', 'warehouse')
             ->where('deleted_at', '=', null)
@@ -86,12 +92,14 @@ class PurchasesController extends BaseController
                 if (!$view_records) {
                     return $query->where('user_id', '=', Auth::user()->id);
                 }
+            })->whereIn('warehouse_id', $warehouses_ids)
+            ->where(function ($query) {
+                return $query->whereHas('warehouse', function ($q) {
+                    if (auth()->user()->workspace_id) {
+                        $q->where('workspace_id', '=', auth()->user()->workspace_id);
+                    }
+                });
             });
-        if(Auth::user()->role_id !== 1){
-            $Purchases->whereHas('warehouse', function ($q) {
-                $q->where('workspace_id', '=', Auth::user()->workspace_id);
-            });
-        }
 
         //Multiple Filter
         $Filtred = $helpers->filter($Purchases, $columns, $param, $request)
@@ -984,6 +992,7 @@ class PurchasesController extends BaseController
 
             $detail_id = 0;
             foreach ($Purchase_data['details'] as $detail) {
+                
 
                 //-------check if detail has purchase_unit_id Or Null
                 if($detail->purchase_unit_id !== null){
@@ -996,6 +1005,9 @@ class PurchasesController extends BaseController
                     $unit = Unit::where('id', $product_unit_purchase_id['unitPurchase']->id)->first();
                     $data['no_unit'] = 0;
                 }
+
+                
+                
 
                 if ($detail->product_variant_id) {
                     $item_product = product_warehouse::where('product_id', $detail->product_id)
@@ -1043,6 +1055,8 @@ class PurchasesController extends BaseController
 
                 }
 
+                
+
                 $data['id'] = $detail->id;
                 $data['detail_id'] = $detail_id += 1;
                 $data['quantity'] = $detail->quantity;
@@ -1088,12 +1102,13 @@ class PurchasesController extends BaseController
                 $warehouses = Warehouse::where('deleted_at', '=', null)->whereIn('id', $warehouses_id)->get(['id', 'name']);
             }
             
-            $suppliers = Provider::where('deleted_at', '=', null)->get(['id', 'name']);
-            if(auth()->user()->workspace_id) {
-                $suppliers = Provider::where('deleted_at', '=', null)
-                    ->where('workspace_id', auth()->user()->workspace_id)
-                    ->get(['id', 'name']);
-            }
+            $suppliers = Provider::where('deleted_at', '=', null)
+                ->where(function ($query) {
+                    if(Auth::user()->workspace_id){
+                        return $query->where('workspace_id', '=', Auth::user()->workspace_id);
+                    }
+                })->get(['id', 'name']);
+
             return response()->json([
                 'details' => $details,
                 'purchase' => $purchase,
