@@ -82,8 +82,8 @@ class QuotationsController extends BaseController
         // Check If User Has Permission View  All Records
         $Quotations = Quotation::with('client', 'warehouse')
             ->where('deleted_at', '=', null)
-            ->where(function ($query) use ($view_records) {
-                if (!$view_records) {
+            ->where(function ($query) {
+                if (auth()->user()->workspace_id) {
                     return $query->where('user_id', '=', Auth::user()->id);
                 }
             })->whereIn('warehouse_id', $warehouses_ids)
