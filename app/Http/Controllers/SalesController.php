@@ -1019,8 +1019,17 @@ class SalesController extends BaseController
             ->orderBy('id', 'DESC')
             ->get();
 
-        $settings = Setting::where('deleted_at', '=', null)->first();
-        $pos_settings = PosSetting::where('deleted_at', '=', null)->first();
+        $temp = $payments;
+        $temp = $temp->toArray();
+        $workspace_id = $temp[0]['workspace_id'];
+
+        $settings = Setting::where('deleted_at', '=', null)
+            ->where('workspace_id', '=', $workspace_id)
+            ->first();
+            
+        $pos_settings = PosSetting::where('deleted_at', '=', null)
+            ->where('workspace_id', '=', $workspace_id)
+            ->first();
         $symbol = $helpers->Get_Currency_Code();
 
         return response()->json([
