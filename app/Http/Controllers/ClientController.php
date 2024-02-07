@@ -36,11 +36,12 @@ class ClientController extends BaseController
         $columns = array(0 => 'name', 1 => 'code', 2 => 'phone', 3 => 'email');
         $param = array(0 => 'like', 1 => 'like', 2 => 'like', 3 => 'like');
         $data = array();
-        $clients = Client::where('deleted_at', '=', null);
-
-        if(auth()->user()->workspace_id) {
-            $clients->where('workspace_id', '=', auth()->user()->workspace_id);
-        }
+        $clients = Client::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if(auth()->user()->workspace_id){
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            });
 
         //Multiple Filter
         $Filtred = $helpers->filter($clients, $columns, $param, $request)
@@ -211,7 +212,13 @@ class ClientController extends BaseController
 
     public function Get_Clients_Without_Paginate()
     {
-        $clients = Client::where('deleted_at', '=', null)->get(['id', 'name']);
+        $clients = Client::where('deleted_at', '=', null)
+            ->where(function ($query) {
+                if(auth()->user()->workspace_id){
+                    return $query->where('workspace_id', '=', auth()->user()->workspace_id);
+                }
+            })
+            ->get(['id', 'name']);
         return response()->json($clients);
     }
 

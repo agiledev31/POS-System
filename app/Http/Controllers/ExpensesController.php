@@ -264,7 +264,9 @@ class ExpensesController extends BaseController
             $warehouses = Warehouse::where('deleted_at', '=', null)->whereIn('id', $warehouses_id)->get(['id', 'name']);
         }
 
-        $Expenses_category = ExpenseCategory::where('deleted_at', '=', null)->get(['id', 'name']);
+        $Expenses_category = ExpenseCategory::where('deleted_at', '=', null)
+            ->whereIn('id','=', $warehouses_id)
+            ->get(['id', 'name']);
 
         return response()->json([
             'Expenses_category' => $Expenses_category,
